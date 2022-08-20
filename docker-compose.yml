@@ -21,7 +21,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
       - CLITool-db-volume:/var/lib/mysql
     environment:
       MYSQL_DATABASE: laravel_db
