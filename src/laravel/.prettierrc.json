@@ -1,0 +1,12 @@
+{
+    "phpVersion": "7.4",
+    "printWidth": 120,
+    "tabWidth": 4,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "trailingCommaPHP": true,
+    "semi": true,
+    "bracketSpacing": true,
+    "endOfLine": "lf",
+    "braceStyle": "psr-2"
+}
