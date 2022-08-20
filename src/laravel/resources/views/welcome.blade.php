@@ -9,5 +9,6 @@
 <body>
     <div id="example"></div>
     <div id="app"></div>
+    <div>リロード</div>
 </body>
 </html>

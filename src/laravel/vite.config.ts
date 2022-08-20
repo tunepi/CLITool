@@ -6,7 +6,8 @@ export default defineConfig({
     server: {
         hmr: {
             host: 'localhost',
-            port: 8002
+            port: 443,
+            clientPort: 443,
         },
     },
     plugins: [
@@ -14,7 +15,11 @@ export default defineConfig({
             input: [
                 'resources/ts/app.tsx',
             ],
-            refresh: true,
+            refresh:  [
+                'resources/routes/**',
+                'routes/**',
+                'resources/views/**',
+            ],
         }),
         react(),
     ],
