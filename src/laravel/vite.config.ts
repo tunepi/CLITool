@@ -3,23 +3,22 @@ import laravel from 'laravel-vite-plugin';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-    server: {
-        hmr: {
-            host: 'localhost',
-            port: 443,
-            clientPort: 443,
+    build: {
+        // outDir に manifest.json を出力
+        manifest: true,
+        rollupOptions: {
+            // デフォルトの .html エントリを上書き
+            input: 'resources/ts/app.tsx',
         },
+    },
+    //5173と8000を接続するために明示的にhostを0.0.0.0に設定
+    server: {
+        host: '0.0.0.0',
     },
     plugins: [
         laravel({
-            input: [
-                'resources/ts/app.tsx',
-            ],
-            refresh:  [
-                'resources/routes/**',
-                'routes/**',
-                'resources/views/**',
-            ],
+            input: ['resources/ts/app.tsx'],
+            refresh: ['routes/**', 'resources/views/**'],
         }),
         react(),
     ],

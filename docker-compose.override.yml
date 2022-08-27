@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  node:
+    image: node:18-alpine
+    working_dir: /opt/laravel
+    command: ["npm", "run", "dev"]
+    volumes:
+      - npm-cache:/root/.npm
+      - ./src/laravel:/opt/laravel
+    ports:
+      - 5173:5173
+
+volumes:
+  npm-cache:
+    driver: local
