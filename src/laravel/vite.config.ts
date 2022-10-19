@@ -17,14 +17,14 @@ export default defineConfig({
     },
     plugins: [
         laravel({
-            input: ['resources/ts/app.tsx'],
-            refresh: ['routes/**', 'resources/views/**'],
+            input: 'resources/js/app.tsx',
+            refresh: true,
         }),
         react(),
     ],
     resolve: {
         alias: {
-            '@': '/resources/ts',
+            '@': '/resources/js',
         },
     },
 });
