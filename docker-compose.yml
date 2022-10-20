@@ -36,5 +36,18 @@ services:
       - PMA_ARBITRARY=1
       - PMA_HOST=db
       - PMA_ROOT_PASSWORD=rootpassword
+  #mail server
+  mail:
+    image: mailhog/mailhog
+    container_name: CLITool-mailhog
+    ports:
+      - "8025:8025"
+    environment:
+      MH_STORAGE: maildir
+      MH_MAILDIR_PATH: /tmp
+    volumes:
+      - maildir:/tmp
 volumes:
   CLITool-db-volume:
+  #mailを保持するためにvolumesに追加
+  maildir: {}
