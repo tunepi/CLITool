@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Scripts -->
+        {{-- route関数を使用するために記載 --}}
         @routes
         @viteReactRefresh
         @vite('resources/js/app.tsx')
