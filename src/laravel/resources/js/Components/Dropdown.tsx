@@ -48,8 +48,8 @@ const Trigger = ({ children }: Children) => {
     return (
         <>
             <div onClick={toggleOpen}>{children}</div>
-
-            {open && <div className="fixed inset-0 z-40" onClick={() => setOpen(false)}></div>}
+            {/* z-40の削除 理由:logoutが効かないため */}
+            {open && <div className="fixed inset-0" onClick={() => setOpen(false)}></div>}
         </>
     );
 };
