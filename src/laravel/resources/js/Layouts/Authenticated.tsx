@@ -4,6 +4,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/inertia-react';
+import HeaderLists from '@/Components/HeaderLists';
 
 interface Props {
     auth: any;
@@ -27,9 +28,10 @@ export default function Authenticated({ auth, header, children }: Props) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
-                                </NavLink>
+                                {/* <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                    dashboard
+                                </NavLink> */}
+                                <HeaderLists />
                             </div>
                         </div>
 
