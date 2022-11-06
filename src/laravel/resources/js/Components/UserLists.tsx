@@ -27,43 +27,60 @@ const customStyles = {
     },
 };
 
+//ユーザ一覧JSXの作成
 const UserListData = (users: Props): JSX.Element[] => {
+    //渡ってきた値を変数に格納
     const userData = users.users;
-    const [setModalIsOpen, modalIsOpen] = useState(false);
+    //モーダル開閉の状態管理
+    const [setModalIsOpen, modalIsOpen] = useState<string>('');
+
+    //モーダル判断用値の設定
+    const setModalOpenById = (id: string) => {
+        modalIsOpen(id);
+    };
+
+    //モーダル条件の初期化
+    const onCloseModal = () => {
+        modalIsOpen('');
+    };
+
     return userData.map((user: any) => {
         return (
             <div className="py-5" key={user['id'].toString()}>
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 bg-white border-b border-gray-200">
-                            {user['name']}
+                        <div className="p-6 bg-white border-b border-gray-200 sm:flex space-x-8">
+                            <div>{user['name']}</div>
                             <Button
                                 variant="contained"
                                 color="primary"
                                 onClick={() => {
-                                    modalIsOpen(true);
+                                    setModalOpenById(user['id'].toString());
                                 }}
                             >
                                 詳細
                             </Button>
+                            {/* 詳細モーダル */}
                             <Modal
-                                isOpen={setModalIsOpen}
+                                isOpen={user['id'].toString() === setModalIsOpen}
                                 style={customStyles}
                                 appElement={document.getElementById('app')}
-                                onRequestClose={() => modalIsOpen(false)}
+                                onRequestClose={onCloseModal}
                             >
                                 <div>氏名：{user['name']}</div>
                                 <div>Email：{user['email']}</div>
                                 <div>登録日：{user['created_at']}</div>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={() => {
-                                        modalIsOpen(false);
-                                    }}
-                                >
-                                    閉じる
-                                </Button>
+                                <div className="p-6 bg-white border-b border-gray-200 sm:flex space-x-14">
+                                    <Button variant="contained" color="primary" onClick={onCloseModal}>
+                                        編集
+                                    </Button>
+                                    <Button variant="contained" color="primary" onClick={onCloseModal}>
+                                        削除
+                                    </Button>
+                                    <Button variant="contained" color="primary" onClick={onCloseModal}>
+                                        閉じる
+                                    </Button>
+                                </div>
                             </Modal>
                         </div>
                     </div>

@@ -14,7 +14,7 @@ const ManagementTypes: Array<Array<string>> = [
 const ManagementListData = (): JSX.Element[] => {
     return ManagementTypes.map((managementType: any) => {
         return (
-            <div className="py-5">
+            <div className="py-5" key={managementType[0]}>
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 bg-white border-b border-gray-200">
@@ -33,6 +33,7 @@ const ManagementListData = (): JSX.Element[] => {
     });
 };
 
+//jsx arrayは表示できないためjsx.elementでexportするようにしている
 const ManagementLists = (): JSX.Element => {
     return <div className="hidden  sm:-my-px sm:ml-10 sm:block">{ManagementListData()}</div>;
 };
