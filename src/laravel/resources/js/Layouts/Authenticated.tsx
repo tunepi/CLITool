@@ -28,9 +28,6 @@ export default function Authenticated({ auth, header, children }: Props) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                {/* <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    dashboard
-                                </NavLink> */}
                                 <HeaderLists />
                             </div>
                         </div>
@@ -63,6 +60,9 @@ export default function Authenticated({ auth, header, children }: Props) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
+                                        <Dropdown.Link href={route('management')} method="get" as="button">
+                                            Management
+                                        </Dropdown.Link>
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
                                             ログアウト
                                         </Dropdown.Link>
@@ -111,6 +111,9 @@ export default function Authenticated({ auth, header, children }: Props) {
                         </div>
 
                         <div className="mt-3 space-y-1">
+                            <ResponsiveNavLink method="get" href={route('management')} as="button">
+                                Management
+                            </ResponsiveNavLink>
                             <ResponsiveNavLink method="post" href={route('logout')} as="button">
                                 ログアウト
                             </ResponsiveNavLink>
