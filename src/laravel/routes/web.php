@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +18,16 @@ use Inertia\Inertia;
 
 //ログイン画面 or dashboard画面
 Route::get('/', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('Dashboard',[
+        'user' => 'user'
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/management', function () {
+    return Inertia::render('Management');
+})->name('management');
+
+Route::get('/user', [UserController::class, 'index'])->name('user');
 
 require __DIR__.'/auth.php';
 

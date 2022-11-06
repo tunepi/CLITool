@@ -3,7 +3,6 @@ import NavLink from '@/Components/NavLink';
 
 //コマンドの種類
 const headerTypes: Array<Array<string>> = [
-    ['Management', 'dashboard'],
     ['Git', 'dashboard'],
     ['Docker', 'dashboard'],
     ['Docker-Compose', 'dashboard'],
