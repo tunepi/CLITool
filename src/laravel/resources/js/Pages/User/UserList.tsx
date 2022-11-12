@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { Head } from '@inertiajs/inertia-react';
 import Authenticated from '@/Layouts/Authenticated';
-import ManagementLists from '@/Components/ManagementLists';
 import UserLists from '@/Components/UserLists';
 
-const UserList = (props: any) => {
+interface Props {
+    auth: Array<Array<any>>;
+    users: Array<Array<any>>;
+}
+
+const UserList = (props: Props) => {
     return (
         <Authenticated
             auth={props.auth}
