@@ -22,7 +22,8 @@ const customStyles = {
     overlay: {
         top: 0,
         left: 0,
-        // backgroundColor: 'rgba(0,0,0,0.85)',
+        backgroundColor: 'rgba(102,96,96,0.7)',
+        transition: 'opacity 200ms ease-in-out',
     },
     content: {
         top: '20%',
@@ -42,8 +43,10 @@ const DetailUserModal = (props: Props) => {
     const [editModalIsOpen, setEditModalIsOpen] = useState<string>('');
     //削除用モーダル表示非表示用
     const [deleteModalIsOpen, setDeleteModalIsOpen] = useState<string>('');
-    //useEffectフラグ用
-    const [flg, setFlg] = useState<number>(0);
+    //編集用useEffectフラグ用
+    const [editModalFlg, setEditModalFlg] = useState<number>(0);
+    //削除用useEffectフラグ用
+    const [deleteModalFlg, setDeleteModalFlg] = useState<number>(0);
 
     //モーダル条件の初期化
     const onCloseModal = () => {
@@ -60,7 +63,7 @@ const DetailUserModal = (props: Props) => {
     };
 
     //useEffect起動用フラグ
-    const setOpenFlg = () => {
+    const setOpenFlg = (flg: number, setFlg: any) => {
         flg === 0 ? setFlg(1) : setFlg(0);
     };
 
@@ -77,6 +80,7 @@ const DetailUserModal = (props: Props) => {
                 style={customStyles}
                 appElement={document.getElementById('app')}
                 onRequestClose={onCloseModal}
+                closeTimeoutMS={200}
             >
                 <div>氏名：{props.user.name}</div>
                 <div>Email：{props.user.email}</div>
@@ -89,7 +93,7 @@ const DetailUserModal = (props: Props) => {
                             //modalの表示非表示制御
                             setEditModalIsOpenById(props.user.id);
                             //2連続編集押下時の表示されない問題の対応
-                            setOpenFlg();
+                            setOpenFlg(editModalFlg, setEditModalFlg);
                             onCloseModal();
                         }}
                     >
@@ -102,7 +106,7 @@ const DetailUserModal = (props: Props) => {
                             //modalの表示非表示制御
                             setDeleteModalIsOpenById(props.user.id);
                             //2連続編集押下時の表示されない問題の対応
-                            setOpenFlg();
+                            setOpenFlg(deleteModalFlg, setDeleteModalFlg);
                             onCloseModal();
                         }}
                     >
@@ -114,9 +118,14 @@ const DetailUserModal = (props: Props) => {
                 </div>
             </Modal>
             {/* 編集モーダル */}
-            <EditUserModal user={props.user} IsOpen={editModalIsOpen} flg={flg} />
+            <EditUserModal user={props.user} IsOpen={editModalIsOpen} flg={editModalFlg} modalIsOpen={setModalIsOpen} />
             {/* 削除モーダル */}
-            <DeleteUserModal user={props.user} IsOpen={deleteModalIsOpen} flg={flg} />
+            <DeleteUserModal
+                user={props.user}
+                IsOpen={deleteModalIsOpen}
+                flg={deleteModalFlg}
+                modalIsOpen={setModalIsOpen}
+            />
         </div>
     );
 };
