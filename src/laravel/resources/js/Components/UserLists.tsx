@@ -8,26 +8,8 @@ import DetailUserModal from './DetailUserModal';
 
 interface Props {
     users: Array<Array<any>>;
+    style: any;
 }
-
-//スタイルの調整用配列
-const customStyles = {
-    overlay: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        // backgroundColor: 'rgba(0,0,0,0.85)',
-    },
-    content: {
-        top: '20%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        minWidth: '40%',
-    },
-};
 
 //ユーザ一覧JSXの作成
 const UserListData = (props: Props): JSX.Element[] => {
@@ -64,7 +46,12 @@ const UserListData = (props: Props): JSX.Element[] => {
                             >
                                 詳細
                             </Button>
-                            <DetailUserModal user={user} detailModalIsOpen={modalIsOpen} flg={flg} />
+                            <DetailUserModal
+                                user={user}
+                                detailModalIsOpen={modalIsOpen}
+                                flg={flg}
+                                style={props.style}
+                            />
                         </div>
                     </div>
                 </div>

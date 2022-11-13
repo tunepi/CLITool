@@ -8,25 +8,6 @@ import { useForm } from '@inertiajs/inertia-react';
 import Label from './Label';
 import Button from './Button';
 
-//スタイルの調整用配列
-const customStyles = {
-    overlay: {
-        top: 0,
-        left: 0,
-        backgroundColor: 'rgba(102,96,96,0.7)',
-        transition: 'opacity 200ms ease-in-out',
-    },
-    content: {
-        top: '20%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        minWidth: '40%',
-    },
-};
-
 //event.target.nameの値宣言
 type Name = 'id' | 'name' | 'email' | 'created_at';
 
@@ -75,7 +56,7 @@ const EditUserModal = (props: any) => {
         <div>
             <Modal
                 isOpen={props.user.id === modalIsOpen}
-                style={customStyles}
+                style={props.style}
                 appElement={document.getElementById('app')}
                 onRequestClose={() => {
                     onCloseModal(props.user.id);

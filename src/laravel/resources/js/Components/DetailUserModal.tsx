@@ -15,26 +15,8 @@ interface Props {
     };
     detailModalIsOpen: string;
     flg: number;
+    style: any;
 }
-
-//スタイルの調整用配列
-const customStyles = {
-    overlay: {
-        top: 0,
-        left: 0,
-        backgroundColor: 'rgba(102,96,96,0.7)',
-        transition: 'opacity 200ms ease-in-out',
-    },
-    content: {
-        top: '20%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        minWidth: '40%',
-    },
-};
 
 const DetailUserModal = (props: Props) => {
     //詳細モーダルの表示非表示用
@@ -77,7 +59,7 @@ const DetailUserModal = (props: Props) => {
             {/* 詳細モーダル */}
             <Modal
                 isOpen={props.user.id === modalIsOpen}
-                style={customStyles}
+                style={props.style}
                 appElement={document.getElementById('app')}
                 onRequestClose={onCloseModal}
                 closeTimeoutMS={200}
@@ -118,13 +100,20 @@ const DetailUserModal = (props: Props) => {
                 </div>
             </Modal>
             {/* 編集モーダル */}
-            <EditUserModal user={props.user} IsOpen={editModalIsOpen} flg={editModalFlg} modalIsOpen={setModalIsOpen} />
+            <EditUserModal
+                user={props.user}
+                IsOpen={editModalIsOpen}
+                flg={editModalFlg}
+                modalIsOpen={setModalIsOpen}
+                style={props.style}
+            />
             {/* 削除モーダル */}
             <DeleteUserModal
                 user={props.user}
                 IsOpen={deleteModalIsOpen}
                 flg={deleteModalFlg}
                 modalIsOpen={setModalIsOpen}
+                style={props.style}
             />
         </div>
     );

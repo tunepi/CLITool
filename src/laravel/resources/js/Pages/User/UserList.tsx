@@ -10,6 +10,24 @@ interface Props {
     users: Array<Array<any>>;
 }
 
+const customStyles = {
+    overlay: {
+        top: 0,
+        left: 0,
+        backgroundColor: 'rgba(102,96,96,0.7)',
+        transition: 'opacity 200ms ease-in-out',
+    },
+    content: {
+        top: '20%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        minWidth: '40%',
+    },
+};
+
 const UserList = (props: Props) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     return (
@@ -32,7 +50,7 @@ const UserList = (props: Props) => {
             }
         >
             <Head title="ユーザ一覧" />
-            <UserLists users={props.users} />
+            <UserLists users={props.users} style={customStyles} />
             <RegisterUserModal setModalIsOpen={setModalIsOpen} modalIsOpen={modalIsOpen} />
         </Authenticated>
     );
