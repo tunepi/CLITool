@@ -75,9 +75,9 @@ const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-whit
         <>
             <Transition
                 show={open}
-                enter="transition ease-out duration-200"
-                enterFrom="transform opacity-0 scale-95"
-                enterTo="transform opacity-100 scale-100"
+                enter=""
+                enterFrom="scale-95"
+                enterTo=""
                 leave="transition ease-in duration-75"
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"

@@ -29,6 +29,10 @@ Route::get('/management', function () {
 
 Route::get('/user', [UserController::class, 'index'])->name('user');
 
+Route::post('/user/register', [UserController::class, 'create'])->name('userRegister');
+Route::post('/user/update', [UserController::class, 'update'])->name('userUpdate');
+Route::post('/user/delete', [UserController::class, 'delete'])->name('userDelete');
+
 require __DIR__.'/auth.php';
 
 //初期画面を一旦コメントアウト

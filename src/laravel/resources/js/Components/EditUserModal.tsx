@@ -13,7 +13,8 @@ const customStyles = {
     overlay: {
         top: 0,
         left: 0,
-        // backgroundColor: 'rgba(0,0,0,0.85)',
+        backgroundColor: 'rgba(102,96,96,0.7)',
+        transition: 'opacity 200ms ease-in-out',
     },
     content: {
         top: '20%',
@@ -42,8 +43,9 @@ const EditUserModal = (props: any) => {
     const [modalIsOpen, setModalIsOpen] = useState<string>('');
 
     //modal非表示用
-    const onCloseModal = () => {
+    const onCloseModal = (id: string) => {
         setModalIsOpen('');
+        props.modalIsOpen(id);
     };
 
     //userEffect:props.IsOpenの値が変わるたびにコールバック関数が呼ばれる
@@ -56,7 +58,11 @@ const EditUserModal = (props: any) => {
         //画面遷移を止める
         e.preventDefault();
 
-        post(route('userUpdate'));
+        post(route('userUpdate'), {
+            onSuccess: () => {
+                setModalIsOpen('');
+            },
+        });
     };
 
     //テキストボックスないの値が変わるたびにvalueの値を最新のものに更新してくれる
@@ -71,7 +77,10 @@ const EditUserModal = (props: any) => {
                 isOpen={props.user.id === modalIsOpen}
                 style={customStyles}
                 appElement={document.getElementById('app')}
-                onRequestClose={onCloseModal}
+                onRequestClose={() => {
+                    onCloseModal(props.user.id);
+                }}
+                closeTimeoutMS={200}
             >
                 <ValidationErrors errors={errors} />
                 <Input type="hidden" name="id" value={data.id} handleChange={onHandleChange} />
@@ -102,7 +111,14 @@ const EditUserModal = (props: any) => {
                     <div>登録日：{data.created_at}</div>
                     <div className="p-6 bg-white border-b border-gray-200 sm:flex space-x-14">
                         <Button className="ml-4 bg-gray-900" processing={processing} children="更新" />
-                        <ModalButton variant="contained" color="primary" onClick={onCloseModal} children="戻る" />
+                        <ModalButton
+                            variant="contained"
+                            color="primary"
+                            onClick={() => {
+                                onCloseModal(props.user.id);
+                            }}
+                            children="戻る"
+                        />
                     </div>
                 </form>
             </Modal>

@@ -28,6 +28,14 @@ interface UserInterface
     public function findOne(int $id): ?User;
 
     /**
+     * ユーザの新規登録
+     *
+     * @param Array $userInfo
+     * @return void
+     */
+    public function create(Array $userInfo);
+
+    /**
      * ユーザの情報更新
      *
      * @param User $user

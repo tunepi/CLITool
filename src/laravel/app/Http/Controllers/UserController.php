@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Services\UserService;
 use App\Http\Requests\User\EditRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
@@ -27,6 +28,7 @@ class UserController extends Controller
      * ユーザ一覧の表示
      *
      * @return void
+     * @return \Inertia\Response
      */
     public function index()
     {
@@ -46,8 +48,31 @@ class UserController extends Controller
     }
 
     /**
+     * ユーザの新規登録
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function create(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $this->userService->create($request);
+
+        //必ずリダイレクトすること
+        return redirect()->route('user');
+    }
+
+    /**
      * ユーザ情報の更新
      *
+     * @param EditRequest $request
      * @return void
      */
     public function update(EditRequest $request)
