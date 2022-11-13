@@ -6,6 +6,7 @@ use App\Interfaces\UserInterface;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
@@ -37,6 +38,28 @@ class UserService
     public function findOne(int $id): ?User
     {
         return $this->userInterface->findOne($id);
+    }
+
+    /**
+     * ユーザの新規登録
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function create(Request $request)
+    {
+        if($request === null){
+            return;
+        }
+
+        /** @var array $userInfo ユーザ登録情報 */
+        $userInfo = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ];
+
+        $this->userInterface->create($userInfo);
     }
 
     /**

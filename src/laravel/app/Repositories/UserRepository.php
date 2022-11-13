@@ -47,6 +47,26 @@ class UserRepository implements UserInterface
         return $this->userRepository->where('id','=',$id)->first();
     }
 
+
+    /**
+     * ユーザの新規登録
+     *
+     * @param Array $userInfo
+     * @return void
+     */
+    public function create(Array $userInfo)
+    {
+        if(empty($userInfo)){
+            return;
+        }
+
+        $newUser = new User;
+
+        $newUser->fill($userInfo);
+
+        $newUser->save();
+    }
+
     /**
      * ユーザ情報の更新
      *
