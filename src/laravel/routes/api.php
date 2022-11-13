@@ -19,5 +19,3 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/user/update', [UserController::class, 'update'])->name('userUpdate');
-Route::post('/user/delete', [UserController::class, 'delete'])->name('userDelete');
