@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import EditUserModal from './EditUserModal';
 import ReactModal from 'react-modal';
 import DeleteUserModal from './DeleteUserModal';
+import Label from './DeleteUserModal';
 
 interface Props {
     user: {
@@ -15,7 +16,25 @@ interface Props {
     };
     detailModalIsOpen: string;
     flg: number;
-    style: any;
+    style: {
+        overlay: {
+            top: number;
+            left: number;
+            backgroundColor: string;
+            transition: string;
+        };
+        content: {
+            top: string;
+            left: string;
+            right: string;
+            bottom: string;
+            marginRight: string;
+            transform: string;
+            minWidth: string;
+        };
+    };
+    setOpenFlg: (flg: number, setFlg: React.Dispatch<React.SetStateAction<number>>) => void;
+    setModalOpenById: (id: string, setModalIsOpen: React.Dispatch<React.SetStateAction<string>>) => void;
 }
 
 const DetailUserModal = (props: Props) => {
@@ -35,20 +54,6 @@ const DetailUserModal = (props: Props) => {
         setModalIsOpen('');
     };
 
-    //編集modal表示用
-    const setEditModalIsOpenById = (id: string) => {
-        setEditModalIsOpen(id);
-    };
-
-    const setDeleteModalIsOpenById = (id: string) => {
-        setDeleteModalIsOpen(id);
-    };
-
-    //useEffect起動用フラグ
-    const setOpenFlg = (flg: number, setFlg: any) => {
-        flg === 0 ? setFlg(1) : setFlg(0);
-    };
-
     //detailModalIsOpenの値が変わったら値をセット
     useEffect(() => {
         setModalIsOpen(props.detailModalIsOpen);
@@ -64,39 +69,52 @@ const DetailUserModal = (props: Props) => {
                 onRequestClose={onCloseModal}
                 closeTimeoutMS={200}
             >
-                <div>氏名：{props.user.name}</div>
-                <div>Email：{props.user.email}</div>
-                <div>登録日：{props.user.created_at}</div>
-                <div className="p-6 bg-white border-b border-gray-200 sm:flex space-x-14">
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => {
-                            //modalの表示非表示制御
-                            setEditModalIsOpenById(props.user.id);
-                            //2連続編集押下時の表示されない問題の対応
-                            setOpenFlg(editModalFlg, setEditModalFlg);
-                            onCloseModal();
-                        }}
-                    >
-                        編集
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => {
-                            //modalの表示非表示制御
-                            setDeleteModalIsOpenById(props.user.id);
-                            //2連続編集押下時の表示されない問題の対応
-                            setOpenFlg(deleteModalFlg, setDeleteModalFlg);
-                            onCloseModal();
-                        }}
-                    >
-                        削除
-                    </Button>
-                    <Button variant="contained" color="primary" onClick={onCloseModal}>
-                        閉じる
-                    </Button>
+                <div>
+                    <div className="border-2 border-block-500">
+                        <div className="flex ml-10">
+                            <label className={`block font-medium text-sm text-gray-700 mr-10 w-11 `}>氏名</label>
+                            {props.user.name}
+                        </div>
+                        <div className="flex ml-10 mt-2">
+                            <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>Email</label>
+                            {props.user.email}
+                        </div>
+                        <div className="flex ml-10 mt-2">
+                            <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>登録日</label>
+                            {props.user.created_at}
+                        </div>
+                    </div>
+                    <div className="flex items-center justify-around mt-4 space-x-14">
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => {
+                                //modalの表示非表示制御
+                                props.setModalOpenById(props.user.id, setEditModalIsOpen);
+                                //2連続編集押下時の表示されない問題の対応
+                                props.setOpenFlg(editModalFlg, setEditModalFlg);
+                                onCloseModal();
+                            }}
+                        >
+                            編集
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => {
+                                //modalの表示非表示制御
+                                props.setModalOpenById(props.user.id, setDeleteModalIsOpen);
+                                //2連続編集押下時の表示されない問題の対応
+                                props.setOpenFlg(deleteModalFlg, setDeleteModalFlg);
+                                onCloseModal();
+                            }}
+                        >
+                            削除
+                        </Button>
+                        <Button variant="contained" color="primary" onClick={onCloseModal}>
+                            閉じる
+                        </Button>
+                    </div>
                 </div>
             </Modal>
             {/* 編集モーダル */}

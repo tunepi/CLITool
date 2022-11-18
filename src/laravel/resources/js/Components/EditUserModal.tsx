@@ -8,10 +8,22 @@ import { useForm } from '@inertiajs/inertia-react';
 import Label from './Label';
 import Button from './Button';
 
+interface Props {
+    user: {
+        id: string;
+        name: string;
+        email: string;
+        created_at: string;
+    };
+    IsOpen: string;
+    flg: number;
+    modalIsOpen: React.Dispatch<React.SetStateAction<string>>;
+    style: any;
+}
 //event.target.nameの値宣言
 type Name = 'id' | 'name' | 'email' | 'created_at';
 
-const EditUserModal = (props: any) => {
+const EditUserModal = (props: Props) => {
     //useFormで使用する変数の宣言
     const { data, setData, post, processing, errors } = useForm({
         id: props.user.id,
@@ -78,7 +90,7 @@ const EditUserModal = (props: any) => {
                             handleChange={onHandleChange}
                         />
                     </div>
-                    <div>
+                    <div className="mt-5">
                         <Label forInput="email" value="Email" />
                         <Input
                             type="text"
@@ -89,8 +101,11 @@ const EditUserModal = (props: any) => {
                             handleChange={onHandleChange}
                         />
                     </div>
-                    <div>登録日：{data.created_at}</div>
-                    <div className="p-6 bg-white border-b border-gray-200 sm:flex space-x-14">
+                    <div className="mt-5">
+                        <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>登録日</label>
+                        <div className="ml-1">{data.created_at}</div>
+                    </div>
+                    <div className="flex items-center justify-between mt-4">
                         <Button className="ml-4 bg-gray-900" processing={processing} children="更新" />
                         <ModalButton
                             variant="contained"

@@ -6,6 +6,7 @@ use App\Interfaces\UserInterface;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Gitリポジトリ
@@ -29,11 +30,11 @@ class UserRepository implements UserInterface
      * 自身以外のユーザを全て取得
      *
      * @param integer $id
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function findAllOtherOwn(int $id): Collection
+    public function findAllOtherOwn(int $id): LengthAwarePaginator
     {
-        return $this->userRepository->where('id','!=',$id)->get();
+        return $this->userRepository->where('id','!=',$id)->paginate(5);
     }
 
     /**

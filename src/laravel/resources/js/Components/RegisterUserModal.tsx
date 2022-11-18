@@ -142,7 +142,7 @@ const RegisterUserModal = (props: Props) => {
 
                     <div className="flex items-center justify-between mt-4">
                         <Button className="ml-4 bg-gray-900" processing={processing}>
-                            新規登録する
+                            新規登録
                         </Button>
                         <ModalButton variant="contained" color="primary" onClick={onCloseModal} children="戻る" />
                     </div>

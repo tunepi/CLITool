@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { Head } from '@inertiajs/inertia-react';
 import Authenticated from '@/Layouts/Authenticated';
 import UserLists from '@/Components/UserLists';
-import { Button } from '@mui/material';
+import { Button, dividerClasses } from '@mui/material';
 import RegisterUserModal from '@/Components/RegisterUserModal';
+import Sidebar from '@/Components/Sidebar';
+import MainLayout from '@/Layouts/MainLayout';
 
 interface Props {
     auth: Array<Array<any>>;
-    users: Array<Array<any>>;
+    users: {
+        links: any;
+        data: any;
+    };
 }
 
 const customStyles = {
@@ -18,7 +23,7 @@ const customStyles = {
         transition: 'opacity 200ms ease-in-out',
     },
     content: {
-        top: '20%',
+        top: '30%',
         left: '50%',
         right: 'auto',
         bottom: 'auto',
@@ -30,29 +35,34 @@ const customStyles = {
 
 const UserList = (props: Props) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    console.log(props);
+    const header = (
+        <div className="flex justify-between">
+            <h2 className="font-semibold text-xl text-gray-800 leading-tight flex items-center">ユーザ一覧</h2>
+            <div>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    children="新規登録"
+                    onClick={() => {
+                        setModalIsOpen(true);
+                    }}
+                />
+            </div>
+        </div>
+    );
     return (
-        <Authenticated
+        <MainLayout
+            title={'ユーザ一覧'}
             auth={props.auth}
-            header={
-                <div className="flex justify-between">
-                    <h2 className="font-semibold text-xl text-gray-800 leading-tight flex items-center">ユーザ一覧</h2>
-                    <div>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            children="新規登録"
-                            onClick={() => {
-                                setModalIsOpen(true);
-                            }}
-                        />
-                    </div>
+            headerTitle={header}
+            children={
+                <div className="w-full">
+                    <UserLists users={props.users.data} style={customStyles} links={props.users.links} />
+                    <RegisterUserModal setModalIsOpen={setModalIsOpen} modalIsOpen={modalIsOpen} />
                 </div>
             }
-        >
-            <Head title="ユーザ一覧" />
-            <UserLists users={props.users} style={customStyles} />
-            <RegisterUserModal setModalIsOpen={setModalIsOpen} modalIsOpen={modalIsOpen} />
-        </Authenticated>
+        />
     );
 };
 
