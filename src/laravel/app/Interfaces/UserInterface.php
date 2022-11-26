@@ -5,6 +5,7 @@ namespace App\Interfaces;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  *  ユーザインターフェイス
@@ -15,9 +16,9 @@ interface UserInterface
      * 自身以外のユーザを全て取得
      *
      * @param integer $id
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function findAllOtherOwn(int $id): Collection;
+    public function findAllOtherOwn(int $id): LengthAwarePaginator;
 
     /**
      * ユーザ1件の取得

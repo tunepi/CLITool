@@ -7,35 +7,31 @@ import ValidationErrors from '@/Components/ValidationErrors';
 import { useForm } from '@inertiajs/inertia-react';
 import Label from './Label';
 import Button from './Button';
+import SelectBox from './SelectBox';
 
-//スタイルの調整用配列
-const customStyles = {
-    overlay: {
-        top: 0,
-        left: 0,
-        backgroundColor: 'rgba(102,96,96,0.7)',
-        transition: 'opacity 200ms ease-in-out',
-    },
-    content: {
-        top: '20%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        minWidth: '40%',
-    },
-};
-
+interface Props {
+    user: {
+        id: string;
+        name: string;
+        email: string;
+        roll: string;
+        created_at: string;
+    };
+    IsOpen: string;
+    flg: number;
+    modalIsOpen: React.Dispatch<React.SetStateAction<string>>;
+    style: any;
+}
 //event.target.nameの値宣言
 type Name = 'id' | 'name' | 'email' | 'created_at';
 
-const EditUserModal = (props: any) => {
+const EditUserModal = (props: Props) => {
     //useFormで使用する変数の宣言
     const { data, setData, post, processing, errors } = useForm({
         id: props.user.id,
         name: props.user.name,
         email: props.user.email,
+        roll: props.user.roll,
         created_at: props.user.created_at,
     });
 
@@ -62,6 +58,9 @@ const EditUserModal = (props: any) => {
             onSuccess: () => {
                 setModalIsOpen('');
             },
+            onStart: (visit) => {
+                console.log(visit);
+            },
         });
     };
 
@@ -71,11 +70,16 @@ const EditUserModal = (props: any) => {
         setData(event.target.name as Name, event.target.value);
     };
 
+    const onHandleChangeBySelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        console.log(event.target.value);
+        setData(event.target.name as 'roll', event.target.value);
+    };
+
     return (
         <div>
             <Modal
                 isOpen={props.user.id === modalIsOpen}
-                style={customStyles}
+                style={props.style}
                 appElement={document.getElementById('app')}
                 onRequestClose={() => {
                     onCloseModal(props.user.id);
@@ -97,7 +101,7 @@ const EditUserModal = (props: any) => {
                             handleChange={onHandleChange}
                         />
                     </div>
-                    <div>
+                    <div className="mt-5">
                         <Label forInput="email" value="Email" />
                         <Input
                             type="text"
@@ -108,8 +112,25 @@ const EditUserModal = (props: any) => {
                             handleChange={onHandleChange}
                         />
                     </div>
-                    <div>登録日：{data.created_at}</div>
-                    <div className="p-6 bg-white border-b border-gray-200 sm:flex space-x-14">
+                    <div className="mt-5">
+                        <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>権限</label>
+                        <select
+                            name="roll"
+                            defaultValue={data.roll == '管理者' ? '1' : '0'}
+                            onChange={(event) => {
+                                onHandleChangeBySelected(event);
+                            }}
+                            className="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                        >
+                            <option value="0">一般</option>
+                            <option value="1">管理者</option>
+                        </select>
+                    </div>
+                    <div className="mt-5">
+                        <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>登録日</label>
+                        <div className="ml-1">{data.created_at}</div>
+                    </div>
+                    <div className="flex items-center justify-between mt-4">
                         <Button className="ml-4 bg-gray-900" processing={processing} children="更新" />
                         <ModalButton
                             variant="contained"

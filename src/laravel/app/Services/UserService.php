@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserService
 {
@@ -24,7 +25,7 @@ class UserService
      * @param integer $id
      * @return Collection
      */
-    public function findAllOtherOwn(int $id): Collection
+    public function findAllOtherOwn(int $id): LengthAwarePaginator
     {
         return $this->userInterface->findAllOtherOwn($id);
     }
@@ -56,6 +57,7 @@ class UserService
         $userInfo = [
             'name' => $request->name,
             'email' => $request->email,
+            'roll' => $request->roll,
             'password' => Hash::make($request->password),
         ];
 

@@ -18,6 +18,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $remember_token
+ * @property int|null $roll
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -49,7 +50,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
-     * The attributes that are mass assignable.
+     * 指定したカラム名のみcreate/update/fillが可能
      *
      * @var array<int, string>
      */
@@ -57,10 +58,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'roll',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * 指定したカラムは常に取得の対象外に設定される
      *
      * @var array<int, string>
      */
@@ -77,4 +79,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * 配列/JSONシリアル化の日付を準備
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y年m月d日');
+    }
+
+    /**
+     * ロールの名称設定
+     *
+     * @return string
+     */
+    protected function getRollAttribute()
+    {
+        return $this->attributes['roll'] === 1 ? '管理者' : '一般';
+    }
 }

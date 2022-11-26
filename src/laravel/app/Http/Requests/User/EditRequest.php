@@ -26,7 +26,8 @@ class EditRequest extends FormRequest
         return [
             'id'   => 'required',
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email'
+            'email' => 'required|string|email',
+            'roll' => 'required'
         ];
     }
 }

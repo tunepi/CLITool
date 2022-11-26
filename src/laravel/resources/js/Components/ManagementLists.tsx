@@ -35,7 +35,7 @@ const ManagementListData = (): JSX.Element[] => {
 
 //jsx arrayは表示できないためjsx.elementでexportするようにしている
 const ManagementLists = (): JSX.Element => {
-    return <div className="hidden  sm:-my-px sm:ml-10 sm:block">{ManagementListData()}</div>;
+    return <div className="hidden  sm:-my-px sm:ml-10 sm:block w-full">{ManagementListData()}</div>;
 };
 
 export default ManagementLists;

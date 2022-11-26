@@ -8,29 +8,39 @@ import { useForm } from '@inertiajs/inertia-react';
 import Label from './Label';
 import Button from './Button';
 
-//スタイルの調整用配列
-const customStyles = {
-    overlay: {
-        top: 0,
-        left: 0,
-        backgroundColor: 'rgba(102,96,96,0.7)',
-        transition: 'opacity 200ms ease-in-out',
-    },
-    content: {
-        top: '20%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        minWidth: '40%',
-    },
-};
+interface Props {
+    user: {
+        id: string;
+        name: string;
+        email: string;
+        created_at: string;
+    };
+    IsOpen: string;
+    flg: number;
+    modalIsOpen: React.Dispatch<React.SetStateAction<string>>;
+    style: {
+        overlay: {
+            top: number;
+            left: number;
+            backgroundColor: string;
+            transition: string;
+        };
+        content: {
+            top: string;
+            left: string;
+            right: string;
+            bottom: string;
+            marginRight: string;
+            transform: string;
+            minWidth: string;
+        };
+    };
+}
 
 //event.target.nameの値宣言
 type Name = 'id' | 'name';
 
-const DeleteUserModal = (props: any) => {
+const DeleteUserModal = (props: Props) => {
     const { data, setData, post, processing } = useForm({
         id: props.user.id,
         name: props.user.name,
@@ -39,7 +49,7 @@ const DeleteUserModal = (props: any) => {
     const [modalIsOpen, setModalIsOpen] = useState<string>('');
 
     //modal非表示用
-    const onCloseModal = (id: number) => {
+    const onCloseModal = (id: string) => {
         setModalIsOpen('');
         props.modalIsOpen(id);
     };
@@ -67,7 +77,7 @@ const DeleteUserModal = (props: any) => {
         <div>
             <Modal
                 isOpen={props.user.id === modalIsOpen}
-                style={customStyles}
+                style={props.style}
                 appElement={document.getElementById('app')}
                 onRequestClose={() => {
                     onCloseModal(props.user.id);
@@ -77,12 +87,18 @@ const DeleteUserModal = (props: any) => {
                 <Input type="hidden" name="id" value={data.id} handleChange={onHandleChange} />
 
                 <form onSubmit={deleteUser}>
-                    <div>
-                        ユーザ：{data.name}を削除します。 <br />
-                        削除した場合元には戻せません。 <br />
-                        本当に削除してよろしいですか？ <br />
+                    <div className="border-2 border-block-500">
+                        <div className="flex pl-10">
+                            <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>ユーザ</label>
+                            <div className="ml-1">{data.name}</div>
+                        </div>
+                        <div className="pl-10 mt-2">
+                            <p>上記ユーザを削除します。</p>
+                            <p>削除した場合元には戻せません。</p>
+                            <p>本当に削除してよろしいですか？</p>
+                        </div>
                     </div>
-                    <div className="p-6 bg-white border-b border-gray-200 sm:flex space-x-14">
+                    <div className="flex items-center justify-around mt-4">
                         <Button className="ml-4 bg-gray-900" processing={processing} children="削除" />
                         <ModalButton
                             variant="contained"

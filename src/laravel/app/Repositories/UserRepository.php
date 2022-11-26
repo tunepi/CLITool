@@ -6,6 +6,8 @@ use App\Interfaces\UserInterface;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Gitリポジトリ
@@ -29,11 +31,11 @@ class UserRepository implements UserInterface
      * 自身以外のユーザを全て取得
      *
      * @param integer $id
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function findAllOtherOwn(int $id): Collection
+    public function findAllOtherOwn(int $id): LengthAwarePaginator
     {
-        return $this->userRepository->where('id','!=',$id)->get();
+        return $this->userRepository->where('id','!=',$id)->paginate(5);
     }
 
     /**
@@ -80,12 +82,20 @@ class UserRepository implements UserInterface
             return;
         }
 
+        Log::debug(gettype(intval($request->roll)));
+        Log::debug(gettype($request->roll));
+        $roll = intval($request->roll);
+        Log::debug($user->roll);
+        Log::debug($roll);
+
         $target = $user;
 
         $target->fill([
             'name' => $request->name,
-            'email' => $request->email
+            'email' => $request->email,
+            'roll' => $roll,
         ]);
+        Log::debug($target);
 
         $target->save();
     }

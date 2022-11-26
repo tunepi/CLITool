@@ -5,29 +5,29 @@ import { Button, Container } from '@mui/material';
 import Modal from 'react-modal';
 import EditUserModal from './EditUserModal';
 import DetailUserModal from './DetailUserModal';
+import PaginationList from './PaginationList';
 
 interface Props {
     users: Array<Array<any>>;
+    style: {
+        overlay: {
+            top: number;
+            left: number;
+            backgroundColor: string;
+            transition: string;
+        };
+        content: {
+            top: string;
+            left: string;
+            right: string;
+            bottom: string;
+            marginRight: string;
+            transform: string;
+            minWidth: string;
+        };
+    };
+    links: any;
 }
-
-//スタイルの調整用配列
-const customStyles = {
-    overlay: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        // backgroundColor: 'rgba(0,0,0,0.85)',
-    },
-    content: {
-        top: '20%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        minWidth: '40%',
-    },
-};
 
 //ユーザ一覧JSXの作成
 const UserListData = (props: Props): JSX.Element[] => {
@@ -38,18 +38,18 @@ const UserListData = (props: Props): JSX.Element[] => {
     //useEffectフラグ用
     const [flg, setFlg] = useState<number>(0);
     //詳細モーダル表示用
-    const setModalOpenById = (id: string) => {
+    const setModalOpenById = (id: string, setModalIsOpen: React.Dispatch<React.SetStateAction<string>>) => {
         setModalIsOpen(id);
     };
 
     //useEffect起動用フラグ
-    const setOpenFlg = () => {
+    const setOpenFlg = (flg: number, setFlg: React.Dispatch<React.SetStateAction<number>>) => {
         flg === 0 ? setFlg(1) : setFlg(0);
     };
 
     return userData.map((user: any) => {
         return (
-            <div className="py-5" key={user.id.toString()}>
+            <div className="pt-5" key={user.id.toString()}>
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 bg-white border-b border-gray-200 sm:flex space-x-8">
@@ -58,13 +58,20 @@ const UserListData = (props: Props): JSX.Element[] => {
                                 variant="contained"
                                 color="primary"
                                 onClick={() => {
-                                    setModalOpenById(user.id);
-                                    setOpenFlg();
+                                    setModalOpenById(user.id, setModalIsOpen);
+                                    setOpenFlg(flg, setFlg);
                                 }}
                             >
                                 詳細
                             </Button>
-                            <DetailUserModal user={user} detailModalIsOpen={modalIsOpen} flg={flg} />
+                            <DetailUserModal
+                                user={user}
+                                detailModalIsOpen={modalIsOpen}
+                                flg={flg}
+                                style={props.style}
+                                setOpenFlg={setOpenFlg}
+                                setModalOpenById={setModalOpenById}
+                            />
                         </div>
                     </div>
                 </div>
@@ -74,7 +81,12 @@ const UserListData = (props: Props): JSX.Element[] => {
 };
 
 const UserLists = (props: Props): JSX.Element => {
-    return <div className="hidden  sm:-my-px sm:ml-10 sm:block">{UserListData(props)}</div>;
+    return (
+        <div className="hidden  sm:-my-px sm:ml-10 sm:block">
+            {UserListData(props)}
+            <PaginationList links={props.links} />
+        </div>
+    );
 };
 
 export default UserLists;

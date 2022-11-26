@@ -22,7 +22,7 @@ const customStyles = {
         transition: 'opacity 200ms ease-in-out',
     },
     content: {
-        top: '30%',
+        top: '45%',
         left: '50%',
         right: 'auto',
         bottom: 'auto',
@@ -37,6 +37,7 @@ const RegisterUserModal = (props: Props) => {
         name: '',
         email: '',
         password: '',
+        roll: '',
         password_confirmation: '',
     });
 
@@ -57,6 +58,10 @@ const RegisterUserModal = (props: Props) => {
             event.target.name as 'email' | 'password' | 'name',
             event.target.type === 'checkbox' ? event.target.checked + '' : event.target.value,
         );
+    };
+
+    const onHandleChangeBySelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setData(event.target.name as 'roll', event.target.value);
     };
 
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -140,9 +145,23 @@ const RegisterUserModal = (props: Props) => {
                         />
                     </div>
 
+                    <div className="mt-4">
+                        <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>権限</label>
+                        <select
+                            name="roll"
+                            onChange={(event) => {
+                                onHandleChangeBySelected(event);
+                            }}
+                            className="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                        >
+                            <option value="0">一般</option>
+                            <option value="1">管理者</option>
+                        </select>
+                    </div>
+
                     <div className="flex items-center justify-between mt-4">
                         <Button className="ml-4 bg-gray-900" processing={processing}>
-                            新規登録する
+                            新規登録
                         </Button>
                         <ModalButton variant="contained" color="primary" onClick={onCloseModal} children="戻る" />
                     </div>
