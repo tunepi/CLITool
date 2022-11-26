@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-import { Head } from '@inertiajs/inertia-react';
-import Authenticated from '@/Layouts/Authenticated';
-import ManagementLists from '@/Components/ManagementLists';
-import MainLayout from '@/Layouts/MainLayout';
+import React from 'react';
+import ManagementLists from '@/Organisms/ManagementLists';
+import MainLayout from '@/Templates/MainLayout';
 
 const Management = (props: any) => {
     return (

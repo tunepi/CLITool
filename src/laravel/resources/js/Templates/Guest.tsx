@@ -1,5 +1,5 @@
 import React from 'react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
+import ApplicationLogo from '@/Atoms/ApplicationLogo';
 import { Link } from '@inertiajs/inertia-react';
 
 interface Props {

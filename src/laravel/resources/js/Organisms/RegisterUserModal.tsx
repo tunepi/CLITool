@@ -1,9 +1,9 @@
 import React from 'react';
 import Modal from 'react-modal';
-import Button from '@/Components/Button';
-import Input from '@/Components/Input';
-import Label from '@/Components/Label';
-import ValidationErrors from '@/Components/ValidationErrors';
+import Button from '@/Atoms/Button';
+import Input from '@/Modules/Input';
+import Label from '@/Atoms/Label';
+import ValidationErrors from '@/Organisms/ValidationErrors';
 import { useForm } from '@inertiajs/inertia-react';
 import { useEffect } from 'react';
 import { Button as ModalButton } from '@mui/material';

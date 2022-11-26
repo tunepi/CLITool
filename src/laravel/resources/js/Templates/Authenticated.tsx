@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+import ApplicationLogo from '@/Atoms/ApplicationLogo';
+import Dropdown from '@/Modules/Dropdown';
+import NavLink from '@/Atoms/NavLink';
+import ResponsiveNavLink from '@/Atoms/ResponsiveNavLink';
 import { Link } from '@inertiajs/inertia-react';
-import HeaderLists from '@/Components/HeaderLists';
 
 interface Props {
     auth: any;

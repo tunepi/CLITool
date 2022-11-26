@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { Head } from '@inertiajs/inertia-react';
-import Authenticated from '@/Layouts/Authenticated';
-import UserLists from '@/Components/UserLists';
-import { Button, dividerClasses } from '@mui/material';
-import RegisterUserModal from '@/Components/RegisterUserModal';
-import Sidebar from '@/Components/Sidebar';
-import MainLayout from '@/Layouts/MainLayout';
+import UserLists from '@/Organisms/UserLists';
+import { Button } from '@mui/material';
+import RegisterUserModal from '@/Organisms/RegisterUserModal';
+import MainLayout from '@/Templates/MainLayout';
 
 interface Props {
     auth: Array<Array<any>>;
@@ -35,7 +32,6 @@ const customStyles = {
 
 const UserList = (props: Props) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    console.log(props);
     const header = (
         <div className="flex justify-between">
             <h2 className="font-semibold text-xl text-gray-800 leading-tight flex items-center">ユーザ一覧</h2>

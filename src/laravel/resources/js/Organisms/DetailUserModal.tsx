@@ -5,7 +5,6 @@ import Modal from 'react-modal';
 import EditUserModal from './EditUserModal';
 import ReactModal from 'react-modal';
 import DeleteUserModal from './DeleteUserModal';
-import Label from './DeleteUserModal';
 
 interface Props {
     user: {

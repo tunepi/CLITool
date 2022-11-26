@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import NavLink from './NavLink';
+import NavLink from '../Atoms/NavLink';
 
 const PaginationLists = (props: any) => {
     const paginationList = props.links;

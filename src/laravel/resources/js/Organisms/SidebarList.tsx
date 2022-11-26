@@ -1,6 +1,6 @@
 import React from 'react';
 
-import NavLink from '@/Components/NavLink';
+import NavLink from '@/Atoms/NavLink';
 
 //コマンドの種類
 const sideBarTypes: Array<Array<string>> = [

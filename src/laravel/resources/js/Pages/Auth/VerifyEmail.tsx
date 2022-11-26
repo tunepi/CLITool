@@ -1,7 +1,7 @@
-import React from "react";
-import Button from "@/Components/Button";
-import Guest from "@/Layouts/Guest";
-import { Head, Link, useForm } from "@inertiajs/inertia-react";
+import React from 'react';
+import Button from '@/Atoms/Button';
+import Guest from '@/Templates/Guest';
+import { Head, Link, useForm } from '@inertiajs/inertia-react';
 
 interface Props {
     status: string;
@@ -13,7 +13,7 @@ export default function VerifyEmail({ status }: Props) {
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        post(route("verification.send"));
+        post(route('verification.send'));
     };
 
     return (
@@ -25,7 +25,7 @@ export default function VerifyEmail({ status }: Props) {
                 メールが届かない場合、下のボタンからメールを再送信してください。
             </div>
 
-            {status === "verification-link-sent" && (
+            {status === 'verification-link-sent' && (
                 <div className="mb-4 font-medium text-sm text-green-600">
                     登録されたメールアドレスに新しいメールを送信しました。
                 </div>
@@ -38,7 +38,7 @@ export default function VerifyEmail({ status }: Props) {
                     </Button>
 
                     <Link
-                        href={route("logout")}
+                        href={route('logout')}
                         method="post"
                         as="button"
                         className="underline text-sm text-gray-600 hover:text-gray-900"

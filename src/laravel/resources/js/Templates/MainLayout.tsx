@@ -1,7 +1,7 @@
 import React from 'react';
 import { Head } from '@inertiajs/inertia-react';
-import Authenticated from '@/Layouts/Authenticated';
-import Sidebar from '@/Components/Sidebar';
+import Authenticated from '@/Templates/Authenticated';
+import Sidebar from '@/Templates/Sidebar';
 
 interface Props {
     auth: any;

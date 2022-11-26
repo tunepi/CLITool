@@ -1,9 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import NavLink from '@/Components/NavLink';
-import { Button, Container } from '@mui/material';
+import { Button } from '@mui/material';
 import Modal from 'react-modal';
-import EditUserModal from './EditUserModal';
 import DetailUserModal from './DetailUserModal';
 import PaginationList from './PaginationList';
 

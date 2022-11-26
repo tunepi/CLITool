@@ -1,9 +1,9 @@
-import React from "react";
-import Button from "@/Components/Button";
-import Guest from "@/Layouts/Guest";
-import Input from "@/Components/Input";
-import ValidationErrors from "@/Components/ValidationErrors";
-import { Head, useForm } from "@inertiajs/inertia-react";
+import React from 'react';
+import Button from '@/Atoms/Button';
+import Guest from '@/Templates/Guest';
+import Input from '@/Modules/Input';
+import ValidationErrors from '@/Organisms/ValidationErrors';
+import { Head, useForm } from '@inertiajs/inertia-react';
 
 interface Props {
     status: string;
@@ -11,17 +11,17 @@ interface Props {
 
 export default function ForgotPassword({ status }: Props) {
     const { data, setData, post, processing, errors } = useForm({
-        email: "",
+        email: '',
     });
 
     const onHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setData(event.target.name as "email", event.target.value);
+        setData(event.target.name as 'email', event.target.value);
     };
 
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        post(route("password.email"));
+        post(route('password.email'));
     };
 
     return (
@@ -32,11 +32,7 @@ export default function ForgotPassword({ status }: Props) {
                 メールアドレスを入力してください。パスワードリセット用のリンクを送ります。
             </div>
 
-            {status && (
-                <div className="mb-4 font-medium text-sm text-green-600">
-                    {status}
-                </div>
-            )}
+            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
 
             <ValidationErrors errors={errors} />
 
@@ -51,10 +47,7 @@ export default function ForgotPassword({ status }: Props) {
                 />
 
                 <div className="flex items-center justify-end mt-4">
-                    <Button
-                        className="ml-4 bg-gray-900"
-                        processing={processing}
-                    >
+                    <Button className="ml-4 bg-gray-900" processing={processing}>
                         パスワードのリセットリンクを送る
                     </Button>
                 </div>
