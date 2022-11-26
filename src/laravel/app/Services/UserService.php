@@ -57,6 +57,7 @@ class UserService
         $userInfo = [
             'name' => $request->name,
             'email' => $request->email,
+            'roll' => $request->roll,
             'password' => Hash::make($request->password),
         ];
 

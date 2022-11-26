@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Gitリポジトリ
@@ -81,12 +82,20 @@ class UserRepository implements UserInterface
             return;
         }
 
+        Log::debug(gettype(intval($request->roll)));
+        Log::debug(gettype($request->roll));
+        $roll = intval($request->roll);
+        Log::debug($user->roll);
+        Log::debug($roll);
+
         $target = $user;
 
         $target->fill([
             'name' => $request->name,
-            'email' => $request->email
+            'email' => $request->email,
+            'roll' => $roll,
         ]);
+        Log::debug($target);
 
         $target->save();
     }

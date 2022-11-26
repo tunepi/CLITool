@@ -23,7 +23,7 @@ const customStyles = {
         transition: 'opacity 200ms ease-in-out',
     },
     content: {
-        top: '30%',
+        top: '45%',
         left: '50%',
         right: 'auto',
         bottom: 'auto',

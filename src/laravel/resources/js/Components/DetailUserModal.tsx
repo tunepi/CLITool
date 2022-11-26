@@ -12,6 +12,7 @@ interface Props {
         id: string;
         name: string;
         email: string;
+        roll: string;
         created_at: string;
     };
     detailModalIsOpen: string;
@@ -78,6 +79,10 @@ const DetailUserModal = (props: Props) => {
                         <div className="flex ml-10 mt-2">
                             <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>Email</label>
                             {props.user.email}
+                        </div>
+                        <div className="flex ml-10 mt-2">
+                            <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>権限</label>
+                            {props.user.roll}
                         </div>
                         <div className="flex ml-10 mt-2">
                             <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>登録日</label>

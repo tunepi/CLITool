@@ -14,7 +14,7 @@ const MainLayout = (props: Props) => {
     return (
         <Authenticated
             auth={props.auth}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">{props.headerTitle}</h2>}
+            header={<div className="font-semibold text-xl text-gray-800 leading-tight">{props.headerTitle}</div>}
         >
             <Head title={props.title} />
             <div className="inline-block flex center  h-full">

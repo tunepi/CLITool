@@ -7,12 +7,14 @@ import ValidationErrors from '@/Components/ValidationErrors';
 import { useForm } from '@inertiajs/inertia-react';
 import Label from './Label';
 import Button from './Button';
+import SelectBox from './SelectBox';
 
 interface Props {
     user: {
         id: string;
         name: string;
         email: string;
+        roll: string;
         created_at: string;
     };
     IsOpen: string;
@@ -29,6 +31,7 @@ const EditUserModal = (props: Props) => {
         id: props.user.id,
         name: props.user.name,
         email: props.user.email,
+        roll: props.user.roll,
         created_at: props.user.created_at,
     });
 
@@ -55,6 +58,9 @@ const EditUserModal = (props: Props) => {
             onSuccess: () => {
                 setModalIsOpen('');
             },
+            onStart: (visit) => {
+                console.log(visit);
+            },
         });
     };
 
@@ -62,6 +68,11 @@ const EditUserModal = (props: Props) => {
     //非同期で送信する際にいちいちテキストボックスの値を取得しなくても良くなる？
     const onHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setData(event.target.name as Name, event.target.value);
+    };
+
+    const onHandleChangeBySelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        console.log(event.target.value);
+        setData(event.target.name as 'roll', event.target.value);
     };
 
     return (
@@ -100,6 +111,20 @@ const EditUserModal = (props: Props) => {
                             isFocused={true}
                             handleChange={onHandleChange}
                         />
+                    </div>
+                    <div className="mt-5">
+                        <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>権限</label>
+                        <select
+                            name="roll"
+                            defaultValue={data.roll == '管理者' ? '1' : '0'}
+                            onChange={(event) => {
+                                onHandleChangeBySelected(event);
+                            }}
+                            className="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                        >
+                            <option value="0">一般</option>
+                            <option value="1">管理者</option>
+                        </select>
                     </div>
                     <div className="mt-5">
                         <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>登録日</label>
