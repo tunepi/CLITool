@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@/Atoms/Button';
 import Guest from '@/Templates/Guest';
-import Input from '@/Modules/Input';
+import Input from '@/Moleclues/Input';
 import ValidationErrors from '@/Organisms/ValidationErrors';
 import { Head, useForm } from '@inertiajs/inertia-react';
 

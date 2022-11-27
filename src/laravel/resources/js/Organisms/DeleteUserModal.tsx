@@ -1,10 +1,10 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Button as ModalButton } from '@mui/material';
-import Input from '../Modules/Input';
+import Input from '../Moleclues/Input';
 import { useForm } from '@inertiajs/inertia-react';
 import Button from '../Atoms/Button';
-import CommonModal from '../Modules/CommonModal';
+import CommonModal from '../Moleclues/CommonModal';
 
 interface Props {
     user: {

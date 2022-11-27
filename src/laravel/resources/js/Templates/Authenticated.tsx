@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ApplicationLogo from '@/Atoms/ApplicationLogo';
-import Dropdown from '@/Modules/Dropdown';
+import Dropdown from '@/Moleclues/Dropdown';
 import NavLink from '@/Atoms/NavLink';
 import ResponsiveNavLink from '@/Atoms/ResponsiveNavLink';
 import { Link } from '@inertiajs/inertia-react';

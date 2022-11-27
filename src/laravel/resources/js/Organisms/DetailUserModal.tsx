@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 import EditUserModal from './EditUserModal';
 import ReactModal from 'react-modal';
 import DeleteUserModal from './DeleteUserModal';
-import CommonModal from '../Modules/CommonModal';
+import CommonModal from '../Moleclues/CommonModal';
 
 interface Props {
     user: {

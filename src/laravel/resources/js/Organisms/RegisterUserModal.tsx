@@ -1,13 +1,13 @@
 import React from 'react';
 import Button from '@/Atoms/Button';
-import Input from '@/Modules/Input';
+import Input from '@/Moleclues/Input';
 import Label from '@/Atoms/Label';
 import ValidationErrors from '@/Organisms/ValidationErrors';
 import { useForm } from '@inertiajs/inertia-react';
 import { useEffect } from 'react';
 import { Button as ModalButton } from '@mui/material';
-import SelectBox from '../Modules/SelectBox';
-import CommonModal from '../Modules/CommonModal';
+import SelectBox from '../Moleclues/SelectBox';
+import CommonModal from '../Moleclues/CommonModal';
 
 interface Props {
     setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;

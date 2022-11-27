@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Button from '@/Atoms/Button';
 import Checkbox from '@/Atoms/Checkbox';
 import Guest from '@/Templates/Guest';
-import Input from '@/Modules/Input';
+import Input from '@/Moleclues/Input';
 import Label from '@/Atoms/Label';
 import ValidationErrors from '@/Organisms/ValidationErrors';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
