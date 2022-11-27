@@ -7,23 +7,6 @@ import PaginationList from './PaginationList';
 
 interface Props {
     users: Array<Array<any>>;
-    style: {
-        overlay: {
-            top: number;
-            left: number;
-            backgroundColor: string;
-            transition: string;
-        };
-        content: {
-            top: string;
-            left: string;
-            right: string;
-            bottom: string;
-            marginRight: string;
-            transform: string;
-            minWidth: string;
-        };
-    };
     links: any;
 }
 
@@ -66,7 +49,6 @@ const UserListData = (props: Props): JSX.Element[] => {
                                 user={user}
                                 detailModalIsOpen={modalIsOpen}
                                 flg={flg}
-                                style={props.style}
                                 setOpenFlg={setOpenFlg}
                                 setModalOpenById={setModalOpenById}
                             />

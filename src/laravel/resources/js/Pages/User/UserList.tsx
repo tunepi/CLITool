@@ -12,25 +12,7 @@ interface Props {
     };
 }
 
-const customStyles = {
-    overlay: {
-        top: 0,
-        left: 0,
-        backgroundColor: 'rgba(102,96,96,0.7)',
-        transition: 'opacity 200ms ease-in-out',
-    },
-    content: {
-        top: '45%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        minWidth: '40%',
-    },
-};
-
-const UserList = (props: Props) => {
+const UserList = ({ auth, users }: Props) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const header = (
         <div className="flex justify-between">
@@ -50,11 +32,11 @@ const UserList = (props: Props) => {
     return (
         <MainLayout
             title={'ユーザ一覧'}
-            auth={props.auth}
+            auth={auth}
             headerTitle={header}
             children={
                 <div className="w-full">
-                    <UserLists users={props.users.data} style={customStyles} links={props.users.links} />
+                    <UserLists users={users.data} links={users.links} />
                     <RegisterUserModal setModalIsOpen={setModalIsOpen} modalIsOpen={modalIsOpen} />
                 </div>
             }

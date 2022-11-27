@@ -2,9 +2,9 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Button as ModalButton } from '@mui/material';
 import Input from '../Modules/Input';
-import Modal from 'react-modal';
 import { useForm } from '@inertiajs/inertia-react';
 import Button from '../Atoms/Button';
+import CommonModal from '../Modules/CommonModal';
 
 interface Props {
     user: {
@@ -15,47 +15,30 @@ interface Props {
     };
     IsOpen: string;
     flg: number;
-    modalIsOpen: React.Dispatch<React.SetStateAction<string>>;
-    style: {
-        overlay: {
-            top: number;
-            left: number;
-            backgroundColor: string;
-            transition: string;
-        };
-        content: {
-            top: string;
-            left: string;
-            right: string;
-            bottom: string;
-            marginRight: string;
-            transform: string;
-            minWidth: string;
-        };
-    };
+    detailModalIsOpen: React.Dispatch<React.SetStateAction<string>>;
 }
 
 //event.target.nameの値宣言
 type Name = 'id' | 'name';
 
-const DeleteUserModal = (props: Props) => {
+const DeleteUserModal = ({ user, IsOpen, flg, detailModalIsOpen }: Props) => {
     const { data, setData, post, processing } = useForm({
-        id: props.user.id,
-        name: props.user.name,
+        id: user.id,
+        name: user.name,
     });
     //modal表示非表示用
     const [modalIsOpen, setModalIsOpen] = useState<string>('');
 
     //modal非表示用
-    const onCloseModal = (id: string) => {
+    const onCloseModal = (id?: string) => {
         setModalIsOpen('');
-        props.modalIsOpen(id);
+        id == undefined ? alert('idが存在しません') : detailModalIsOpen(id);
     };
 
     //userEffect:props.IsOpenの値が変わるたびにコールバック関数が呼ばれる
     useEffect(() => {
-        setModalIsOpen(props.IsOpen);
-    }, [props.flg]);
+        setModalIsOpen(IsOpen);
+    }, [flg]);
 
     //更新処理を送信する
     const deleteUser = (e: React.FormEvent<HTMLFormElement>) => {
@@ -66,25 +49,15 @@ const DeleteUserModal = (props: Props) => {
     };
 
     //テキストボックスないの値が変わるたびにvalueの値を最新のものに更新してくれる
-    //非同期で送信する際にいちいちテキストボックスの値を取得しなくても良くなる？
     const onHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setData(event.target.name as Name, event.target.value);
     };
 
     return (
         <div>
-            <Modal
-                isOpen={props.user.id === modalIsOpen}
-                style={props.style}
-                appElement={document.getElementById('app')}
-                onRequestClose={() => {
-                    onCloseModal(props.user.id);
-                }}
-                closeTimeoutMS={200}
-            >
-                <Input type="hidden" name="id" value={data.id} handleChange={onHandleChange} />
-
+            <CommonModal isOpen={user.id === modalIsOpen} onRequestClose={onCloseModal} id={user.id}>
                 <form onSubmit={deleteUser}>
+                    <Input type="hidden" name="id" value={data.id} handleChange={onHandleChange} />
                     <div className="border-2 border-block-500">
                         <div className="flex pl-10">
                             <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>ユーザ</label>
@@ -102,13 +75,13 @@ const DeleteUserModal = (props: Props) => {
                             variant="contained"
                             color="primary"
                             onClick={() => {
-                                onCloseModal(props.user.id);
+                                onCloseModal(user.id);
                             }}
                             children="戻る"
                         />
                     </div>
                 </form>
-            </Modal>
+            </CommonModal>
         </div>
     );
 };

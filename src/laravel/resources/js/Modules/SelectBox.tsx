@@ -5,8 +5,8 @@ interface Props {
     options: Array<string>;
     handleChange: React.ChangeEventHandler<HTMLSelectElement>;
     name: string;
-    defaultValue: string | number | undefined;
-    className: string;
+    defaultValue?: string | number | undefined;
+    className?: string;
 }
 
 export default function SelectBox({ options, handleChange, name, defaultValue, className }: Props) {
