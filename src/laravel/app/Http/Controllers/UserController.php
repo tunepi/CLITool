@@ -8,7 +8,9 @@ use App\Models\User;
 use App\Services\UserService;
 use App\Http\Requests\User\EditRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules;
+use \Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
@@ -27,20 +29,29 @@ class UserController extends Controller
     /**
      * ユーザ一覧の表示
      *
+     * @param Request $request
+     * @param int|null $page
      * @return void
      * @return \Inertia\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
 
         if($user === null){
             return Inertia::render('Management');
         }
+        //リダイレクト時、ページ数の保持のために使用
+        if(empty($request->old('page'))){
+            $page = $request->has('page') ? $request->page : 1;
+        }else{
+            $page = $request->old('page');
+        }
+        
 
         $id = $user->id;
 
-        $userLists = $this->userService->findAllOtherOwn($id);
+        $userLists = $this->userService->findAllOtherOwn($id, $page);
 
         return Inertia::render('User/UserList',[
             'users' => $userLists,
@@ -65,8 +76,7 @@ class UserController extends Controller
 
         $this->userService->create($request);
 
-        //必ずリダイレクトすること
-        return redirect()->route('user');
+        $this->commonRedirectUserList($request);
     }
 
     /**
@@ -79,8 +89,7 @@ class UserController extends Controller
     {
         $this->userService->update($request);
 
-        //必ずリダイレクトすること
-        return redirect()->route('user');
+        $this->commonRedirectUserList($request);
     }
 
     /**
@@ -93,7 +102,20 @@ class UserController extends Controller
     {
         $this->userService->delete($request);
 
+        $this->commonRedirectUserList($request);
+    }
+
+    /**
+     * ユーザ一覧：共通リダイレクト
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    private function commonRedirectUserList(Request $request): RedirectResponse
+    {
+        $pages = $request->has('page') ? ['page' => $request->page] : ['page' => 1];
+
         //必ずリダイレクトすること
-        return redirect()->route('user');
+        return redirect()->route('user')->withInput($pages);
     }
 }

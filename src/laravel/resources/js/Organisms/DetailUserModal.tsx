@@ -19,9 +19,10 @@ interface Props {
     flg: number;
     setOpenFlg: (flg: number, setFlg: React.Dispatch<React.SetStateAction<number>>) => void;
     setModalOpenById: (id: string, setModalIsOpen: React.Dispatch<React.SetStateAction<string>>) => void;
+    current_page: number;
 }
 
-const DetailUserModal = ({ user, detailModalIsOpen, flg, setOpenFlg, setModalOpenById }: Props) => {
+const DetailUserModal = ({ user, detailModalIsOpen, flg, setOpenFlg, setModalOpenById, current_page }: Props) => {
     //詳細モーダルの表示非表示用
     const [modalIsOpen, setModalIsOpen] = useState<string>(detailModalIsOpen);
     //編集用モーダル表示非表示用
@@ -99,13 +100,20 @@ const DetailUserModal = ({ user, detailModalIsOpen, flg, setOpenFlg, setModalOpe
                 </div>
             </CommonModal>
             {/* 編集モーダル */}
-            <EditUserModal user={user} IsOpen={editModalIsOpen} flg={editModalFlg} detailModalIsOpen={setModalIsOpen} />
+            <EditUserModal
+                user={user}
+                IsOpen={editModalIsOpen}
+                flg={editModalFlg}
+                detailModalIsOpen={setModalIsOpen}
+                current_page={current_page}
+            />
             {/* 削除モーダル */}
             <DeleteUserModal
                 user={user}
                 IsOpen={deleteModalIsOpen}
                 flg={deleteModalFlg}
                 detailModalIsOpen={setModalIsOpen}
+                current_page={current_page}
             />
         </div>
     );

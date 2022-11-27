@@ -16,15 +16,17 @@ interface Props {
     IsOpen: string;
     flg: number;
     detailModalIsOpen: React.Dispatch<React.SetStateAction<string>>;
+    current_page: number;
 }
 
 //event.target.nameの値宣言
-type Name = 'id' | 'name';
+type Name = 'id' | 'name' | 'page';
 
-const DeleteUserModal = ({ user, IsOpen, flg, detailModalIsOpen }: Props) => {
+const DeleteUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page }: Props) => {
     const { data, setData, post, processing } = useForm({
         id: user.id,
         name: user.name,
+        page: current_page,
     });
     //modal表示非表示用
     const [modalIsOpen, setModalIsOpen] = useState<string>('');
@@ -58,6 +60,7 @@ const DeleteUserModal = ({ user, IsOpen, flg, detailModalIsOpen }: Props) => {
             <CommonModal isOpen={user.id === modalIsOpen} onRequestClose={onCloseModal} id={user.id}>
                 <form onSubmit={deleteUser}>
                     <Input type="hidden" name="id" value={data.id} handleChange={onHandleChange} />
+                    <Input type="hidden" name="page" value={data.page} handleChange={onHandleChange} />
                     <div className="border-2 border-block-500">
                         <div className="flex pl-10">
                             <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>ユーザ</label>

@@ -20,11 +20,12 @@ interface Props {
     IsOpen: string;
     flg: number;
     detailModalIsOpen: React.Dispatch<React.SetStateAction<string>>;
+    current_page: number;
 }
 //event.target.nameの値宣言
-type Name = 'id' | 'name' | 'email' | 'created_at';
+type Name = 'id' | 'name' | 'email' | 'created_at' | 'page';
 
-const EditUserModal = ({ user, IsOpen, flg, detailModalIsOpen }: Props) => {
+const EditUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page }: Props) => {
     //useFormで使用する変数の宣言
     const { data, setData, post, processing, errors } = useForm({
         id: user.id,
@@ -32,6 +33,7 @@ const EditUserModal = ({ user, IsOpen, flg, detailModalIsOpen }: Props) => {
         email: user.email,
         roll: user.roll,
         created_at: user.created_at,
+        page: current_page,
     });
 
     //modal表示非表示用
@@ -56,7 +58,6 @@ const EditUserModal = ({ user, IsOpen, flg, detailModalIsOpen }: Props) => {
         post(route('userUpdate'), {
             onSuccess: (page) => {
                 setModalIsOpen('');
-                console.log(page);
             },
         });
     };
@@ -76,6 +77,7 @@ const EditUserModal = ({ user, IsOpen, flg, detailModalIsOpen }: Props) => {
             <form onSubmit={submit}>
                 <ValidationErrors errors={errors} />
                 <Input type="hidden" name="id" value={data.id} handleChange={onHandleChange} />
+                <Input type="hidden" name="page" value={data.page} handleChange={onHandleChange} />
                 <div>
                     <Label forInput="name" value="氏名" />
                     <Input

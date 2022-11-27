@@ -9,6 +9,7 @@ interface Props {
     users: {
         links: any;
         data: any;
+        current_page: number;
     };
 }
 
@@ -36,8 +37,12 @@ const UserList = ({ auth, users }: Props) => {
             headerTitle={header}
             children={
                 <div className="w-full">
-                    <UserLists users={users.data} links={users.links} />
-                    <RegisterUserModal setModalIsOpen={setModalIsOpen} modalIsOpen={modalIsOpen} />
+                    <UserLists users={users.data} links={users.links} current_page={users.current_page} />
+                    <RegisterUserModal
+                        setModalIsOpen={setModalIsOpen}
+                        modalIsOpen={modalIsOpen}
+                        current_page={users.current_page}
+                    />
                 </div>
             }
         />

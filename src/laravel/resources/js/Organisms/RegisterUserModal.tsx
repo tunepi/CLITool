@@ -12,15 +12,17 @@ import CommonModal from '../Modules/CommonModal';
 interface Props {
     setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     modalIsOpen: boolean;
+    current_page: number;
 }
 
-const RegisterUserModal = ({ setModalIsOpen, modalIsOpen }: Props) => {
+const RegisterUserModal = ({ setModalIsOpen, modalIsOpen, current_page }: Props) => {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
         password: '',
         roll: '',
         password_confirmation: '',
+        page: current_page,
     });
 
     //modal非表示用
@@ -37,7 +39,7 @@ const RegisterUserModal = ({ setModalIsOpen, modalIsOpen }: Props) => {
 
     const onHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setData(
-            event.target.name as 'email' | 'password' | 'name',
+            event.target.name as 'email' | 'password' | 'name' | 'page',
             event.target.type === 'checkbox' ? event.target.checked + '' : event.target.value,
         );
     };
@@ -50,6 +52,9 @@ const RegisterUserModal = ({ setModalIsOpen, modalIsOpen }: Props) => {
         e.preventDefault();
 
         post(route('userRegister'), {
+            onStart: (visit) => {
+                console.log(visit);
+            },
             onSuccess: () => {
                 setModalIsOpen(false);
                 reset('name', 'email', 'password', 'password_confirmation');
@@ -61,6 +66,7 @@ const RegisterUserModal = ({ setModalIsOpen, modalIsOpen }: Props) => {
         <CommonModal isOpen={modalIsOpen} onRequestClose={onCloseModal}>
             <form onSubmit={submit}>
                 <ValidationErrors errors={errors} />
+                <Input type="hidden" name="page" value={data.page} handleChange={onHandleChange} />
                 <div>
                     <Label forInput="name" value="Name" />
 

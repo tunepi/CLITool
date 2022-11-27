@@ -8,6 +8,7 @@ import PaginationList from './PaginationList';
 interface Props {
     users: Array<Array<any>>;
     links: any;
+    current_page: number;
 }
 
 //ユーザ一覧JSXの作成
@@ -51,6 +52,7 @@ const UserListData = (props: Props): JSX.Element[] => {
                                 flg={flg}
                                 setOpenFlg={setOpenFlg}
                                 setModalOpenById={setModalOpenById}
+                                current_page={props.current_page}
                             />
                         </div>
                     </div>

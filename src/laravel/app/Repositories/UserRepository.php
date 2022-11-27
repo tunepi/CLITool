@@ -30,12 +30,14 @@ class UserRepository implements UserInterface
     /**
      * 自身以外のユーザを全て取得
      *
-     * @param integer $id
+     * @param int $id
+     * @param int $page
      * @return LengthAwarePaginator
      */
-    public function findAllOtherOwn(int $id): LengthAwarePaginator
+    public function findAllOtherOwn(int $id, int $page): LengthAwarePaginator
     {
-        return $this->userRepository->where('id','!=',$id)->paginate(5);
+        //第２引数は取得するカラム名、第３引数は表示ページのクエリ文字列、第4引数は該当ページ数
+        return $this->userRepository->where('id','!=',$id)->paginate(5, ['*'], 'page', $page);
     }
 
     /**

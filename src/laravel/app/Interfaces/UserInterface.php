@@ -15,10 +15,11 @@ interface UserInterface
     /**
      * 自身以外のユーザを全て取得
      *
-     * @param integer $id
+     * @param int $id
+     * @param int $page
      * @return LengthAwarePaginator
      */
-    public function findAllOtherOwn(int $id): LengthAwarePaginator;
+    public function findAllOtherOwn(int $id, int $page): LengthAwarePaginator;
 
     /**
      * ユーザ1件の取得
