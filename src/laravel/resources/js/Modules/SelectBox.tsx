@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function SelectBox({ options, handleChange, name, defaultValue, className }: Props) {
-    const option = options.map((option, index) => <Option value={option} index={index} />);
+    const option = options.map((option, index) => <Option value={option} index={index} key={index} />);
     return (
         <div>
             <select
