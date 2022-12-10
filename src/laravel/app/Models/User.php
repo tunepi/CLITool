@@ -96,8 +96,8 @@ class User extends Authenticatable
      *
      * @return string
      */
-    protected function getRollAttribute()
-    {
-        return $this->attributes['roll'] === 1 ? '管理者' : '一般';
-    }
+    // protected function getRollAttribute()
+    // {
+    //     return $this->attributes['roll'] === 1 ? '管理者' : '一般';
+    // }
 }

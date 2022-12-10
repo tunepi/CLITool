@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link } from '@inertiajs/inertia-react';
 import { Transition } from '@headlessui/react';
+import { Button } from '@mui/material';
 
 interface ContextType {
     open: boolean;
@@ -25,6 +26,11 @@ type DropdownLinkProps = {
     as?: string;
     children: React.ReactNode;
 };
+
+interface DropdownModalButtonProps {
+    children: React.ReactNode;
+    handleClick: () => void;
+}
 
 const DropDownContext = React.createContext<ContextType>({} as ContextType);
 
@@ -110,8 +116,22 @@ const DropdownLink = ({ href, method = 'post', as = 'a', children }: DropdownLin
     );
 };
 
+const DropdownModalButton = ({ children, handleClick }: DropdownModalButtonProps) => {
+    return (
+        <Button
+            className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+            onClick={() => {
+                handleClick();
+            }}
+        >
+            {children}
+        </Button>
+    );
+};
+
 Dropdown.Trigger = Trigger;
 Dropdown.Content = Content;
 Dropdown.Link = DropdownLink;
+Dropdown.ModalButton = DropdownModalButton;
 
 export default Dropdown;

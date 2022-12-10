@@ -1,29 +1,29 @@
-import React, { useEffect } from "react";
-import Button from "@/Components/Button";
-import Guest from "@/Layouts/Guest";
-import Input from "@/Components/Input";
-import Label from "@/Components/Label";
-import ValidationErrors from "@/Components/ValidationErrors";
-import { Head, useForm } from "@inertiajs/inertia-react";
+import React, { useEffect } from 'react';
+import Button from '@/Atoms/Button';
+import Guest from '@/Templates/Guest';
+import Input from '@/Moleclues/Input';
+import Label from '@/Atoms/Label';
+import ValidationErrors from '@/Organisms/ValidationErrors';
+import { Head, useForm } from '@inertiajs/inertia-react';
 
 interface Props {
     token: string;
     email: string;
 }
 
-type Name = "email" | "password" | "password_confirmation" | "token";
+type Name = 'email' | 'password' | 'password_confirmation' | 'token';
 
 export default function ResetPassword({ token, email }: Props) {
     const { data, setData, post, processing, errors, reset } = useForm({
         token: token,
         email: email,
-        password: "",
-        password_confirmation: "",
+        password: '',
+        password_confirmation: '',
     });
 
     useEffect(() => {
         return () => {
-            reset("password", "password_confirmation");
+            reset('password', 'password_confirmation');
         };
     }, []);
 
@@ -34,7 +34,7 @@ export default function ResetPassword({ token, email }: Props) {
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        post(route("password.update"));
+        post(route('password.update'));
     };
 
     return (
@@ -72,10 +72,7 @@ export default function ResetPassword({ token, email }: Props) {
                 </div>
 
                 <div className="mt-4">
-                    <Label
-                        forInput="password_confirmation"
-                        value="Confirm Password"
-                    />
+                    <Label forInput="password_confirmation" value="Confirm Password" />
 
                     <Input
                         type="password"
@@ -88,10 +85,7 @@ export default function ResetPassword({ token, email }: Props) {
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    <Button
-                        className="ml-4 bg-gray-900"
-                        processing={processing}
-                    >
+                    <Button className="ml-4 bg-gray-900" processing={processing}>
                         パスワードを変更する
                     </Button>
                 </div>

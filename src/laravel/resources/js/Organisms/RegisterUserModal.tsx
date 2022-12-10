@@ -1,18 +1,35 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Button from '@/Atoms/Button';
-import Guest from '@/Templates/Guest';
 import Input from '@/Moleclues/Input';
 import Label from '@/Atoms/Label';
 import ValidationErrors from '@/Organisms/ValidationErrors';
-import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import { useForm } from '@inertiajs/inertia-react';
+import { useEffect } from 'react';
+import { Button as ModalButton } from '@mui/material';
+import SelectBox from '../Moleclues/SelectBox';
+import CommonModal from '../Moleclues/CommonModal';
 
-export default function Register() {
+interface Props {
+    setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    modalIsOpen: boolean;
+    current_page: number;
+}
+
+const RegisterUserModal = ({ setModalIsOpen, modalIsOpen, current_page }: Props) => {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
         password: '',
+        roll: '',
         password_confirmation: '',
+        page: current_page,
     });
+
+    //modal非表示用
+    const onCloseModal = () => {
+        setModalIsOpen(false);
+        reset('name', 'email', 'password', 'password_confirmation');
+    };
 
     useEffect(() => {
         return () => {
@@ -22,24 +39,34 @@ export default function Register() {
 
     const onHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setData(
-            event.target.name as 'email' | 'password' | 'name',
+            event.target.name as 'email' | 'password' | 'name' | 'page',
             event.target.type === 'checkbox' ? event.target.checked + '' : event.target.value,
         );
+    };
+
+    const onHandleChangeBySelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setData(event.target.name as 'roll', event.target.value);
     };
 
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        post(route('register'));
+        post(route('userRegister'), {
+            onStart: (visit) => {
+                console.log(visit);
+            },
+            onSuccess: () => {
+                setModalIsOpen(false);
+                reset('name', 'email', 'password', 'password_confirmation');
+            },
+        });
     };
 
     return (
-        <Guest>
-            <Head title="新規登録" />
-
-            <ValidationErrors errors={errors} />
-
+        <CommonModal isOpen={modalIsOpen} onRequestClose={onCloseModal}>
             <form onSubmit={submit}>
+                <ValidationErrors errors={errors} />
+                <Input type="hidden" name="page" value={data.page} handleChange={onHandleChange} />
                 <div>
                     <Label forInput="name" value="Name" />
 
@@ -96,16 +123,28 @@ export default function Register() {
                     />
                 </div>
 
-                <div className="flex items-center justify-end mt-4">
-                    <Link href={route('login')} className="underline text-sm text-gray-600 hover:text-gray-900">
-                        ログインはこちら
-                    </Link>
+                <div className="mt-4">
+                    <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>権限</label>
+                    <SelectBox
+                        options={['一般', '管理者']}
+                        name={'roll'}
+                        defaultValue={data.roll == '管理者' ? '1' : '0'}
+                        handleChange={onHandleChangeBySelected}
+                        className={
+                            'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm'
+                        }
+                    />
+                </div>
 
+                <div className="flex items-center justify-between mt-4">
                     <Button className="ml-4 bg-gray-900" processing={processing}>
-                        新規登録する
+                        新規登録
                     </Button>
+                    <ModalButton variant="contained" color="primary" onClick={onCloseModal} children="戻る" />
                 </div>
             </form>
-        </Guest>
+        </CommonModal>
     );
-}
+};
+
+export default RegisterUserModal;

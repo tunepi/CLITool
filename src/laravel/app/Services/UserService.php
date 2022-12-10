@@ -22,12 +22,13 @@ class UserService
     /**
      * 自身以外のユーザリスト取得
      *
-     * @param integer $id
+     * @param int $id
+     * @param int $page
      * @return Collection
      */
-    public function findAllOtherOwn(int $id): LengthAwarePaginator
+    public function findAllOtherOwn(int $id, int $page): LengthAwarePaginator
     {
-        return $this->userInterface->findAllOtherOwn($id);
+        return $this->userInterface->findAllOtherOwn($id, $page);
     }
 
     /**

@@ -1,38 +1,20 @@
 import React from 'react';
 import { useState } from 'react';
-import NavLink from '@/Components/NavLink';
-import { Button, Container } from '@mui/material';
+import { Button } from '@mui/material';
 import Modal from 'react-modal';
-import EditUserModal from './EditUserModal';
 import DetailUserModal from './DetailUserModal';
 import PaginationList from './PaginationList';
 
 interface Props {
     users: Array<Array<any>>;
-    style: {
-        overlay: {
-            top: number;
-            left: number;
-            backgroundColor: string;
-            transition: string;
-        };
-        content: {
-            top: string;
-            left: string;
-            right: string;
-            bottom: string;
-            marginRight: string;
-            transform: string;
-            minWidth: string;
-        };
-    };
     links: any;
+    current_page: number;
 }
 
 //ユーザ一覧JSXの作成
-const UserListData = (props: Props): JSX.Element[] => {
+const UserListData = ({ users, current_page }: Props): JSX.Element[] => {
     //渡ってきた値を変数に格納
-    const userData = props.users;
+    const userData = users;
     //詳細モーダル表示非表示用
     const [modalIsOpen, setModalIsOpen] = useState<string>('');
     //useEffectフラグ用
@@ -68,9 +50,9 @@ const UserListData = (props: Props): JSX.Element[] => {
                                 user={user}
                                 detailModalIsOpen={modalIsOpen}
                                 flg={flg}
-                                style={props.style}
                                 setOpenFlg={setOpenFlg}
                                 setModalOpenById={setModalOpenById}
+                                current_page={current_page}
                             />
                         </div>
                     </div>

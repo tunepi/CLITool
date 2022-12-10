@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Head } from '@inertiajs/inertia-react';
-import Authenticated from '@/Layouts/Authenticated';
-import MainLayout from '@/Layouts/MainLayout';
+import Authenticated from '@/Templates/Authenticated';
+import MainLayout from '@/Templates/MainLayout';
 
 export default function Dashboard(props: any) {
     const children = (

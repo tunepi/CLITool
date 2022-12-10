@@ -5,7 +5,8 @@ import Modal from 'react-modal';
 import EditUserModal from './EditUserModal';
 import ReactModal from 'react-modal';
 import DeleteUserModal from './DeleteUserModal';
-import Label from './DeleteUserModal';
+import CommonModal from '../Moleclues/CommonModal';
+import CheckRoll from '../Atoms/CheckRoll';
 
 interface Props {
     user: {
@@ -17,30 +18,14 @@ interface Props {
     };
     detailModalIsOpen: string;
     flg: number;
-    style: {
-        overlay: {
-            top: number;
-            left: number;
-            backgroundColor: string;
-            transition: string;
-        };
-        content: {
-            top: string;
-            left: string;
-            right: string;
-            bottom: string;
-            marginRight: string;
-            transform: string;
-            minWidth: string;
-        };
-    };
     setOpenFlg: (flg: number, setFlg: React.Dispatch<React.SetStateAction<number>>) => void;
     setModalOpenById: (id: string, setModalIsOpen: React.Dispatch<React.SetStateAction<string>>) => void;
+    current_page: number;
 }
 
-const DetailUserModal = (props: Props) => {
+const DetailUserModal = ({ user, detailModalIsOpen, flg, setOpenFlg, setModalOpenById, current_page }: Props) => {
     //詳細モーダルの表示非表示用
-    const [modalIsOpen, setModalIsOpen] = useState<string>(props.detailModalIsOpen);
+    const [modalIsOpen, setModalIsOpen] = useState<string>(detailModalIsOpen);
     //編集用モーダル表示非表示用
     const [editModalIsOpen, setEditModalIsOpen] = useState<string>('');
     //削除用モーダル表示非表示用
@@ -57,36 +42,29 @@ const DetailUserModal = (props: Props) => {
 
     //detailModalIsOpenの値が変わったら値をセット
     useEffect(() => {
-        setModalIsOpen(props.detailModalIsOpen);
-    }, [props.flg]);
+        setModalIsOpen(detailModalIsOpen);
+    }, [flg]);
 
     return (
         <div>
-            {/* 詳細モーダル */}
-            <Modal
-                isOpen={props.user.id === modalIsOpen}
-                style={props.style}
-                appElement={document.getElementById('app')}
-                onRequestClose={onCloseModal}
-                closeTimeoutMS={200}
-            >
+            <CommonModal isOpen={user.id === modalIsOpen} onRequestClose={onCloseModal} id={user.id}>
                 <div>
                     <div className="border-2 border-block-500">
                         <div className="flex ml-10">
                             <label className={`block font-medium text-sm text-gray-700 mr-10 w-11 `}>氏名</label>
-                            {props.user.name}
+                            {user.name}
                         </div>
                         <div className="flex ml-10 mt-2">
                             <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>Email</label>
-                            {props.user.email}
+                            {user.email}
                         </div>
                         <div className="flex ml-10 mt-2">
                             <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>権限</label>
-                            {props.user.roll}
+                            {CheckRoll(user.roll)}
                         </div>
                         <div className="flex ml-10 mt-2">
                             <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>登録日</label>
-                            {props.user.created_at}
+                            {user.created_at}
                         </div>
                     </div>
                     <div className="flex items-center justify-around mt-4 space-x-14">
@@ -95,9 +73,9 @@ const DetailUserModal = (props: Props) => {
                             color="primary"
                             onClick={() => {
                                 //modalの表示非表示制御
-                                props.setModalOpenById(props.user.id, setEditModalIsOpen);
+                                setModalOpenById(user.id, setEditModalIsOpen);
                                 //2連続編集押下時の表示されない問題の対応
-                                props.setOpenFlg(editModalFlg, setEditModalFlg);
+                                setOpenFlg(editModalFlg, setEditModalFlg);
                                 onCloseModal();
                             }}
                         >
@@ -108,9 +86,9 @@ const DetailUserModal = (props: Props) => {
                             color="primary"
                             onClick={() => {
                                 //modalの表示非表示制御
-                                props.setModalOpenById(props.user.id, setDeleteModalIsOpen);
+                                setModalOpenById(user.id, setDeleteModalIsOpen);
                                 //2連続編集押下時の表示されない問題の対応
-                                props.setOpenFlg(deleteModalFlg, setDeleteModalFlg);
+                                setOpenFlg(deleteModalFlg, setDeleteModalFlg);
                                 onCloseModal();
                             }}
                         >
@@ -121,22 +99,22 @@ const DetailUserModal = (props: Props) => {
                         </Button>
                     </div>
                 </div>
-            </Modal>
+            </CommonModal>
             {/* 編集モーダル */}
             <EditUserModal
-                user={props.user}
+                user={user}
                 IsOpen={editModalIsOpen}
                 flg={editModalFlg}
-                modalIsOpen={setModalIsOpen}
-                style={props.style}
+                detailModalIsOpen={setModalIsOpen}
+                current_page={current_page}
             />
             {/* 削除モーダル */}
             <DeleteUserModal
-                user={props.user}
+                user={user}
                 IsOpen={deleteModalIsOpen}
                 flg={deleteModalFlg}
-                modalIsOpen={setModalIsOpen}
-                style={props.style}
+                detailModalIsOpen={setModalIsOpen}
+                current_page={current_page}
             />
         </div>
     );
