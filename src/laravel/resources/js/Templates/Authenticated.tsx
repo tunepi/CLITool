@@ -4,6 +4,7 @@ import Dropdown from '@/Moleclues/Dropdown';
 import NavLink from '@/Atoms/NavLink';
 import ResponsiveNavLink from '@/Atoms/ResponsiveNavLink';
 import { Link } from '@inertiajs/inertia-react';
+import AccountDetailModal from '@/Organisms/AccountDetailModal';
 
 interface Props {
     auth: any;
@@ -13,6 +14,11 @@ interface Props {
 
 export default function Authenticated({ auth, header, children }: Props) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+    const [IsOpenModal, setIsModalOpen] = useState('');
+
+    const handleClick = () => {
+        setIsModalOpen(auth.user.id);
+    };
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -55,9 +61,14 @@ export default function Authenticated({ auth, header, children }: Props) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        <Dropdown.Link href={route('management')} method="get" as="button">
-                                            Management
-                                        </Dropdown.Link>
+                                        <Dropdown.ModalButton handleClick={handleClick}>
+                                            プロフィール
+                                        </Dropdown.ModalButton>
+                                        {auth.user.roll == 1 && (
+                                            <Dropdown.Link href={route('management')} method="get" as="button">
+                                                Management
+                                            </Dropdown.Link>
+                                        )}
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
                                             ログアウト
                                         </Dropdown.Link>
@@ -106,9 +117,11 @@ export default function Authenticated({ auth, header, children }: Props) {
                         </div>
 
                         <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink method="get" href={route('management')} as="button">
-                                Management
-                            </ResponsiveNavLink>
+                            {auth.user.roll == 1 && (
+                                <ResponsiveNavLink method="get" href={route('management')} as="button">
+                                    Management
+                                </ResponsiveNavLink>
+                            )}
                             <ResponsiveNavLink method="post" href={route('logout')} as="button">
                                 ログアウト
                             </ResponsiveNavLink>
@@ -124,6 +137,7 @@ export default function Authenticated({ auth, header, children }: Props) {
             )}
 
             <main>{children}</main>
+            <AccountDetailModal user={auth.user} accountModalIsOpen={IsOpenModal} setModalIsOpen={setIsModalOpen} />
         </div>
     );
 }

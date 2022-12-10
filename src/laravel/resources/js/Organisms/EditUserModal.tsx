@@ -8,6 +8,7 @@ import Label from '../Atoms/Label';
 import Button from '../Atoms/Button';
 import SelectBox from '../Moleclues/SelectBox';
 import CommonModal from '../Moleclues/CommonModal';
+import CheckRoll from '../Atoms/CheckRoll';
 
 interface Props {
     user: {
@@ -21,11 +22,12 @@ interface Props {
     flg: number;
     detailModalIsOpen: React.Dispatch<React.SetStateAction<string>>;
     current_page: number;
+    isProfile?: number;
 }
 //event.target.nameの値宣言
-type Name = 'id' | 'name' | 'email' | 'created_at' | 'page';
+type Name = 'id' | 'name' | 'email' | 'created_at' | 'page' | 'roll';
 
-const EditUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page }: Props) => {
+const EditUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page, isProfile }: Props) => {
     //useFormで使用する変数の宣言
     const { data, setData, post, processing, errors } = useForm({
         id: user.id,
@@ -56,7 +58,10 @@ const EditUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page }: P
         e.preventDefault();
 
         post(route('userUpdate'), {
-            onSuccess: (page) => {
+            onStart: (visit) => {
+                console.log(visit);
+            },
+            onSuccess: () => {
                 setModalIsOpen('');
             },
         });
@@ -71,6 +76,8 @@ const EditUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page }: P
     const onHandleChangeBySelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setData(event.target.name as 'roll', event.target.value);
     };
+
+    console.log(user.roll == '管理者' ? '1' : '0');
 
     return (
         <CommonModal isOpen={user.id === modalIsOpen} onRequestClose={onCloseModal} id={user.id}>
@@ -102,15 +109,22 @@ const EditUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page }: P
                 </div>
                 <div className="mt-5">
                     <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>権限</label>
-                    <SelectBox
-                        options={['一般', '管理者']}
-                        name={'roll'}
-                        defaultValue={data.roll == '管理者' ? '1' : '0'}
-                        handleChange={onHandleChangeBySelected}
-                        className={
-                            'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm'
-                        }
-                    />
+                    {isProfile == 1 ? (
+                        <div className="ml-1">
+                            {CheckRoll(data.roll)}
+                            <Input type="hidden" name="roll" value={data.roll} handleChange={onHandleChange} />
+                        </div>
+                    ) : (
+                        <SelectBox
+                            options={['一般', '管理者']}
+                            name={'roll'}
+                            defaultValue={data.roll}
+                            handleChange={onHandleChangeBySelected}
+                            className={
+                                'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm'
+                            }
+                        />
+                    )}
                 </div>
                 <div className="mt-5">
                     <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>登録日</label>

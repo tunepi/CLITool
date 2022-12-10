@@ -12,9 +12,9 @@ interface Props {
 }
 
 //ユーザ一覧JSXの作成
-const UserListData = (props: Props): JSX.Element[] => {
+const UserListData = ({ users, current_page }: Props): JSX.Element[] => {
     //渡ってきた値を変数に格納
-    const userData = props.users;
+    const userData = users;
     //詳細モーダル表示非表示用
     const [modalIsOpen, setModalIsOpen] = useState<string>('');
     //useEffectフラグ用
@@ -52,7 +52,7 @@ const UserListData = (props: Props): JSX.Element[] => {
                                 flg={flg}
                                 setOpenFlg={setOpenFlg}
                                 setModalOpenById={setModalOpenById}
-                                current_page={props.current_page}
+                                current_page={current_page}
                             />
                         </div>
                     </div>
