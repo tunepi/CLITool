@@ -4,7 +4,7 @@ import NavLink from '@/Atoms/NavLink';
 //コマンドの種類
 const ManagementTypes: Array<Array<string>> = [
     ['ユーザ一覧', 'user'],
-    ['Git', 'dashboard'],
+    ['Git', 'git'],
     ['Docker', 'dashboard'],
     ['Docker-Compose', 'dashboard'],
     ['Npm', 'dashboard'],

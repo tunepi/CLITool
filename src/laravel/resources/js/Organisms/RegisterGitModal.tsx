@@ -15,62 +15,79 @@ interface Props {
     current_page: number;
 }
 
-const RegisterUserModal = ({ setModalIsOpen, modalIsOpen, current_page }: Props) => {
+const RegisterGitModal = ({ setModalIsOpen, modalIsOpen, current_page }: Props) => {
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
-        password: '',
-        roll: '',
-        password_confirmation: '',
+        git_name: '',
+        git_type: '',
+        description: '',
         page: current_page,
     });
+
+    const gitType = [
+        '選択してください',
+        'Setup and Config',
+        'Getting and Creating Projects',
+        'Basic Snapshotting',
+        'Branching and Merging',
+        'Sharing and Updating Projects',
+        'Inspection and Comparison',
+        'Patching',
+        'Debugging',
+        'Guides',
+        'Email',
+        'External Systems',
+        'Administration',
+        'Server Admin',
+        'Plumbing Commands',
+    ];
 
     //modal非表示用
     const onCloseModal = () => {
         setModalIsOpen(false);
-        reset('name', 'email', 'password', 'password_confirmation');
+        reset('git_name');
     };
 
     useEffect(() => {
-        return () => {
-            reset('password', 'password_confirmation');
-        };
+        return () => {};
     }, []);
 
     const onHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setData(
-            event.target.name as 'email' | 'password' | 'name' | 'page',
+            event.target.name as 'git_name',
             event.target.type === 'checkbox' ? event.target.checked + '' : event.target.value,
         );
     };
 
     const onHandleChangeBySelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setData(event.target.name as 'roll', event.target.value);
+        setData(event.target.name as 'git_type', event.target.value);
+    };
+
+    const onChangeBySelected = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setData(event.target.name as 'description', event.target.value);
     };
 
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        post(route('userRegister'), {
+        post(route('gitRegister'), {
             onSuccess: () => {
                 setModalIsOpen(false);
-                reset('name', 'email', 'password', 'password_confirmation');
+                reset('git_name', 'git_type', 'description');
             },
         });
     };
-
     return (
         <CommonModal isOpen={modalIsOpen} onRequestClose={onCloseModal}>
             <form onSubmit={submit}>
                 <ValidationErrors errors={errors} />
                 <Input type="hidden" name="page" value={data.page} handleChange={onHandleChange} />
                 <div>
-                    <Label forInput="name" value="Name" />
+                    <Label forInput="name" value="gitコマンド名" />
 
                     <Input
                         type="text"
-                        name="name"
-                        value={data.name}
+                        name="git_name"
+                        value={data.git_name}
                         className="mt-1 block w-full"
                         autoComplete="name"
                         isFocused={true}
@@ -80,57 +97,28 @@ const RegisterUserModal = ({ setModalIsOpen, modalIsOpen, current_page }: Props)
                 </div>
 
                 <div className="mt-4">
-                    <Label forInput="email" value="Email" />
-
-                    <Input
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        handleChange={onHandleChange}
-                        required
-                    />
-                </div>
-
-                <div className="mt-4">
-                    <Label forInput="password" value="Password" />
-
-                    <Input
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        handleChange={onHandleChange}
-                        required
-                    />
-                </div>
-
-                <div className="mt-4">
-                    <Label forInput="password_confirmation" value="Confirm Password" />
-
-                    <Input
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        handleChange={onHandleChange}
-                        required
-                    />
-                </div>
-
-                <div className="mt-4">
-                    <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>権限</label>
+                    <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>種別</label>
                     <SelectBox
-                        options={['一般', '管理者']}
-                        name={'roll'}
-                        defaultValue={data.roll == '管理者' ? '1' : '0'}
+                        options={gitType}
+                        name={'git_type'}
+                        defaultValue={data.description == '管理者' ? '1' : '0'}
                         handleChange={onHandleChangeBySelected}
                         className={
                             'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm'
                         }
                     />
+                </div>
+
+                <div className="mt-4">
+                    <Label forInput="password_confirmation" value="説明" />
+                    <textarea
+                        name="description"
+                        cols={10}
+                        rows={8}
+                        value={data.description}
+                        onChange={onChangeBySelected}
+                        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                    ></textarea>
                 </div>
 
                 <div className="flex items-center justify-between mt-4">
@@ -144,4 +132,4 @@ const RegisterUserModal = ({ setModalIsOpen, modalIsOpen, current_page }: Props)
     );
 };
 
-export default RegisterUserModal;
+export default RegisterGitModal;

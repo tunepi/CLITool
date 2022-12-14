@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\GitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,20 +28,14 @@ Route::get('/management', function () {
     return Inertia::render('Management');
 })->name('management');
 
+//マスタ管理ユーザ
 Route::get('/user', [UserController::class, 'index'])->name('user');
-
 Route::post('/user/register', [UserController::class, 'create'])->name('userRegister');
 Route::post('/user/update', [UserController::class, 'update'])->name('userUpdate');
 Route::post('/user/delete', [UserController::class, 'delete'])->name('userDelete');
 
-require __DIR__.'/auth.php';
+//マスタ管理Git
+Route::get('/management/git', [GitController::class, 'index'])->name('git');
+Route::post('/management/git/register', [GitController::class, 'create'])->name('gitRegister');
 
-//初期画面を一旦コメントアウト
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
+require __DIR__.'/auth.php';

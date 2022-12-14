@@ -83,12 +83,7 @@ class UserRepository implements UserInterface
         if($user === null || $request === null){
             return;
         }
-
-        Log::debug(gettype(intval($request->roll)));
-        Log::debug(gettype($request->roll));
         $roll = intval($request->roll);
-        Log::debug($user->roll);
-        Log::debug($roll);
 
         $target = $user;
 
