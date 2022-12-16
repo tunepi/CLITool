@@ -36,7 +36,18 @@ class GitController extends Controller
             return Inertia::render('Management');
         }
 
-        return Inertia::render('GitList');
+        //リダイレクト時、ページ数の保持のために使用
+        if(empty($request->old('page'))){
+            $page = $request->has('page') ? $request->page : 1;
+        }else{
+            $page = $request->old('page');
+        }
+
+        $gitLists = $this->gitService->findAll($page);
+
+        return Inertia::render('GitList',[
+            'gits' => $gitLists
+        ]);
     }
 
     public function create(CreateRequest $request)

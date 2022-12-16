@@ -24,7 +24,6 @@ const RegisterGitModal = ({ setModalIsOpen, modalIsOpen, current_page }: Props) 
     });
 
     const gitType = [
-        '選択してください',
         'Setup and Config',
         'Getting and Creating Projects',
         'Basic Snapshotting',
@@ -62,7 +61,7 @@ const RegisterGitModal = ({ setModalIsOpen, modalIsOpen, current_page }: Props) 
         setData(event.target.name as 'git_type', event.target.value);
     };
 
-    const onChangeBySelected = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const onChangeBySelectArea = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setData(event.target.name as 'description', event.target.value);
     };
 
@@ -116,7 +115,7 @@ const RegisterGitModal = ({ setModalIsOpen, modalIsOpen, current_page }: Props) 
                         cols={10}
                         rows={8}
                         value={data.description}
-                        onChange={onChangeBySelected}
+                        onChange={onChangeBySelectArea}
                         className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                     ></textarea>
                 </div>

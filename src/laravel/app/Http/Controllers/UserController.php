@@ -47,7 +47,6 @@ class UserController extends Controller
         }else{
             $page = $request->old('page');
         }
-        
 
         $id = $user->id;
 

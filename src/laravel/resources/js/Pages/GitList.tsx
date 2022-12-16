@@ -5,19 +5,25 @@ import SubHeader from '../Moleclues/SubHeader';
 import RegisterGitModal from '../Organisms/RegisterGitModal';
 
 interface Props {
-    auth: any;
+    auth: Array<Array<any>>;
+    gits: {
+        links: any;
+        data: any;
+        current_page: number;
+    };
 }
 
-const GitList = (props: Props) => {
+const GitList = ({ auth, gits }: Props) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    console.log(gits);
     return (
         <MainLayout
             title={'Git管理'}
-            auth={props.auth}
+            auth={auth}
             headerTitle={<SubHeader headerName="Git" buttonName="新規登録" setModalIsOpen={setModalIsOpen} />}
             children={
                 <div className="w-full">
-                    <GitLists />
+                    <GitLists gits={gits.data} links={gits.links} current_page={gits.current_page} />
                     <RegisterGitModal setModalIsOpen={setModalIsOpen} modalIsOpen={modalIsOpen} current_page={1} />
                 </div>
             }
