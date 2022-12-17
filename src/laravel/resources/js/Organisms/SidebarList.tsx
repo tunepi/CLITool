@@ -6,10 +6,10 @@ import NavLink from '@/Atoms/NavLink';
 const sideBarTypes: Array<Array<string>> = [
     ['UserFavorite', 'dashboard'],
     ['Git', 'dashboard'],
-    ['Docker', 'dashboard'],
-    ['Docker-Compose', 'dashboard'],
-    ['Npm', 'dashboard'],
-    ['Yarn', 'dashboard'],
+    // ['Docker', 'dashboard'],
+    // ['Docker-Compose', 'dashboard'],
+    // ['Npm', 'dashboard'],
+    // ['Yarn', 'dashboard'],
 ];
 
 const SidebarLists = () => {

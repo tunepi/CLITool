@@ -92,7 +92,6 @@ class UserRepository implements UserInterface
             'email' => $request->email,
             'roll' => $roll,
         ]);
-        Log::debug($target);
 
         $target->save();
     }

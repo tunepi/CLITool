@@ -34,7 +34,7 @@ const GitListData = ({ gits, current_page }: Props): JSX.Element[] => {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 bg-white border-b border-gray-200 sm:flex space-x-8">
                             {/* <div>{git.git_name}</div> */}
-                            <NavLink href="/" active={false} children={git.git_name} />
+                            <NavLink href={route('gitOption', { id: git.id })} active={false} children={git.git_name} />
                             <Button
                                 variant="contained"
                                 color="primary"

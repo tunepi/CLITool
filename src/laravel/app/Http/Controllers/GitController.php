@@ -50,10 +50,43 @@ class GitController extends Controller
         ]);
     }
 
+    /**
+     * 新規登録
+     *
+     * @param CreateRequest $request
+     * @return void
+     */
     public function create(CreateRequest $request)
     {
         $this->gitService->create($request);
 
         return redirect()->route('git');
     }
+
+    /**
+     * 更新
+     *
+     * @param CreateRequest $request
+     * @return void
+     */
+    public function update(CreateRequest $request)
+    {
+        $this->gitService->update($request);
+
+        return redirect()->route('git');
+    }
+
+    /**
+     * 削除
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function delete(Request $request)
+    {
+        $this->gitService->delete($request);
+
+        return redirect()->route('git');
+    }
+
 }

@@ -7,15 +7,10 @@ import ReactModal from 'react-modal';
 import DeleteUserModal from './DeleteUserModal';
 import CommonModal from '../Moleclues/CommonModal';
 import CheckRoll from '../Atoms/CheckRoll';
+import { User } from '../type';
 
 interface Props {
-    user: {
-        id: string;
-        name: string;
-        email: string;
-        roll: string;
-        created_at: string;
-    };
+    user: User;
     detailModalIsOpen: string;
     flg: number;
     setOpenFlg: (flg: number, setFlg: React.Dispatch<React.SetStateAction<number>>) => void;

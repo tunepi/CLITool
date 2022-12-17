@@ -5,10 +5,10 @@ import NavLink from '@/Atoms/NavLink';
 const ManagementTypes: Array<Array<string>> = [
     ['ユーザ一覧', 'user'],
     ['Git', 'git'],
-    ['Docker', 'dashboard'],
-    ['Docker-Compose', 'dashboard'],
-    ['Npm', 'dashboard'],
-    ['Yarn', 'dashboard'],
+    // ['Docker', 'dashboard'],
+    // ['Docker-Compose', 'dashboard'],
+    // ['Npm', 'dashboard'],
+    // ['Yarn', 'dashboard'],
 ];
 
 const ManagementListData = (): JSX.Element[] => {

@@ -9,15 +9,10 @@ import Button from '../Atoms/Button';
 import SelectBox from '../Moleclues/SelectBox';
 import CommonModal from '../Moleclues/CommonModal';
 import CheckRoll from '../Atoms/CheckRoll';
+import { User } from '../type';
 
 interface Props {
-    user: {
-        id: string;
-        name: string;
-        email: string;
-        roll: string;
-        created_at: string;
-    };
+    user: User;
     IsOpen: string;
     flg: number;
     detailModalIsOpen: React.Dispatch<React.SetStateAction<string>>;
@@ -76,8 +71,6 @@ const EditUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page, isP
     const onHandleChangeBySelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setData(event.target.name as 'roll', event.target.value);
     };
-
-    console.log(user.roll == '管理者' ? '1' : '0');
 
     return (
         <CommonModal isOpen={user.id === modalIsOpen} onRequestClose={onCloseModal} id={user.id}>

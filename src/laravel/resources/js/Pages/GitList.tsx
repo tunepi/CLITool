@@ -15,7 +15,6 @@ interface Props {
 
 const GitList = ({ auth, gits }: Props) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    console.log(gits);
     return (
         <MainLayout
             title={'Git管理'}

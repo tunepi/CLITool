@@ -8,15 +8,12 @@ import DeleteUserModal from './DeleteUserModal';
 import CommonModal from '../Moleclues/CommonModal';
 import CheckRoll from '../Atoms/CheckRoll';
 import GitTypeName from '../Atoms/GitTypeName';
+import EditGitModal from './EditGitModal';
+import DeleteGitModal from './DeleteGitModal';
+import { Git } from '../type';
 
 interface Props {
-    git: {
-        id: string;
-        git_name: string;
-        git_type: string;
-        description: string;
-        created_at: string;
-    };
+    git: Git;
     detailModalIsOpen: string;
     flg: number;
     setOpenFlg: (flg: number, setFlg: React.Dispatch<React.SetStateAction<number>>) => void;
@@ -102,21 +99,21 @@ const DetailGitModal = ({ git, detailModalIsOpen, flg, setOpenFlg, setModalOpenB
                 </div>
             </CommonModal>
             {/* 編集モーダル */}
-            {/* <EditUserModal
-                user={user}
+            <EditGitModal
+                git={git}
                 IsOpen={editModalIsOpen}
                 flg={editModalFlg}
                 detailModalIsOpen={setModalIsOpen}
                 current_page={current_page}
-            /> */}
-            {/* 削除モーダル
-            <DeleteUserModal
-                user={user}
+            />
+            {/* 削除モーダル */}
+            <DeleteGitModal
+                git={git}
                 IsOpen={deleteModalIsOpen}
                 flg={deleteModalFlg}
                 detailModalIsOpen={setModalIsOpen}
                 current_page={current_page}
-            /> */}
+            />
         </div>
     );
 };

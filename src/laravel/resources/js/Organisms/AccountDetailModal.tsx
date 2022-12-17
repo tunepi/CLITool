@@ -4,15 +4,10 @@ import { Button } from '@mui/material';
 import EditUserModal from './EditUserModal';
 import CommonModal from '../Moleclues/CommonModal';
 import CheckRoll from '../Atoms/CheckRoll';
+import { User } from '../type';
 
 interface Props {
-    user: {
-        id: string;
-        name: string;
-        email: string;
-        roll: string;
-        created_at: string;
-    };
+    user: User;
     accountModalIsOpen: string;
     setModalIsOpen: React.Dispatch<React.SetStateAction<string>>;
 }

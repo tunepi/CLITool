@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GitController;
+use App\Http\Controllers\GitOptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,18 +25,37 @@ Route::get('/', function () {
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/management', function () {
-    return Inertia::render('Management');
-})->name('management');
 
-//マスタ管理ユーザ
-Route::get('/user', [UserController::class, 'index'])->name('user');
-Route::post('/user/register', [UserController::class, 'create'])->name('userRegister');
-Route::post('/user/update', [UserController::class, 'update'])->name('userUpdate');
-Route::post('/user/delete', [UserController::class, 'delete'])->name('userDelete');
 
-//マスタ管理Git
-Route::get('/management/git', [GitController::class, 'index'])->name('git');
-Route::post('/management/git/register', [GitController::class, 'create'])->name('gitRegister');
+
+
+//マスタ管理G
+Route::prefix('management')->group(function(){
+    Route::get('/list', function () {
+        return Inertia::render('Management');
+    })->name('management');
+
+    /** @var UserController */
+    $userController = UserController::class;
+    //User
+    Route::get('/user', [$userController, 'index'])->name('user');
+    Route::post('/user/register', [$userController, 'create'])->name('userRegister');
+    Route::post('/user/update', [$userController, 'update'])->name('userUpdate');
+    Route::post('/user/delete', [$userController, 'delete'])->name('userDelete');
+
+    /** @var GitController */
+    $gitController = GitController::class;
+    //Git
+    Route::get('/git', [$gitController, 'index'])->name('git');
+    Route::post('/git/register', [$gitController, 'create'])->name('gitRegister');
+    Route::post('/git/update', [$gitController, 'update'])->name('gitUpdate');
+    Route::post('/git/delete', [$gitController, 'delete'])->name('gitDelete');
+
+    /** @var GitOptionController */
+    $gitController = GitOptionController::class;
+    //GitOption
+    Route::get('/git/option/{id}', [$gitController, 'index'])->name('gitOption');
+});
+
 
 require __DIR__.'/auth.php';
