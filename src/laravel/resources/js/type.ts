@@ -13,3 +13,11 @@ export type User = {
     roll: string;
     created_at: string;
 };
+
+export type GitOption = {
+    id: string;
+    git_id: string;
+    git_option: string;
+    description: string;
+    created_at: string;
+};

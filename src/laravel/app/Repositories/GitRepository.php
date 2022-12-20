@@ -34,7 +34,6 @@ class GitRepository implements GitInterface
     {
         //第２引数は取得するカラム名、第３引数は表示ページのクエリ文字列、第4引数は該当ページ数
         return $this->gitRepository->paginate(5, ['*'], 'page', $page);
-        // return $this->gitRepository->paginate(5);
     }
 
     /**
@@ -45,10 +44,8 @@ class GitRepository implements GitInterface
      */
     public function findOne(?int $id):Git
     {
-        $query = $this->gitRepository;
-
         if(!empty($id)){
-            $query->where('id', '=', $id);
+            $query = $this->gitRepository->where('id', '=', $id);
         }
 
         return $query->first();

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Git;
+namespace App\Http\Requests\GitOption;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,10 +24,9 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required',
-            'git_name'   => 'required|string|max:255',
-            'git_type' => 'required',
-            'description' => 'required',
+            'git_id' => 'required',
+            'git_option' => 'required|string|max:255',
+            'description' => 'required'
         ];
     }
 }

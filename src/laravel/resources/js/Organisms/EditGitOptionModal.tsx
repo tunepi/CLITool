@@ -9,15 +9,10 @@ import Button from '../Atoms/Button';
 import SelectBox from '../Moleclues/SelectBox';
 import CommonModal from '../Moleclues/CommonModal';
 import CheckRoll from '../Atoms/CheckRoll';
+import { GitOption } from '@/type';
 
 interface Props {
-    git: {
-        id: string;
-        git_name: string;
-        git_type: string;
-        description: string;
-        created_at: string;
-    };
+    gitOption: GitOption;
     IsOpen: string;
     flg: number;
     detailModalIsOpen: React.Dispatch<React.SetStateAction<string>>;
@@ -25,31 +20,14 @@ interface Props {
     isProfile?: number;
 }
 
-const EditGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page, isProfile }: Props) => {
+const EditGitOptionModal = ({ gitOption, IsOpen, flg, detailModalIsOpen, current_page, isProfile }: Props) => {
     const { data, setData, post, processing, errors, reset } = useForm({
-        id: git.id,
-        git_name: git.git_name,
-        git_type: git.git_type,
-        description: git.description,
+        id: gitOption.id,
+        git_id: gitOption.git_id,
+        git_option: gitOption.git_option,
+        description: gitOption.description,
         page: current_page,
     });
-
-    const gitType: any = [
-        'Setup and Config',
-        'Getting and Creating Projects',
-        'Basic Snapshotting',
-        'Branching and Merging',
-        'Sharing and Updating Projects',
-        'Inspection and Comparison',
-        'Patching',
-        'Debugging',
-        'Guides',
-        'Email',
-        'External Systems',
-        'Administration',
-        'Server Admin',
-        'Plumbing Commands',
-    ];
 
     //modal表示非表示用
     const [modalIsOpen, setModalIsOpen] = useState<string>('');
@@ -57,7 +35,7 @@ const EditGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page, isPro
     //modal非表示用
     const onCloseModal = () => {
         setModalIsOpen('');
-        reset('git_name');
+        reset('git_option');
     };
 
     useEffect(() => {
@@ -66,13 +44,9 @@ const EditGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page, isPro
 
     const onHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setData(
-            event.target.name as 'id' | 'git_name',
+            event.target.name as 'id' | 'git_option',
             event.target.type === 'checkbox' ? event.target.checked + '' : event.target.value,
         );
-    };
-
-    const onHandleChangeBySelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setData(event.target.name as 'git_type', event.target.value);
     };
 
     const onChangeBySelectArea = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -84,7 +58,7 @@ const EditGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page, isPro
         //画面遷移を止める
         e.preventDefault();
 
-        post(route('gitUpdate'), {
+        post(route('gitOptionUpdate'), {
             onStart: (visit) => {
                 console.log(visit);
             },
@@ -95,36 +69,24 @@ const EditGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page, isPro
     };
 
     return (
-        <CommonModal isOpen={git.id == modalIsOpen} onRequestClose={onCloseModal} id={git.id}>
+        <CommonModal isOpen={gitOption.id == modalIsOpen} onRequestClose={onCloseModal} id={gitOption.id}>
             <form onSubmit={submit}>
                 <ValidationErrors errors={errors} />
                 <Input type="hidden" name="page" value={data.page} handleChange={onHandleChange} />
                 <Input type="hidden" name="id" value={data.id} handleChange={onHandleChange} />
+                <Input type="hidden" name="git_id" value={data.git_id} handleChange={onHandleChange} />
                 <div>
-                    <Label forInput="name" value="gitコマンド名" />
+                    <Label forInput="name" value="gitオプション名" />
 
                     <Input
                         type="text"
-                        name="git_name"
-                        value={data.git_name}
+                        name="git_option"
+                        value={data.git_option}
                         className="mt-1 block w-full"
                         autoComplete="name"
                         isFocused={true}
                         handleChange={onHandleChange}
                         required
-                    />
-                </div>
-
-                <div className="mt-4">
-                    <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>種別</label>
-                    <SelectBox
-                        options={gitType}
-                        name={'git_type'}
-                        defaultValue={data.git_type}
-                        handleChange={onHandleChangeBySelected}
-                        className={
-                            'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm'
-                        }
                     />
                 </div>
 
@@ -151,4 +113,4 @@ const EditGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page, isPro
     );
 };
 
-export default EditGitModal;
+export default EditGitOptionModal;

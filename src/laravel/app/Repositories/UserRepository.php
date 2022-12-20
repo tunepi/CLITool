@@ -51,49 +51,22 @@ class UserRepository implements UserInterface
         return $this->userRepository->where('id','=',$id)->first();
     }
 
-
     /**
-     * ユーザの新規登録
+     * 登録・更新の共通処理
      *
+     * @param User $userInstance
      * @param Array $userInfo
      * @return void
      */
-    public function create(Array $userInfo)
+    public function save(User $userInstance, Array $userInfo)
     {
-        if(empty($userInfo)){
+        if($userInstance === null || empty($userInfo)){
             return;
         }
 
-        $newUser = new User;
+        $userInstance->fill($userInfo);
 
-        $newUser->fill($userInfo);
-
-        $newUser->save();
-    }
-
-    /**
-     * ユーザ情報の更新
-     *
-     * @param User $user
-     * @param Request $request
-     * @return void
-     */
-    public function update(User $user, Request $request)
-    {
-        if($user === null || $request === null){
-            return;
-        }
-        $roll = intval($request->roll);
-
-        $target = $user;
-
-        $target->fill([
-            'name' => $request->name,
-            'email' => $request->email,
-            'roll' => $roll,
-        ]);
-
-        $target->save();
+        $userInstance->save();
     }
 
     /**

@@ -30,6 +30,17 @@ class GitService
     }
 
     /**
+     * 1件取得
+     *
+     * @param Request $request
+     * @return Git
+     */
+    public function findOne(Request $request):Git
+    {
+        return $this->gitInterface->findOne($request->id);
+    }
+
+    /**
      * 新規作成
      *
      * @param Request $request

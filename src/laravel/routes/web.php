@@ -55,6 +55,9 @@ Route::prefix('management')->group(function(){
     $gitController = GitOptionController::class;
     //GitOption
     Route::get('/git/option/{id}', [$gitController, 'index'])->name('gitOption');
+    Route::post('/git/option/register', [$gitController, 'create'])->name('gitOptionRegister');
+    Route::post('/git/option/update', [$gitController, 'update'])->name('gitOptionUpdate');
+    Route::post('/git/option/delete', [$gitController, 'delete'])->name('gitOptionDelete');
 });
 
 
