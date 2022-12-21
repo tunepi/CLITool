@@ -3,12 +3,12 @@ import GitOptionLists from '@/Organisms/GitOptionLists';
 import GitOptionRegisterModal from '@/Organisms/GitOptionRegisterModal';
 import MainLayout from '@/Templates/MainLayout';
 import React, { useState } from 'react';
-import { Git } from '../type';
+import { Auth, Git, GitOptions } from '../type';
 
 interface Props {
-    auth: Array<Array<any>>;
+    auth: Auth;
     git: Git;
-    gits: any;
+    gits: GitOptions;
 }
 
 const GitOptionList = ({ auth, git, gits }: Props) => {

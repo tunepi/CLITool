@@ -5,23 +5,24 @@ import DetailGitModal from './DetailGitModal';
 import PaginationList from './PaginationList';
 import NavLink from '../Atoms/NavLink';
 import DetailGitOptionModal from './DetailGitOptionModal';
+import { Git, GitOption, Links } from '@/type';
 
 interface Props {
-    gits: Array<Array<any>>;
-    links: any;
+    gits: GitOption[];
+    links: Links[];
     current_page: number;
-    git_id: string;
+    git_id: number;
 }
 
 const GitOptionListData = ({ gits, current_page, git_id }: Props): JSX.Element[] => {
     //渡ってきた値を変数に格納
     const gitOptionData = gits;
     //詳細モーダル表示非表示用
-    const [modalIsOpen, setModalIsOpen] = useState<string>('');
+    const [modalIsOpen, setModalIsOpen] = useState<number>();
     //useEffectフラグ用
     const [flg, setFlg] = useState<number>(0);
     //詳細モーダル表示用
-    const setModalOpenById = (id: string, setModalIsOpen: React.Dispatch<React.SetStateAction<string>>) => {
+    const setModalOpenById = (id: number, setModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>) => {
         setModalIsOpen(id);
     };
 
@@ -29,7 +30,7 @@ const GitOptionListData = ({ gits, current_page, git_id }: Props): JSX.Element[]
     const setOpenFlg = (flg: number, setFlg: React.Dispatch<React.SetStateAction<number>>) => {
         flg === 0 ? setFlg(1) : setFlg(0);
     };
-    return gitOptionData.map((git: any) => {
+    return gitOptionData.map((git: GitOption) => {
         return (
             <div className="pt-5" key={git.id.toString()}>
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

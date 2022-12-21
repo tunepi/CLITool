@@ -13,9 +13,9 @@ import { GitOption } from '@/type';
 
 interface Props {
     gitOption: GitOption;
-    IsOpen: string;
+    IsOpen: number | undefined;
     flg: number;
-    detailModalIsOpen: React.Dispatch<React.SetStateAction<string>>;
+    detailModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>;
     current_page: number;
     isProfile?: number;
 }
@@ -30,11 +30,11 @@ const EditGitOptionModal = ({ gitOption, IsOpen, flg, detailModalIsOpen, current
     });
 
     //modal表示非表示用
-    const [modalIsOpen, setModalIsOpen] = useState<string>('');
+    const [modalIsOpen, setModalIsOpen] = useState<number | undefined>();
 
     //modal非表示用
     const onCloseModal = () => {
-        setModalIsOpen('');
+        setModalIsOpen(undefined);
         reset('git_option');
     };
 
@@ -63,7 +63,7 @@ const EditGitOptionModal = ({ gitOption, IsOpen, flg, detailModalIsOpen, current
                 console.log(visit);
             },
             onSuccess: () => {
-                setModalIsOpen('');
+                setModalIsOpen(undefined);
             },
         });
     };

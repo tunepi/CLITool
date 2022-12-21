@@ -11,20 +11,20 @@ import { User } from '../type';
 
 interface Props {
     user: User;
-    detailModalIsOpen: string;
+    detailModalIsOpen: number | undefined;
     flg: number;
     setOpenFlg: (flg: number, setFlg: React.Dispatch<React.SetStateAction<number>>) => void;
-    setModalOpenById: (id: string, setModalIsOpen: React.Dispatch<React.SetStateAction<string>>) => void;
+    setModalOpenById: (id: number, setModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>) => void;
     current_page: number;
 }
 
 const DetailUserModal = ({ user, detailModalIsOpen, flg, setOpenFlg, setModalOpenById, current_page }: Props) => {
     //詳細モーダルの表示非表示用
-    const [modalIsOpen, setModalIsOpen] = useState<string>(detailModalIsOpen);
+    const [modalIsOpen, setModalIsOpen] = useState<number | undefined>(detailModalIsOpen);
     //編集用モーダル表示非表示用
-    const [editModalIsOpen, setEditModalIsOpen] = useState<string>('');
+    const [editModalIsOpen, setEditModalIsOpen] = useState<number | undefined>();
     //削除用モーダル表示非表示用
-    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState<string>('');
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState<number | undefined>();
     //編集用useEffectフラグ用
     const [editModalFlg, setEditModalFlg] = useState<number>(0);
     //削除用useEffectフラグ用
@@ -32,7 +32,7 @@ const DetailUserModal = ({ user, detailModalIsOpen, flg, setOpenFlg, setModalOpe
 
     //モーダル条件の初期化
     const onCloseModal = () => {
-        setModalIsOpen('');
+        setModalIsOpen(undefined);
     };
 
     //detailModalIsOpenの値が変わったら値をセット

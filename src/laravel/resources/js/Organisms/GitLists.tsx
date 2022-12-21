@@ -4,10 +4,11 @@ import { Button } from '@mui/material';
 import DetailGitModal from './DetailGitModal';
 import PaginationList from './PaginationList';
 import NavLink from '../Atoms/NavLink';
+import { Git, Links } from '@/type';
 
 interface Props {
-    gits: Array<Array<any>>;
-    links: any;
+    gits: Git[];
+    links: Links[];
     current_page: number;
 }
 
@@ -15,11 +16,11 @@ const GitListData = ({ gits, current_page }: Props): JSX.Element[] => {
     //渡ってきた値を変数に格納
     const gitData = gits;
     //詳細モーダル表示非表示用
-    const [modalIsOpen, setModalIsOpen] = useState<string>('');
+    const [modalIsOpen, setModalIsOpen] = useState<number>();
     //useEffectフラグ用
     const [flg, setFlg] = useState<number>(0);
     //詳細モーダル表示用
-    const setModalOpenById = (id: string, setModalIsOpen: React.Dispatch<React.SetStateAction<string>>) => {
+    const setModalOpenById = (id: number, setModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>) => {
         setModalIsOpen(id);
     };
 
@@ -27,7 +28,7 @@ const GitListData = ({ gits, current_page }: Props): JSX.Element[] => {
     const setOpenFlg = (flg: number, setFlg: React.Dispatch<React.SetStateAction<number>>) => {
         flg === 0 ? setFlg(1) : setFlg(0);
     };
-    return gitData.map((git: any) => {
+    return gitData.map((git: Git) => {
         return (
             <div className="pt-5" key={git.id.toString()}>
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

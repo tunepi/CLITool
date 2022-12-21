@@ -3,14 +3,11 @@ import MainLayout from '@/Templates/MainLayout';
 import GitLists from '../Organisms/GitLists';
 import SubHeader from '../Moleclues/SubHeader';
 import RegisterGitModal from '../Organisms/RegisterGitModal';
+import { Auth, Gits } from '@/type';
 
 interface Props {
-    auth: Array<Array<any>>;
-    gits: {
-        links: any;
-        data: any;
-        current_page: number;
-    };
+    auth: Auth;
+    gits: Gits;
 }
 
 const GitList = ({ auth, gits }: Props) => {

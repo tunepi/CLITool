@@ -5,7 +5,7 @@ interface Props {
     isOpen: boolean;
     onRequestClose: (id?: string) => void;
     children: JSX.Element;
-    id?: string;
+    id?: number;
 }
 
 const customStyles = {
@@ -27,8 +27,8 @@ const customStyles = {
 };
 
 const CommonModal = ({ isOpen, onRequestClose, children, id }: Props) => {
-    const onCloseModal = (id?: string) => {
-        id == undefined ? onRequestClose() : onRequestClose(id);
+    const onCloseModal = (id?: number) => {
+        id == undefined ? onRequestClose() : onRequestClose(id.toString());
     };
 
     return (

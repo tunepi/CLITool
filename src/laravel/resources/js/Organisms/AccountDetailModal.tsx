@@ -8,21 +8,21 @@ import { User } from '../type';
 
 interface Props {
     user: User;
-    accountModalIsOpen: string;
-    setModalIsOpen: React.Dispatch<React.SetStateAction<string>>;
+    accountModalIsOpen: number;
+    setModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
 
 const AccountDetailModal = ({ user, accountModalIsOpen, setModalIsOpen }: Props) => {
     //編集用モーダル表示非表示用
-    const [editModalIsOpen, setEditModalIsOpen] = useState<string>('');
+    const [editModalIsOpen, setEditModalIsOpen] = useState<number>();
     //編集用useEffectフラグ用
     const [editModalFlg, setEditModalFlg] = useState<number>(0);
 
     const isProfile = 1;
 
     //詳細モーダル表示用
-    const setModalOpenById = (id: string, setModalIsOpen: React.Dispatch<React.SetStateAction<string>>) => {
-        setModalIsOpen(id);
+    const setModalOpenById = (id: string, setModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>) => {
+        setModalIsOpen(Number(id));
     };
 
     //useEffect起動用フラグ
@@ -32,7 +32,7 @@ const AccountDetailModal = ({ user, accountModalIsOpen, setModalIsOpen }: Props)
 
     //モーダル条件の初期化
     const onCloseModal = () => {
-        setModalIsOpen('');
+        setModalIsOpen(undefined);
     };
 
     return (
@@ -63,7 +63,7 @@ const AccountDetailModal = ({ user, accountModalIsOpen, setModalIsOpen }: Props)
                             color="primary"
                             onClick={() => {
                                 //modalの表示非表示制御
-                                setModalOpenById(user.id, setEditModalIsOpen);
+                                setModalOpenById(user.id.toString(), setEditModalIsOpen);
                                 // //2連続編集押下時の表示されない問題の対応
                                 setOpenFlg(editModalFlg, setEditModalFlg);
                                 onCloseModal();

@@ -17,7 +17,7 @@ const gitType: any = {
     '13': 'Plumbing Commands',
 };
 
-const GitTypeName = (git_type: string) => {
+const GitTypeName = (git_type: number) => {
     return <div>{gitType[git_type]}</div>;
 };
 

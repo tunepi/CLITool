@@ -4,10 +4,11 @@ import { Button } from '@mui/material';
 import Modal from 'react-modal';
 import DetailUserModal from './DetailUserModal';
 import PaginationList from './PaginationList';
+import { User, Links } from '@/type';
 
 interface Props {
-    users: Array<Array<any>>;
-    links: any;
+    users: User[];
+    links: Links[];
     current_page: number;
 }
 
@@ -16,11 +17,14 @@ const UserListData = ({ users, current_page }: Props): JSX.Element[] => {
     //渡ってきた値を変数に格納
     const userData = users;
     //詳細モーダル表示非表示用
-    const [modalIsOpen, setModalIsOpen] = useState<string>('');
+    const [modalIsOpen, setModalIsOpen] = useState<number>();
     //useEffectフラグ用
     const [flg, setFlg] = useState<number>(0);
     //詳細モーダル表示用
-    const setModalOpenById = (id: string, setModalIsOpen: React.Dispatch<React.SetStateAction<string>>) => {
+    const setModalOpenById = (id: number, setModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>) => {
+        if (setModalIsOpen == undefined) {
+            return;
+        }
         setModalIsOpen(id);
     };
 
@@ -29,7 +33,7 @@ const UserListData = ({ users, current_page }: Props): JSX.Element[] => {
         flg === 0 ? setFlg(1) : setFlg(0);
     };
 
-    return userData.map((user: any) => {
+    return userData.map((user: User) => {
         return (
             <div className="pt-5" key={user.id.toString()}>
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

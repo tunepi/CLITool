@@ -13,9 +13,9 @@ import { User } from '../type';
 
 interface Props {
     user: User;
-    IsOpen: string;
+    IsOpen: number | undefined;
     flg: number;
-    detailModalIsOpen: React.Dispatch<React.SetStateAction<string>>;
+    detailModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>;
     current_page: number;
     isProfile?: number;
 }
@@ -28,22 +28,25 @@ const EditUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page, isP
         id: user.id,
         name: user.name,
         email: user.email,
-        roll: user.roll,
+        roll: user.roll.toString(),
         created_at: user.created_at,
         page: current_page,
     });
 
     //modal表示非表示用
-    const [modalIsOpen, setModalIsOpen] = useState<string>('');
+    const [modalIsOpen, setModalIsOpen] = useState<number | undefined>();
 
     //modal非表示用
     const onCloseModal = (id?: string) => {
-        setModalIsOpen('');
-        id == undefined ? alert('idが存在しません') : detailModalIsOpen(id);
+        setModalIsOpen(undefined);
+        id == undefined ? alert('idが存在しません') : detailModalIsOpen(Number(id));
     };
 
     //userEffect:props.IsOpenの値が変わるたびにコールバック関数が呼ばれる
     useEffect(() => {
+        if (IsOpen == undefined) {
+            return;
+        }
         setModalIsOpen(IsOpen);
     }, [flg]);
 
@@ -53,11 +56,8 @@ const EditUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page, isP
         e.preventDefault();
 
         post(route('userUpdate'), {
-            onStart: (visit) => {
-                console.log(visit);
-            },
             onSuccess: () => {
-                setModalIsOpen('');
+                setModalIsOpen(undefined);
             },
         });
     };
@@ -104,7 +104,7 @@ const EditUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page, isP
                     <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>権限</label>
                     {isProfile == 1 ? (
                         <div className="ml-1">
-                            {CheckRoll(data.roll)}
+                            {CheckRoll(Number(data.roll))}
                             <Input type="hidden" name="roll" value={data.roll} handleChange={onHandleChange} />
                         </div>
                     ) : (
@@ -129,7 +129,7 @@ const EditUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page, isP
                         variant="contained"
                         color="primary"
                         onClick={() => {
-                            onCloseModal(user.id);
+                            onCloseModal(user.id.toString());
                         }}
                         children="戻る"
                     />

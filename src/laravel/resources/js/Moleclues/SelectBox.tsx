@@ -2,7 +2,7 @@ import React from 'react';
 import Option from '../Atoms/Option ';
 
 interface Props {
-    options: Array<string>;
+    options: Array<string | number | readonly string[] | undefined>;
     handleChange: React.ChangeEventHandler<HTMLSelectElement>;
     name: string;
     defaultValue?: string | number | undefined;

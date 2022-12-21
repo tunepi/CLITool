@@ -12,7 +12,7 @@ interface Props {
     setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     modalIsOpen: boolean;
     current_page: number;
-    git_id: string;
+    git_id: number;
 }
 
 const GitOptionRegisterModal = ({ setModalIsOpen, modalIsOpen, current_page, git_id }: Props) => {

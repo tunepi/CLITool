@@ -4,18 +4,16 @@ import { Button } from '@mui/material';
 import RegisterUserModal from '@/Organisms/RegisterUserModal';
 import MainLayout from '@/Templates/MainLayout';
 import SubHeader from '../Moleclues/SubHeader';
+import { Auth, Users } from '@/type';
 
 interface Props {
-    auth: Array<Array<any>>;
-    users: {
-        links: any;
-        data: any;
-        current_page: number;
-    };
+    auth: Auth;
+    users: Users;
 }
 
 const UserList = ({ auth, users }: Props) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    console.log(users.links);
     const header = <SubHeader headerName="ユーザ一覧" buttonName="新規登録" setModalIsOpen={setModalIsOpen} />;
     return (
         <MainLayout

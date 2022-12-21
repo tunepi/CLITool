@@ -9,9 +9,9 @@ import { User } from '../type';
 
 interface Props {
     user: User;
-    IsOpen: string;
+    IsOpen: number | undefined;
     flg: number;
-    detailModalIsOpen: React.Dispatch<React.SetStateAction<string>>;
+    detailModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>;
     current_page: number;
 }
 
@@ -25,12 +25,12 @@ const DeleteUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page }:
         page: current_page,
     });
     //modal表示非表示用
-    const [modalIsOpen, setModalIsOpen] = useState<string>('');
+    const [modalIsOpen, setModalIsOpen] = useState<number | undefined>();
 
     //modal非表示用
     const onCloseModal = (id?: string) => {
-        setModalIsOpen('');
-        id == undefined ? alert('idが存在しません') : detailModalIsOpen(id);
+        setModalIsOpen(undefined);
+        id == undefined ? alert('idが存在しません') : detailModalIsOpen(Number(id));
     };
 
     //userEffect:props.IsOpenの値が変わるたびにコールバック関数が呼ばれる
@@ -74,7 +74,7 @@ const DeleteUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page }:
                             variant="contained"
                             color="primary"
                             onClick={() => {
-                                onCloseModal(user.id);
+                                onCloseModal(user.id.toString());
                             }}
                             children="戻る"
                         />

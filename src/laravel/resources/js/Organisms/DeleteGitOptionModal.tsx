@@ -9,9 +9,9 @@ import { GitOption } from '../type';
 
 interface Props {
     gitOption: GitOption;
-    IsOpen: string;
+    IsOpen: number | undefined;
     flg: number;
-    detailModalIsOpen: React.Dispatch<React.SetStateAction<string>>;
+    detailModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>;
     current_page: number;
 }
 
@@ -27,12 +27,12 @@ const DeleteGitOptionModal = ({ gitOption, IsOpen, flg, detailModalIsOpen, curre
     });
 
     //modal表示非表示用
-    const [modalIsOpen, setModalIsOpen] = useState<string>('');
+    const [modalIsOpen, setModalIsOpen] = useState<number>();
 
     //modal非表示用
     const onCloseModal = (id?: string) => {
-        setModalIsOpen('');
-        id == undefined ? alert('idが存在しません') : detailModalIsOpen(id);
+        setModalIsOpen(undefined);
+        id == undefined ? alert('idが存在しません') : detailModalIsOpen(Number(id));
     };
 
     //userEffect:props.IsOpenの値が変わるたびにコールバック関数が呼ばれる
@@ -50,7 +50,7 @@ const DeleteGitOptionModal = ({ gitOption, IsOpen, flg, detailModalIsOpen, curre
                 console.log(visit);
             },
             onSuccess: () => {
-                setModalIsOpen('');
+                setModalIsOpen(undefined);
             },
         });
     };
@@ -84,7 +84,7 @@ const DeleteGitOptionModal = ({ gitOption, IsOpen, flg, detailModalIsOpen, curre
                             variant="contained"
                             color="primary"
                             onClick={() => {
-                                onCloseModal(gitOption.id);
+                                onCloseModal(gitOption.id.toString());
                             }}
                             children="戻る"
                         />

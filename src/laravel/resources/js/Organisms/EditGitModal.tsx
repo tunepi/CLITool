@@ -8,19 +8,14 @@ import Label from '../Atoms/Label';
 import Button from '../Atoms/Button';
 import SelectBox from '../Moleclues/SelectBox';
 import CommonModal from '../Moleclues/CommonModal';
-import CheckRoll from '../Atoms/CheckRoll';
+import { Git } from '@/type';
+import { gitType } from '@/common';
 
 interface Props {
-    git: {
-        id: string;
-        git_name: string;
-        git_type: string;
-        description: string;
-        created_at: string;
-    };
-    IsOpen: string;
+    git: Git;
+    IsOpen: number | undefined;
     flg: number;
-    detailModalIsOpen: React.Dispatch<React.SetStateAction<string>>;
+    detailModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>;
     current_page: number;
     isProfile?: number;
 }
@@ -29,34 +24,17 @@ const EditGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page, isPro
     const { data, setData, post, processing, errors, reset } = useForm({
         id: git.id,
         git_name: git.git_name,
-        git_type: git.git_type,
+        git_type: git.git_type.toString(),
         description: git.description,
         page: current_page,
     });
 
-    const gitType: any = [
-        'Setup and Config',
-        'Getting and Creating Projects',
-        'Basic Snapshotting',
-        'Branching and Merging',
-        'Sharing and Updating Projects',
-        'Inspection and Comparison',
-        'Patching',
-        'Debugging',
-        'Guides',
-        'Email',
-        'External Systems',
-        'Administration',
-        'Server Admin',
-        'Plumbing Commands',
-    ];
-
     //modal表示非表示用
-    const [modalIsOpen, setModalIsOpen] = useState<string>('');
+    const [modalIsOpen, setModalIsOpen] = useState<number | undefined>();
 
     //modal非表示用
     const onCloseModal = () => {
-        setModalIsOpen('');
+        setModalIsOpen(undefined);
         reset('git_name');
     };
 
@@ -85,11 +63,8 @@ const EditGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page, isPro
         e.preventDefault();
 
         post(route('gitUpdate'), {
-            onStart: (visit) => {
-                console.log(visit);
-            },
             onSuccess: () => {
-                setModalIsOpen('');
+                setModalIsOpen(undefined);
             },
         });
     };

@@ -2,26 +2,20 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import Modal from 'react-modal';
-import EditUserModal from './EditUserModal';
-import ReactModal from 'react-modal';
-import DeleteUserModal from './DeleteUserModal';
 import CommonModal from '../Moleclues/CommonModal';
-import CheckRoll from '../Atoms/CheckRoll';
 import GitTypeName from '../Atoms/GitTypeName';
-import EditGitModal from './EditGitModal';
-import DeleteGitModal from './DeleteGitModal';
 import { GitOption } from '../type';
 import EditGitOptionModal from './EditGitOptionModal';
 import DeleteGitOptionModal from './DeleteGitOptionModal';
 
 interface Props {
     gitOption: GitOption;
-    detailModalIsOpen: string;
+    detailModalIsOpen: number | undefined;
     flg: number;
     setOpenFlg: (flg: number, setFlg: React.Dispatch<React.SetStateAction<number>>) => void;
-    setModalOpenById: (id: string, setModalIsOpen: React.Dispatch<React.SetStateAction<string>>) => void;
+    setModalOpenById: (id: number, setModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>) => void;
     current_page: number;
-    git_id: string;
+    git_id: number;
 }
 
 const DetailGitOptionModal = ({
@@ -34,11 +28,11 @@ const DetailGitOptionModal = ({
     git_id,
 }: Props) => {
     //詳細モーダルの表示非表示用
-    const [modalIsOpen, setModalIsOpen] = useState<string>(detailModalIsOpen);
+    const [modalIsOpen, setModalIsOpen] = useState<number | undefined>(detailModalIsOpen);
     //編集用モーダル表示非表示用
-    const [editModalIsOpen, setEditModalIsOpen] = useState<string>('');
+    const [editModalIsOpen, setEditModalIsOpen] = useState<number>();
     //削除用モーダル表示非表示用
-    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState<string>('');
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState<number>();
     //編集用useEffectフラグ用
     const [editModalFlg, setEditModalFlg] = useState<number>(0);
     //削除用useEffectフラグ用
@@ -46,7 +40,7 @@ const DetailGitOptionModal = ({
 
     //モーダル条件の初期化
     const onCloseModal = () => {
-        setModalIsOpen('');
+        setModalIsOpen(undefined);
     };
 
     //detailModalIsOpenの値が変わったら値をセット

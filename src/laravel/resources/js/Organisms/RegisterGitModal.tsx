@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { Button as ModalButton } from '@mui/material';
 import SelectBox from '../Moleclues/SelectBox';
 import CommonModal from '../Moleclues/CommonModal';
+import { gitType } from '@/common';
 
 interface Props {
     setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,23 +23,6 @@ const RegisterGitModal = ({ setModalIsOpen, modalIsOpen, current_page }: Props) 
         description: '',
         page: current_page,
     });
-
-    const gitType = [
-        'Setup and Config',
-        'Getting and Creating Projects',
-        'Basic Snapshotting',
-        'Branching and Merging',
-        'Sharing and Updating Projects',
-        'Inspection and Comparison',
-        'Patching',
-        'Debugging',
-        'Guides',
-        'Email',
-        'External Systems',
-        'Administration',
-        'Server Admin',
-        'Plumbing Commands',
-    ];
 
     //modal非表示用
     const onCloseModal = () => {

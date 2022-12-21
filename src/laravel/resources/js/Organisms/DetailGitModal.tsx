@@ -1,12 +1,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Button } from '@mui/material';
-import Modal from 'react-modal';
-import EditUserModal from './EditUserModal';
-import ReactModal from 'react-modal';
-import DeleteUserModal from './DeleteUserModal';
 import CommonModal from '../Moleclues/CommonModal';
-import CheckRoll from '../Atoms/CheckRoll';
 import GitTypeName from '../Atoms/GitTypeName';
 import EditGitModal from './EditGitModal';
 import DeleteGitModal from './DeleteGitModal';
@@ -14,19 +9,19 @@ import { Git } from '../type';
 
 interface Props {
     git: Git;
-    detailModalIsOpen: string;
+    detailModalIsOpen: number | undefined;
     flg: number;
     setOpenFlg: (flg: number, setFlg: React.Dispatch<React.SetStateAction<number>>) => void;
-    setModalOpenById: (id: string, setModalIsOpen: React.Dispatch<React.SetStateAction<string>>) => void;
+    setModalOpenById: (id: number, setModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>) => void;
     current_page: number;
 }
 const DetailGitModal = ({ git, detailModalIsOpen, flg, setOpenFlg, setModalOpenById, current_page }: Props) => {
     //詳細モーダルの表示非表示用
-    const [modalIsOpen, setModalIsOpen] = useState<string>(detailModalIsOpen);
+    const [modalIsOpen, setModalIsOpen] = useState<number | undefined>(detailModalIsOpen);
     //編集用モーダル表示非表示用
-    const [editModalIsOpen, setEditModalIsOpen] = useState<string>('');
+    const [editModalIsOpen, setEditModalIsOpen] = useState<number>();
     //削除用モーダル表示非表示用
-    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState<string>('');
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState<number | undefined>();
     //編集用useEffectフラグ用
     const [editModalFlg, setEditModalFlg] = useState<number>(0);
     //削除用useEffectフラグ用
@@ -34,13 +29,14 @@ const DetailGitModal = ({ git, detailModalIsOpen, flg, setOpenFlg, setModalOpenB
 
     //モーダル条件の初期化
     const onCloseModal = () => {
-        setModalIsOpen('');
+        setModalIsOpen(undefined);
     };
 
     //detailModalIsOpenの値が変わったら値をセット
     useEffect(() => {
         setModalIsOpen(detailModalIsOpen);
     }, [flg]);
+
     return (
         <div>
             <CommonModal isOpen={git.id === modalIsOpen} onRequestClose={onCloseModal} id={git.id}>

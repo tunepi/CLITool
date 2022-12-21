@@ -9,9 +9,9 @@ import { Git } from '../type';
 
 interface Props {
     git: Git;
-    IsOpen: string;
+    IsOpen: number | undefined;
     flg: number;
-    detailModalIsOpen: React.Dispatch<React.SetStateAction<string>>;
+    detailModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>;
     current_page: number;
 }
 
@@ -26,12 +26,12 @@ const DeleteGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page }: P
     });
 
     //modal表示非表示用
-    const [modalIsOpen, setModalIsOpen] = useState<string>('');
+    const [modalIsOpen, setModalIsOpen] = useState<number>();
 
     //modal非表示用
     const onCloseModal = (id?: string) => {
-        setModalIsOpen('');
-        id == undefined ? alert('idが存在しません') : detailModalIsOpen(id);
+        setModalIsOpen(undefined);
+        id == undefined ? alert('idが存在しません') : detailModalIsOpen(Number(id));
     };
 
     //userEffect:props.IsOpenの値が変わるたびにコールバック関数が呼ばれる
@@ -46,7 +46,7 @@ const DeleteGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page }: P
 
         post(route('gitDelete'), {
             onSuccess: () => {
-                setModalIsOpen('');
+                setModalIsOpen(undefined);
             },
         });
     };
@@ -79,7 +79,7 @@ const DeleteGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page }: P
                             variant="contained"
                             color="primary"
                             onClick={() => {
-                                onCloseModal(git.id);
+                                onCloseModal(git.id.toString());
                             }}
                             children="戻る"
                         />
