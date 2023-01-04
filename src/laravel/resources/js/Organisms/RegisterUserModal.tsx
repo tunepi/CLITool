@@ -20,7 +20,7 @@ const RegisterUserModal = ({ setModalIsOpen, modalIsOpen, current_page }: Props)
         name: '',
         email: '',
         password: '',
-        roll: '',
+        roll: '0',
         password_confirmation: '',
         page: current_page,
     });
@@ -125,7 +125,7 @@ const RegisterUserModal = ({ setModalIsOpen, modalIsOpen, current_page }: Props)
                     <SelectBox
                         options={['一般', '管理者']}
                         name={'roll'}
-                        defaultValue={data.roll == '管理者' ? '1' : '0'}
+                        defaultValue={data.roll == '1' ? 1 : 0}
                         handleChange={onHandleChangeBySelected}
                         className={
                             'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm'
