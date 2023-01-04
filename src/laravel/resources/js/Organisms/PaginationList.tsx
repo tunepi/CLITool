@@ -5,11 +5,14 @@ const PaginationLists = (props: any) => {
     const paginationList = props.links;
 
     return paginationList.map((paginationData: any, index: any) => {
+        //エスケープされた<< >>を元に戻す関数
         const unescapeHTML = (html: any) => {
             var escapeEl = document.createElement('textarea');
-            escapeEl.innerHTML = html;
+            const only = html.substr(html.indexOf('&'), 6);
+            escapeEl.innerHTML = only;
             return escapeEl.textContent;
         };
+
         return (
             <NavLink
                 href={paginationData.url}
