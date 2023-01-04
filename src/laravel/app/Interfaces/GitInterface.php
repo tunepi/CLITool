@@ -13,9 +13,10 @@ interface GitInterface
      * 一覧取得
      *
      * @param integer $page
+     * @param int | null $gitType
      * @return LengthAwarePaginator
      */
-    public function findAll(int $page): LengthAwarePaginator;
+    public function findAll(int $page, ?int $gitType): LengthAwarePaginator;
 
     /**
      * 一件取得

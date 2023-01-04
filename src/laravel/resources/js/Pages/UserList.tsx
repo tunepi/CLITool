@@ -13,7 +13,6 @@ interface Props {
 
 const UserList = ({ auth, users }: Props) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    console.log(users.links);
     const header = <SubHeader headerName="ユーザ一覧" buttonName="新規登録" setModalIsOpen={setModalIsOpen} />;
     return (
         <MainLayout

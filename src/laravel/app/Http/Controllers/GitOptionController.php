@@ -34,7 +34,21 @@ class GitOptionController extends Controller
 
         return Inertia::render('GitOptionList',[
             'git' => $git,
-            'gits' => $gits
+            'gits' => $gits,
+            'general' => false
+        ]);
+    }
+
+    public function general(Request $request)
+    {
+        $git = $this->gitService->findOne($request);
+
+        $gits = $this->gitOptionService->findAll($git->id);
+
+        return Inertia::render('GitOptionList',[
+            'git' => $git,
+            'gits' => $gits,
+            'general' => true
         ]);
     }
 

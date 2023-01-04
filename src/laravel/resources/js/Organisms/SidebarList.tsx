@@ -4,12 +4,8 @@ import NavLink from '@/Atoms/NavLink';
 
 //コマンドの種類
 const sideBarTypes: Array<Array<string>> = [
-    ['UserFavorite', 'dashboard'],
-    ['Git', 'dashboard'],
-    // ['Docker', 'dashboard'],
-    // ['Docker-Compose', 'dashboard'],
-    // ['Npm', 'dashboard'],
-    // ['Yarn', 'dashboard'],
+    ['ブックマーク', 'favorite'],
+    ['Git', 'gitList'],
 ];
 
 const SidebarLists = () => {

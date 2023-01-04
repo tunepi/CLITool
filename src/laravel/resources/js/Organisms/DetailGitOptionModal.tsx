@@ -15,7 +15,7 @@ interface Props {
     setOpenFlg: (flg: number, setFlg: React.Dispatch<React.SetStateAction<number>>) => void;
     setModalOpenById: (id: number, setModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>) => void;
     current_page: number;
-    git_id: number;
+    general: boolean;
 }
 
 const DetailGitOptionModal = ({
@@ -25,7 +25,7 @@ const DetailGitOptionModal = ({
     setOpenFlg,
     setModalOpenById,
     current_page,
-    git_id,
+    general,
 }: Props) => {
     //詳細モーダルの表示非表示用
     const [modalIsOpen, setModalIsOpen] = useState<number | undefined>(detailModalIsOpen);
@@ -69,32 +69,36 @@ const DetailGitOptionModal = ({
                         </div>
                     </div>
                     <div className="flex items-center justify-around mt-4 space-x-14">
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={() => {
-                                //modalの表示非表示制御
-                                setModalOpenById(gitOption.id, setEditModalIsOpen);
-                                //2連続編集押下時の表示されない問題の対応
-                                setOpenFlg(editModalFlg, setEditModalFlg);
-                                onCloseModal();
-                            }}
-                        >
-                            編集
-                        </Button>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={() => {
-                                //modalの表示非表示制御
-                                setModalOpenById(gitOption.id, setDeleteModalIsOpen);
-                                //2連続編集押下時の表示されない問題の対応
-                                setOpenFlg(deleteModalFlg, setDeleteModalFlg);
-                                onCloseModal();
-                            }}
-                        >
-                            削除
-                        </Button>
+                        {general == false && (
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={() => {
+                                    //modalの表示非表示制御
+                                    setModalOpenById(gitOption.id, setEditModalIsOpen);
+                                    //2連続編集押下時の表示されない問題の対応
+                                    setOpenFlg(editModalFlg, setEditModalFlg);
+                                    onCloseModal();
+                                }}
+                            >
+                                編集
+                            </Button>
+                        )}
+                        {general == false && (
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={() => {
+                                    //modalの表示非表示制御
+                                    setModalOpenById(gitOption.id, setDeleteModalIsOpen);
+                                    //2連続編集押下時の表示されない問題の対応
+                                    setOpenFlg(deleteModalFlg, setDeleteModalFlg);
+                                    onCloseModal();
+                                }}
+                            >
+                                削除
+                            </Button>
+                        )}
                         <Button variant="contained" color="primary" onClick={onCloseModal}>
                             閉じる
                         </Button>
@@ -102,21 +106,25 @@ const DetailGitOptionModal = ({
                 </div>
             </CommonModal>
             {/* 編集モーダル */}
-            <EditGitOptionModal
-                gitOption={gitOption}
-                IsOpen={editModalIsOpen}
-                flg={editModalFlg}
-                detailModalIsOpen={setModalIsOpen}
-                current_page={current_page}
-            />
+            {general == false && (
+                <EditGitOptionModal
+                    gitOption={gitOption}
+                    IsOpen={editModalIsOpen}
+                    flg={editModalFlg}
+                    detailModalIsOpen={setModalIsOpen}
+                    current_page={current_page}
+                />
+            )}
             {/* 削除モーダル */}
-            <DeleteGitOptionModal
-                gitOption={gitOption}
-                IsOpen={deleteModalIsOpen}
-                flg={deleteModalFlg}
-                detailModalIsOpen={setModalIsOpen}
-                current_page={current_page}
-            />
+            {general == false && (
+                <DeleteGitOptionModal
+                    gitOption={gitOption}
+                    IsOpen={deleteModalIsOpen}
+                    flg={deleteModalFlg}
+                    detailModalIsOpen={setModalIsOpen}
+                    current_page={current_page}
+                />
+            )}
         </div>
     );
 };

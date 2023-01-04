@@ -23,6 +23,7 @@ const customStyles = {
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
         minWidth: '40%',
+        maxWidth: '450px',
     },
 };
 

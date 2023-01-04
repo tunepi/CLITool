@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FavoriteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,7 +27,19 @@ Route::get('/', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+Route::group(['prefix' => 'general', 'middleware' => 'auth', 'verified'], function(){
+    /** @var GitController */
+    $gitController = GitController::class;
+    Route::get('/git/{git_type?}', [$gitController, 'general'])->name('gitList');
 
+    /** @var GitOptionController */
+    $gitOptionController = GitOptionController::class;
+    //GitOption
+    Route::get('/git/option/{id}', [$gitOptionController, 'general'])->name('gitOptionList');
+    $favoriteController = FavoriteController::class;
+    //お気に入り
+    Route::get('/favorite', [$favoriteController, 'index'])->name('favorite');
+});
 
 
 //マスタ管理G
@@ -52,12 +65,12 @@ Route::prefix('management')->group(function(){
     Route::post('/git/delete', [$gitController, 'delete'])->name('gitDelete');
 
     /** @var GitOptionController */
-    $gitController = GitOptionController::class;
+    $gitOptionController = GitOptionController::class;
     //GitOption
-    Route::get('/git/option/{id}', [$gitController, 'index'])->name('gitOption');
-    Route::post('/git/option/register', [$gitController, 'create'])->name('gitOptionRegister');
-    Route::post('/git/option/update', [$gitController, 'update'])->name('gitOptionUpdate');
-    Route::post('/git/option/delete', [$gitController, 'delete'])->name('gitOptionDelete');
+    Route::get('/git/option/{id}', [$gitOptionController, 'index'])->name('gitOption');
+    Route::post('/git/option/register', [$gitOptionController, 'create'])->name('gitOptionRegister');
+    Route::post('/git/option/update', [$gitOptionController, 'update'])->name('gitOptionUpdate');
+    Route::post('/git/option/delete', [$gitOptionController, 'delete'])->name('gitOptionDelete');
 });
 
 

@@ -59,9 +59,6 @@ const EditGitOptionModal = ({ gitOption, IsOpen, flg, detailModalIsOpen, current
         e.preventDefault();
 
         post(route('gitOptionUpdate'), {
-            onStart: (visit) => {
-                console.log(visit);
-            },
             onSuccess: () => {
                 setModalIsOpen(undefined);
             },

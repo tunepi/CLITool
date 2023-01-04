@@ -15,7 +15,7 @@ interface Props {
     git_id: number;
 }
 
-const GitOptionRegisterModal = ({ setModalIsOpen, modalIsOpen, current_page, git_id }: Props) => {
+const RegisterGitOptionModal = ({ setModalIsOpen, modalIsOpen, current_page, git_id }: Props) => {
     const { data, setData, post, processing, errors, reset } = useForm({
         git_id: git_id,
         git_option: '',
@@ -98,4 +98,4 @@ const GitOptionRegisterModal = ({ setModalIsOpen, modalIsOpen, current_page, git
     );
 };
 
-export default GitOptionRegisterModal;
+export default RegisterGitOptionModal;

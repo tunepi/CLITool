@@ -5,16 +5,17 @@ import DetailGitModal from './DetailGitModal';
 import PaginationList from './PaginationList';
 import NavLink from '../Atoms/NavLink';
 import { Git, Links } from '@/type';
+import MainTableLayout from '@/Moleclues/MainTableLayout';
+import GitTypeName from '../Atoms/GitTypeName';
 
 interface Props {
     gits: Git[];
     links: Links[];
     current_page: number;
+    general?: boolean;
 }
 
-const GitListData = ({ gits, current_page }: Props): JSX.Element[] => {
-    //渡ってきた値を変数に格納
-    const gitData = gits;
+const GitLists = ({ gits, links, current_page, general }: Props) => {
     //詳細モーダル表示非表示用
     const [modalIsOpen, setModalIsOpen] = useState<number>();
     //useEffectフラグ用
@@ -28,45 +29,56 @@ const GitListData = ({ gits, current_page }: Props): JSX.Element[] => {
     const setOpenFlg = (flg: number, setFlg: React.Dispatch<React.SetStateAction<number>>) => {
         flg === 0 ? setFlg(1) : setFlg(0);
     };
-    return gitData.map((git: Git) => {
-        return (
-            <div className="pt-5" key={git.id.toString()}>
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 bg-white border-b border-gray-200 sm:flex space-x-8">
-                            {/* <div>{git.git_name}</div> */}
-                            <NavLink href={route('gitOption', { id: git.id })} active={false} children={git.git_name} />
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={() => {
-                                    setModalOpenById(git.id, setModalIsOpen);
-                                    setOpenFlg(flg, setFlg);
-                                }}
-                            >
-                                詳細
-                            </Button>
-                            <DetailGitModal
-                                git={git}
-                                detailModalIsOpen={modalIsOpen}
-                                flg={flg}
-                                setOpenFlg={setOpenFlg}
-                                setModalOpenById={setModalOpenById}
-                                current_page={current_page}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    });
-};
 
-const GitLists = (props: Props) => {
+    //一般・管理画面によるURLの切り替え
+    const gitOptionUrl = general == true ? 'gitOptionList' : 'gitOption';
+
+    //渡ってきた値を変数に格納
+    const gitData = gits.map((git: Git) => {
+        const data = {
+            ID: git.id,
+            コマンド名: git.git_name,
+            説明: (
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                        setModalOpenById(git.id, setModalIsOpen);
+                        setOpenFlg(flg, setFlg);
+                    }}
+                >
+                    詳細
+                </Button>
+            ),
+            モーダル: (
+                <DetailGitModal
+                    git={git}
+                    detailModalIsOpen={modalIsOpen}
+                    flg={flg}
+                    setOpenFlg={setOpenFlg}
+                    setModalOpenById={setModalOpenById}
+                    current_page={current_page}
+                    general={general}
+                />
+            ),
+            オプションリンク: (
+                <NavLink href={route(gitOptionUrl, { id: git.id })} active={false} children={'オプション画面へ'} />
+            ),
+            種別: GitTypeName(git.git_type),
+            登録日: git.created_at,
+        };
+        return data;
+    });
+
+    //テーブルヘッダー兼key
+    const target =
+        general == true
+            ? ['コマンド名', '種別', '説明', 'オプションリンク']
+            : ['ID', 'コマンド名', '種別', '登録日', '説明', 'オプションリンク'];
     return (
         <div className="hidden  sm:-my-px sm:ml-10 sm:block">
-            {GitListData(props)}
-            <PaginationList links={props.links} />
+            <MainTableLayout th={target} tds={gitData} />
+            <PaginationList links={links} />
         </div>
     );
 };

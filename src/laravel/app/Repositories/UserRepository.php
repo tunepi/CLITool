@@ -37,7 +37,7 @@ class UserRepository implements UserInterface
     public function findAllOtherOwn(int $id, int $page): LengthAwarePaginator
     {
         //第２引数は取得するカラム名、第３引数は表示ページのクエリ文字列、第4引数は該当ページ数
-        return $this->userRepository->where('id','!=',$id)->paginate(5, ['*'], 'page', $page);
+        return $this->userRepository->where('id','!=',$id)->paginate(10, ['*'], 'page', $page);
     }
 
     /**

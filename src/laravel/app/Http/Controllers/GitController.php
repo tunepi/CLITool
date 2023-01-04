@@ -43,10 +43,56 @@ class GitController extends Controller
             $page = $request->old('page');
         }
 
-        $gitLists = $this->gitService->findAll($page);
+        if(empty($request->old('git_type'))){
+            $gitType = $request->git_type;
+        }else{
+            $gitType = null;
+        }
+
+        Log::debug($gitType);
+
+        $gitLists = $this->gitService->findAll($page, $gitType);
 
         return Inertia::render('GitList',[
-            'gits' => $gitLists
+            'gits' => $gitLists,
+            'general' => false,
+        ]);
+    }
+
+    /**
+     * 一般権限の一覧画面
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function general(Request $request)
+    {
+        $user = Auth::user();
+
+        if($user === null){
+            return Inertia::render('Management');
+        }
+
+        //リダイレクト時、ページ数の保持のために使用
+        if(empty($request->old('page'))){
+            $page = $request->has('page') ? $request->page : 1;
+        }else{
+            $page = $request->old('page');
+        }
+
+        if(empty($request->old('git_type'))){
+            $gitType = $request->git_type;
+        }else{
+            $gitType = null;
+        }
+
+        Log::debug($gitType);
+
+        $gitLists = $this->gitService->findAll($page, $gitType);
+
+        return Inertia::render('GitList',[
+            'gits' => $gitLists,
+            'general' => true
         ]);
     }
 
@@ -87,6 +133,14 @@ class GitController extends Controller
         $this->gitService->delete($request);
 
         return redirect()->route('git');
+    }
+
+    public function search(Request $request) 
+    {
+        Log::debug($request);
+        return Inertia::render('GitList',[
+            'gits' => $request
+        ]);
     }
 
 }

@@ -59,3 +59,30 @@ export type Links = {
     label: string;
     url: string | null;
 };
+
+export type TableGitArray = {
+    コマンド名: string;
+    説明: JSX.Element;
+    モーダル: JSX.Element;
+    オプションリンク: JSX.Element;
+    種別: JSX.Element;
+    登録日: string;
+};
+
+export type TableUserArray = {
+    ID: number;
+    ユーザ名: string;
+    Eメール: string;
+    操作: JSX.Element;
+    モーダル: JSX.Element;
+    登録日: string;
+};
+
+export type TableGitOptionArray = {
+    ID: number;
+    オプション名: string;
+    説明: JSX.Element;
+    モーダル: JSX.Element;
+    更新日: string | null;
+    登録日: string;
+};

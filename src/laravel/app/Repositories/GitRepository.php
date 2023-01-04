@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\GitInterface;
 use App\Models\Git;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Gitリポジトリ
@@ -28,12 +29,18 @@ class GitRepository implements GitInterface
      * 一覧取得
      *
      * @param int $page
+     * @param int | null $gitType
      * @return LengthAwarePaginator
      */
-    public function findAll(int $page): LengthAwarePaginator
+    public function findAll(int $page, ?int $gitType): LengthAwarePaginator
     {
+        $query = Git::query();
+
+        if($gitType ==! null){
+            $query->where('git_type', '=', $gitType);
+        }
         //第２引数は取得するカラム名、第３引数は表示ページのクエリ文字列、第4引数は該当ページ数
-        return $this->gitRepository->paginate(5, ['*'], 'page', $page);
+        return $query->paginate(5, ['*'], 'page', $page);
     }
 
     /**
@@ -44,8 +51,10 @@ class GitRepository implements GitInterface
      */
     public function findOne(?int $id):Git
     {
+        $query = Git::query();
+
         if(!empty($id)){
-            $query = $this->gitRepository->where('id', '=', $id);
+            $query->where('id', '=', $id);
         }
 
         return $query->first();

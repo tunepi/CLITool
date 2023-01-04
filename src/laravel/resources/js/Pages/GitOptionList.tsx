@@ -1,6 +1,6 @@
 import SubHeader from '@/Moleclues/SubHeader';
 import GitOptionLists from '@/Organisms/GitOptionLists';
-import GitOptionRegisterModal from '@/Organisms/GitOptionRegisterModal';
+import RegisterGitOptionModal from '@/Organisms/RegisterGitOptionModal';
 import MainLayout from '@/Templates/MainLayout';
 import React, { useState } from 'react';
 import { Auth, Git, GitOptions } from '../type';
@@ -9,30 +9,41 @@ interface Props {
     auth: Auth;
     git: Git;
     gits: GitOptions;
+    general: boolean;
 }
 
-const GitOptionList = ({ auth, git, gits }: Props) => {
+const GitOptionList = ({ auth, git, gits, general }: Props) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    console.log(gits);
     return (
         <MainLayout
-            title={'GitOption管理'}
+            title={general == true ? 'GitOption一覧' : 'GitOption管理'}
             auth={auth}
-            headerTitle={<SubHeader headerName={git.git_name} buttonName="新規登録" setModalIsOpen={setModalIsOpen} />}
+            headerTitle={
+                <SubHeader
+                    headerName={git.git_name}
+                    buttonName="新規登録"
+                    setModalIsOpen={setModalIsOpen}
+                    general={general}
+                />
+            }
             children={
                 <div className="w-full">
                     <GitOptionLists
                         gits={gits.data}
                         links={gits.links}
                         current_page={gits.current_page}
-                        git_id={git.id}
+                        general={general}
+                        auth={auth}
+                        git_name={git.git_name}
                     />
-                    <GitOptionRegisterModal
-                        setModalIsOpen={setModalIsOpen}
-                        modalIsOpen={modalIsOpen}
-                        current_page={1}
-                        git_id={git.id}
-                    />
+                    {general == false && (
+                        <RegisterGitOptionModal
+                            setModalIsOpen={setModalIsOpen}
+                            modalIsOpen={modalIsOpen}
+                            current_page={1}
+                            git_id={git.id}
+                        />
+                    )}
                 </div>
             }
         />
