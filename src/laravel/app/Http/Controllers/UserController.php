@@ -47,13 +47,12 @@ class UserController extends Controller
         }else{
             $page = $request->old('page');
         }
-        
 
         $id = $user->id;
 
         $userLists = $this->userService->findAllOtherOwn($id, $page);
 
-        return Inertia::render('User/UserList',[
+        return Inertia::render('UserList',[
             'users' => $userLists,
         ]);
     }

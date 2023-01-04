@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * App\Models\Git
@@ -29,5 +31,28 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Git extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable, SoftDeletes;
+
+    /**
+     * 指定したカラム名のみcreate/update/fillが可能
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'git_name',
+        'git_type',
+        'description',
+    ];
+
+    /**
+     * 配列/JSONシリアル化の日付を準備
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y年m月d日');
+    }
+    
 }

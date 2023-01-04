@@ -62,7 +62,9 @@ class UserService
             'password' => Hash::make($request->password),
         ];
 
-        $this->userInterface->create($userInfo);
+        $userInstance = new User;
+
+        $this->userInterface->save($userInstance, $userInfo);
     }
 
     /**
@@ -81,7 +83,14 @@ class UserService
 
         $user = $this->userInterface->findOne($id);
 
-        return $this->userInterface->update($user, $request);
+        /** @var array $userInfo ユーザ登録情報 */
+        $userInfo = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'roll' => $request->roll,
+        ];
+
+        return $this->userInterface->save($user, $userInfo);
     }
 
     public function delete(Request $request)

@@ -37,7 +37,7 @@ class UserRepository implements UserInterface
     public function findAllOtherOwn(int $id, int $page): LengthAwarePaginator
     {
         //第２引数は取得するカラム名、第３引数は表示ページのクエリ文字列、第4引数は該当ページ数
-        return $this->userRepository->where('id','!=',$id)->paginate(5, ['*'], 'page', $page);
+        return $this->userRepository->where('id','!=',$id)->paginate(10, ['*'], 'page', $page);
     }
 
     /**
@@ -51,55 +51,22 @@ class UserRepository implements UserInterface
         return $this->userRepository->where('id','=',$id)->first();
     }
 
-
     /**
-     * ユーザの新規登録
+     * 登録・更新の共通処理
      *
+     * @param User $userInstance
      * @param Array $userInfo
      * @return void
      */
-    public function create(Array $userInfo)
+    public function save(User $userInstance, Array $userInfo)
     {
-        if(empty($userInfo)){
+        if($userInstance === null || empty($userInfo)){
             return;
         }
 
-        $newUser = new User;
+        $userInstance->fill($userInfo);
 
-        $newUser->fill($userInfo);
-
-        $newUser->save();
-    }
-
-    /**
-     * ユーザ情報の更新
-     *
-     * @param User $user
-     * @param Request $request
-     * @return void
-     */
-    public function update(User $user, Request $request)
-    {
-        if($user === null || $request === null){
-            return;
-        }
-
-        Log::debug(gettype(intval($request->roll)));
-        Log::debug(gettype($request->roll));
-        $roll = intval($request->roll);
-        Log::debug($user->roll);
-        Log::debug($roll);
-
-        $target = $user;
-
-        $target->fill([
-            'name' => $request->name,
-            'email' => $request->email,
-            'roll' => $roll,
-        ]);
-        Log::debug($target);
-
-        $target->save();
+        $userInstance->save();
     }
 
     /**

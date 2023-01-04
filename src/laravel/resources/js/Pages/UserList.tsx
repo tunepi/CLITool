@@ -3,33 +3,17 @@ import UserLists from '@/Organisms/UserLists';
 import { Button } from '@mui/material';
 import RegisterUserModal from '@/Organisms/RegisterUserModal';
 import MainLayout from '@/Templates/MainLayout';
+import SubHeader from '../Moleclues/SubHeader';
+import { Auth, Users } from '@/type';
 
 interface Props {
-    auth: Array<Array<any>>;
-    users: {
-        links: any;
-        data: any;
-        current_page: number;
-    };
+    auth: Auth;
+    users: Users;
 }
 
 const UserList = ({ auth, users }: Props) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const header = (
-        <div className="flex justify-between">
-            <h2 className="font-semibold text-xl text-gray-800 leading-tight flex items-center">ユーザ一覧</h2>
-            <div>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    children="新規登録"
-                    onClick={() => {
-                        setModalIsOpen(true);
-                    }}
-                />
-            </div>
-        </div>
-    );
+    const header = <SubHeader headerName="ユーザ一覧" buttonName="新規登録" setModalIsOpen={setModalIsOpen} />;
     return (
         <MainLayout
             title={'ユーザ一覧'}

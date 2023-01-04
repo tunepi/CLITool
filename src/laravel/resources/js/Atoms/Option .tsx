@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface Props {
-    value: string;
+    value?: string | number | readonly string[] | undefined;
     index: number;
 }
 

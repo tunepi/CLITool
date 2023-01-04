@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\FavoriteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\GitController;
+use App\Http\Controllers\GitOptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,24 +26,52 @@ Route::get('/', function () {
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/management', function () {
-    return Inertia::render('Management');
-})->name('management');
 
-Route::get('/user', [UserController::class, 'index'])->name('user');
+Route::group(['prefix' => 'general', 'middleware' => 'auth', 'verified'], function(){
+    /** @var GitController */
+    $gitController = GitController::class;
+    Route::get('/git/{git_type?}', [$gitController, 'general'])->name('gitList');
 
-Route::post('/user/register', [UserController::class, 'create'])->name('userRegister');
-Route::post('/user/update', [UserController::class, 'update'])->name('userUpdate');
-Route::post('/user/delete', [UserController::class, 'delete'])->name('userDelete');
+    /** @var GitOptionController */
+    $gitOptionController = GitOptionController::class;
+    //GitOption
+    Route::get('/git/option/{id}', [$gitOptionController, 'general'])->name('gitOptionList');
+    $favoriteController = FavoriteController::class;
+    //お気に入り
+    Route::get('/favorite', [$favoriteController, 'index'])->name('favorite');
+});
+
+
+//マスタ管理G
+Route::prefix('management')->group(function(){
+    Route::get('/list', function () {
+        return Inertia::render('Management');
+    })->name('management');
+
+    /** @var UserController */
+    $userController = UserController::class;
+    //User
+    Route::get('/user', [$userController, 'index'])->name('user');
+    Route::post('/user/register', [$userController, 'create'])->name('userRegister');
+    Route::post('/user/update', [$userController, 'update'])->name('userUpdate');
+    Route::post('/user/delete', [$userController, 'delete'])->name('userDelete');
+
+    /** @var GitController */
+    $gitController = GitController::class;
+    //Git
+    Route::get('/git', [$gitController, 'index'])->name('git');
+    Route::post('/git/register', [$gitController, 'create'])->name('gitRegister');
+    Route::post('/git/update', [$gitController, 'update'])->name('gitUpdate');
+    Route::post('/git/delete', [$gitController, 'delete'])->name('gitDelete');
+
+    /** @var GitOptionController */
+    $gitOptionController = GitOptionController::class;
+    //GitOption
+    Route::get('/git/option/{id}', [$gitOptionController, 'index'])->name('gitOption');
+    Route::post('/git/option/register', [$gitOptionController, 'create'])->name('gitOptionRegister');
+    Route::post('/git/option/update', [$gitOptionController, 'update'])->name('gitOptionUpdate');
+    Route::post('/git/option/delete', [$gitOptionController, 'delete'])->name('gitOptionDelete');
+});
+
 
 require __DIR__.'/auth.php';
-
-//初期画面を一旦コメントアウト
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });

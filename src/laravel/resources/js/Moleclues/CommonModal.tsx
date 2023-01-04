@@ -5,7 +5,7 @@ interface Props {
     isOpen: boolean;
     onRequestClose: (id?: string) => void;
     children: JSX.Element;
-    id?: string;
+    id?: number;
 }
 
 const customStyles = {
@@ -23,12 +23,13 @@ const customStyles = {
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
         minWidth: '40%',
+        maxWidth: '450px',
     },
 };
 
 const CommonModal = ({ isOpen, onRequestClose, children, id }: Props) => {
-    const onCloseModal = (id?: string) => {
-        id == undefined ? onRequestClose() : onRequestClose(id);
+    const onCloseModal = (id?: number) => {
+        id == undefined ? onRequestClose() : onRequestClose(id.toString());
     };
 
     return (

@@ -5,10 +5,10 @@ import Input from '../Moleclues/Input';
 import { useForm } from '@inertiajs/inertia-react';
 import Button from '../Atoms/Button';
 import CommonModal from '../Moleclues/CommonModal';
-import { User } from '../type';
+import { Git } from '../type';
 
 interface Props {
-    user: User;
+    git: Git;
     IsOpen: number | undefined;
     flg: number;
     detailModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>;
@@ -16,16 +16,17 @@ interface Props {
 }
 
 //event.target.nameの値宣言
-type Name = 'id' | 'name' | 'page';
+type Name = 'id' | 'git_name' | 'page';
 
-const DeleteUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page }: Props) => {
+const DeleteGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page }: Props) => {
     const { data, setData, post, processing } = useForm({
-        id: user.id,
-        name: user.name,
+        id: git.id,
+        git_name: git.git_name,
         page: current_page,
     });
+
     //modal表示非表示用
-    const [modalIsOpen, setModalIsOpen] = useState<number | undefined>();
+    const [modalIsOpen, setModalIsOpen] = useState<number>();
 
     //modal非表示用
     const onCloseModal = (id?: string) => {
@@ -39,11 +40,15 @@ const DeleteUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page }:
     }, [flg]);
 
     //更新処理を送信する
-    const deleteUser = (e: React.FormEvent<HTMLFormElement>) => {
+    const deleteGit = (e: React.FormEvent<HTMLFormElement>) => {
         //画面遷移を止める
         e.preventDefault();
 
-        post(route('userDelete'));
+        post(route('gitDelete'), {
+            onSuccess: () => {
+                setModalIsOpen(undefined);
+            },
+        });
     };
 
     //テキストボックスないの値が変わるたびにvalueの値を最新のものに更新してくれる
@@ -53,17 +58,17 @@ const DeleteUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page }:
 
     return (
         <div>
-            <CommonModal isOpen={user.id === modalIsOpen} onRequestClose={onCloseModal} id={user.id}>
-                <form onSubmit={deleteUser}>
+            <CommonModal isOpen={git.id === modalIsOpen} onRequestClose={onCloseModal} id={git.id}>
+                <form onSubmit={deleteGit}>
                     <Input type="hidden" name="id" value={data.id} handleChange={onHandleChange} />
                     <Input type="hidden" name="page" value={data.page} handleChange={onHandleChange} />
                     <div className="border-2 border-block-500">
                         <div className="flex pl-10">
                             <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>ユーザ</label>
-                            <div className="ml-1">{data.name}</div>
+                            <div className="ml-1">{data.git_name}</div>
                         </div>
                         <div className="pl-10 mt-2">
-                            <p>上記ユーザを削除します。</p>
+                            <p>上記コマンドを削除します。</p>
                             <p>削除した場合元には戻せません。</p>
                             <p>本当に削除してよろしいですか？</p>
                         </div>
@@ -74,7 +79,7 @@ const DeleteUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page }:
                             variant="contained"
                             color="primary"
                             onClick={() => {
-                                onCloseModal(user.id.toString());
+                                onCloseModal(git.id.toString());
                             }}
                             children="戻る"
                         />
@@ -85,4 +90,4 @@ const DeleteUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page }:
     );
 };
 
-export default DeleteUserModal;
+export default DeleteGitModal;

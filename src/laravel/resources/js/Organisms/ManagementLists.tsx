@@ -4,11 +4,11 @@ import NavLink from '@/Atoms/NavLink';
 //コマンドの種類
 const ManagementTypes: Array<Array<string>> = [
     ['ユーザ一覧', 'user'],
-    ['Git', 'dashboard'],
-    ['Docker', 'dashboard'],
-    ['Docker-Compose', 'dashboard'],
-    ['Npm', 'dashboard'],
-    ['Yarn', 'dashboard'],
+    ['Git', 'git'],
+    // ['Docker', 'dashboard'],
+    // ['Docker-Compose', 'dashboard'],
+    // ['Npm', 'dashboard'],
+    // ['Yarn', 'dashboard'],
 ];
 
 const ManagementListData = (): JSX.Element[] => {
