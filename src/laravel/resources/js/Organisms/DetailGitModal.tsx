@@ -25,7 +25,6 @@ const DetailGitModal = ({
     current_page,
     general,
 }: Props) => {
-    console.log(general);
     //詳細モーダルの表示非表示用
     const [modalIsOpen, setModalIsOpen] = useState<number | undefined>(detailModalIsOpen);
     //編集用モーダル表示非表示用
@@ -53,21 +52,7 @@ const DetailGitModal = ({
                 <div>
                     <label className={`block font-medium text-sm text-gray-700 mr-10 w-13`}>説明</label>
                     <div className="border-2 border-block-500">
-                        {/* <div className="flex ml-10">
-                            <label className={`block font-medium text-sm text-gray-700 mr-10 w-13`}>
-                                gitコマンド名
-                            </label>
-                            {git.git_name}
-                        </div>
-                        <div className="flex ml-10 mt-2">
-                            <label className={`block font-medium text-sm text-gray-700 mr-10 w-13`}>種別</label>
-                            {GitTypeName(git.git_type)}
-                        </div> */}
                         <div className="flex ml-1 break-words whitespace-pre-wrap">{git.description}</div>
-                        {/* <div className="flex ml-10 mt-2">
-                            <label className={`block font-medium text-sm text-gray-700 mr-10 w-13`}>登録日</label>
-                            {git.created_at}
-                        </div> */}
                     </div>
                     <div className="flex items-center justify-around mt-4 space-x-14">
                         {general == false && (

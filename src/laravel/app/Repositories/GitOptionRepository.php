@@ -34,8 +34,7 @@ class GitOptionRepository implements GitOptionInterface
     public function findAll(int $gitId): LengthAwarePaginator
     {
         //第２引数は取得するカラム名、第３引数は表示ページのクエリ文字列、第4引数は該当ページ数
-        // return $this->gitOptionRepository->paginate(5, ['*'], 'page', $page);
-        return $this->gitOptionRepository->where('git_id', '=', $gitId)->paginate(5);
+        return $this->gitOptionRepository->with('userFavorite', 'git')->where('git_id', '=', $gitId)->paginate(5);
 
     }
 

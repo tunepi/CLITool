@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use \Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Auth;
+use App\Models\UserFavorite;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\GitOption
@@ -53,5 +57,28 @@ class GitOption extends Model
     protected function serializeDate(\DateTimeInterface $date)
     {
         return $date->format('Y年m月d日');
+    }
+
+    /**
+     * userFavoriteとのリレーション
+     *
+     * @return HasOne
+     */
+    public function userFavorite():HasOne
+    {
+        $user = Auth::user();
+
+        return $this->hasOne(userFavorite::class, 'command_id', 'id')
+	        ->where('type', UserFavorite::GIT)->where('user_id', $user->id);
+    }
+
+    /**
+     * gitとのリレーション
+     *
+     * @return BelongsTo
+     */
+    public function git():BelongsTo
+    {
+        return $this->belongsTo(Git::class);
     }
 }

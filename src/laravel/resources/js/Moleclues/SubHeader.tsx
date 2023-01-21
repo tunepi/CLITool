@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 
 interface Props {
     headerName: string;
-    buttonName: string;
+    buttonName?: string;
     setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     general?: boolean;
     children?: React.ReactNode;

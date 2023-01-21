@@ -27,7 +27,6 @@ class GitOptionController extends Controller
 
     public function index(Request $request)
     {
-        // Log::debug('request'.$request);
         $git = $this->gitService->findOne($request);
 
         $gits = $this->gitOptionService->findAll($git->id);
@@ -90,7 +89,6 @@ class GitOptionController extends Controller
      */
     public function delete(Request $request): RedirectResponse
     {
-        Log::debug('リクエスト内'.$request->id);
         $this->gitOptionService->delete($request);
 
         return redirect()->route('gitOption',[

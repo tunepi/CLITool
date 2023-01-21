@@ -13,9 +13,10 @@ interface Props {
     auth: Auth;
     gits: Gits;
     general: boolean;
+    searchGitType?: number;
 }
 
-const GitList = ({ auth, gits, general }: Props) => {
+const GitList = ({ auth, gits, general, searchGitType }: Props) => {
     const { data, setData, processing, errors, reset } = useForm({
         git_type: '',
     });
@@ -25,7 +26,7 @@ const GitList = ({ auth, gits, general }: Props) => {
     const onHandleChangeBySelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setData(event.target.name as 'git_type', event.target.value);
         Inertia.visit(route('gitList', { git_type: event.target.value }), {
-            only: ['gits'],
+            only: ['gits', 'searchGitType'],
         });
     };
 
@@ -43,7 +44,7 @@ const GitList = ({ auth, gits, general }: Props) => {
                         <SelectBox
                             options={gitType}
                             name={'git_type'}
-                            defaultValue={data.git_type}
+                            defaultValue={searchGitType}
                             handleChange={onHandleChangeBySelected}
                             className={
                                 'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm'
