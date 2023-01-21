@@ -34,7 +34,7 @@ const GitOptionList = ({ auth, git, gits, general }: Props) => {
                         current_page={gits.current_page}
                         general={general}
                         auth={auth}
-                        git_name={git.git_name}
+                        redirect_url={'gitOptionList'}
                     />
                     {general == false && (
                         <RegisterGitOptionModal

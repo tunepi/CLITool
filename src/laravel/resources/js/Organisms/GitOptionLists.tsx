@@ -15,10 +15,10 @@ interface Props {
     current_page: number;
     general: boolean;
     auth: Auth;
-    git_name: string;
+    redirect_url: string;
 }
 
-const GitOptionLists = ({ gits, current_page, auth, general, links, git_name }: Props) => {
+const GitOptionLists = ({ gits, current_page, auth, general, links, redirect_url }: Props) => {
     //詳細モーダル表示非表示用
     const [modalIsOpen, setModalIsOpen] = useState<number>();
     //useEffectフラグ用
@@ -35,11 +35,22 @@ const GitOptionLists = ({ gits, current_page, auth, general, links, git_name }: 
         flg === 0 ? setFlg(1) : setFlg(0);
     };
 
+    //お気に入り登録の有無
+    const isFavoriteUrl = (git: GitOption): string => {
+        if (git.user_favorite == null) {
+            return 'favoriteCreate';
+        } else if (git.user_favorite.is_favorite == 0) {
+            return 'favoriteRegister';
+        } else {
+            return 'favoriteCancel';
+        }
+    };
+
     //渡ってきた値を変数に格納
     const gitOptionData = gits.map((git: GitOption) => {
         const data = {
             ID: git.id,
-            オプション名: git_name + ' ' + git.git_option,
+            オプション名: git.git.git_name + ' ' + git.git_option,
             説明: (
                 <Button
                     variant="contained"
@@ -64,11 +75,20 @@ const GitOptionLists = ({ gits, current_page, auth, general, links, git_name }: 
                 />
             ),
             コピー: (
-                <CopyToClipboard text={git_name + ' ' + git.git_option} onCopy={() => setCopied(true)}>
+                <CopyToClipboard text={git.git.git_name + ' ' + git.git_option} onCopy={() => setCopied(true)}>
                     <Btn content="コピー" />
                 </CopyToClipboard>
             ),
-            ブックマーク: <FavoriteButton user_id={auth.user.id} command_id={git.id} type={1} />,
+            ブックマーク: (
+                <FavoriteButton
+                    user_id={auth.user.id}
+                    command_id={git.id}
+                    type={1}
+                    url={isFavoriteUrl(git)}
+                    git_id={git.git_id}
+                    redirect_url={redirect_url}
+                />
+            ),
             更新日: git.updated_at,
             登録日: git.created_at,
         };

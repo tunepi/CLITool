@@ -14,3 +14,5 @@ export const gitType: string[] = [
     'Server Admin',
     'Plumbing Commands',
 ];
+
+export const COMMAND = ['すべて', 'Git'];

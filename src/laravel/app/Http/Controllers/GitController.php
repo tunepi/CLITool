@@ -49,13 +49,12 @@ class GitController extends Controller
             $gitType = null;
         }
 
-        Log::debug($gitType);
-
         $gitLists = $this->gitService->findAll($page, $gitType);
 
         return Inertia::render('GitList',[
             'gits' => $gitLists,
             'general' => false,
+            'searchGitType' => $gitType,
         ]);
     }
 
@@ -85,8 +84,6 @@ class GitController extends Controller
         }else{
             $gitType = null;
         }
-
-        Log::debug($gitType);
 
         $gitLists = $this->gitService->findAll($page, $gitType);
 

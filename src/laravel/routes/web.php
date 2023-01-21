@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\UserFavoriteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -36,9 +36,12 @@ Route::group(['prefix' => 'general', 'middleware' => 'auth', 'verified'], functi
     $gitOptionController = GitOptionController::class;
     //GitOption
     Route::get('/git/option/{id}', [$gitOptionController, 'general'])->name('gitOptionList');
-    $favoriteController = FavoriteController::class;
-    //お気に入り
-    Route::get('/favorite', [$favoriteController, 'index'])->name('favorite');
+    $userFavoriteController = UserFavoriteController::class;
+    //ブックマーク
+    Route::get('/favorite/{command_type?}', [$userFavoriteController, 'index'])->name('favorite');
+    Route::post('/favorite/create/{is_favorite?}', [$userFavoriteController, 'create'])->name('favoriteCreate');
+    Route::post('/favorite/register/{is_favorite?}', [$userFavoriteController, 'register'])->name('favoriteRegister');
+    Route::post('/favorite/cancel/{is_favorite?}', [$userFavoriteController, 'cancel'])->name('favoriteCancel');
 });
 
 

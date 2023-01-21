@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * App\Models\UserFavorite
@@ -29,5 +33,45 @@ use Illuminate\Database\Eloquent\Model;
  */
 class UserFavorite extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable, SoftDeletes;
+
+    /** @var Git */
+    const GIT = 1;
+
+    const TYPE_AND_ROUTE = [
+        '1' => 'git.git'
+    ];
+
+    /**
+     * 指定したカラム名のみcreate/update/fillが可能
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'command_id',
+        'user_id',
+        'type',
+        'is_favorite'
+    ];
+
+    /**
+     * 配列/JSONシリアル化の日付を準備
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y年m月d日');
+    }
+
+    /**
+     * gitOptionsとのリレーション
+     *
+     * @return BelongsTo
+     */
+    public function git():BelongsTo
+    {
+        return $this->belongsTo(GitOption::class, 'command_id','id');
+    }
 }

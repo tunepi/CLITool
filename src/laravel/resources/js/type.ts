@@ -46,6 +46,8 @@ export type GitOption = {
     created_at: string;
     updated_at: string | null;
     deleted_at: string | null;
+    user_favorite: UserFavorite;
+    git: Git;
 };
 
 export type GitOptions = {
@@ -85,4 +87,15 @@ export type TableGitOptionArray = {
     モーダル: JSX.Element;
     更新日: string | null;
     登録日: string;
+};
+
+export type UserFavorite = {
+    id: number;
+    command_id: number;
+    user_id: number;
+    type: number;
+    is_favorite: number;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string;
 };
