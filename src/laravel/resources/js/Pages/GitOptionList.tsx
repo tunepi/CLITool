@@ -1,3 +1,4 @@
+import NavLink from '@/Atoms/NavLink';
 import SubHeader from '@/Moleclues/SubHeader';
 import GitOptionLists from '@/Organisms/GitOptionLists';
 import RegisterGitOptionModal from '@/Organisms/RegisterGitOptionModal';
@@ -10,10 +11,15 @@ interface Props {
     git: Git;
     gits: GitOptions;
     general: boolean;
+    current_page?: number;
+    git_type?: number;
 }
 
-const GitOptionList = ({ auth, git, gits, general }: Props) => {
+const GitOptionList = ({ auth, git, gits, general, current_page, git_type }: Props) => {
+    console.log(git_type);
     const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    const gitUrl = general == true ? 'gitList' : 'git';
     return (
         <MainLayout
             title={general == true ? 'GitOption一覧' : 'GitOption管理'}
@@ -24,6 +30,13 @@ const GitOptionList = ({ auth, git, gits, general }: Props) => {
                     buttonName="新規登録"
                     setModalIsOpen={setModalIsOpen}
                     general={general}
+                    children={
+                        <NavLink
+                            href={route(gitUrl, { page: current_page, git_type: git_type })}
+                            active={false}
+                            children={'戻る'}
+                        />
+                    }
                 />
             }
             children={
@@ -35,6 +48,8 @@ const GitOptionList = ({ auth, git, gits, general }: Props) => {
                         general={general}
                         auth={auth}
                         redirect_url={'gitOptionList'}
+                        next_url={gits.next_page_url}
+                        prev_url={gits.prev_page_url}
                     />
                     {general == false && (
                         <RegisterGitOptionModal

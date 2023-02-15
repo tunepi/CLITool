@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 /**
  *  ユーザインターフェイス
@@ -17,9 +18,9 @@ interface UserInterface
      *
      * @param int $id
      * @param int $page
-     * @return LengthAwarePaginator
+     * @return Paginator
      */
-    public function findAllOtherOwn(int $id, int $page): LengthAwarePaginator;
+    public function findAllOtherOwn(int $id, int $page): Paginator;
 
     /**
      * ユーザ1件の取得

@@ -5,6 +5,7 @@ namespace App\Interfaces;
 use App\Repositories\GitOptionRepository;
 use App\Models\GitOption;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 interface GitOptionInterface 
 {
@@ -13,9 +14,9 @@ interface GitOptionInterface
      * 一覧取得
      *
      * 
-     * @return LengthAwarePaginator
+     * @return Paginator
      */
-    public function findAll(int $gitId): LengthAwarePaginator;
+    public function findAll(int $gitId, int $page): Paginator;
 
     /**
      * 1件取得

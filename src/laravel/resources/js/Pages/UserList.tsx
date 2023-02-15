@@ -21,7 +21,12 @@ const UserList = ({ auth, users }: Props) => {
             headerTitle={header}
             children={
                 <div className="w-full">
-                    <UserLists users={users.data} links={users.links} current_page={users.current_page} />
+                    <UserLists
+                        users={users.data}
+                        current_page={users.current_page}
+                        next_url={users.next_page_url}
+                        prev_url={users.prev_page_url}
+                    />
                     <RegisterUserModal
                         setModalIsOpen={setModalIsOpen}
                         modalIsOpen={modalIsOpen}

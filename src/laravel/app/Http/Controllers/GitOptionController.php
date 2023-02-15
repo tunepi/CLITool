@@ -29,12 +29,35 @@ class GitOptionController extends Controller
     {
         $git = $this->gitService->findOne($request);
 
-        $gits = $this->gitOptionService->findAll($git->id);
+        //リダイレクト時、ページ数の保持のために使用
+        if(empty($request->old('page'))){
+            $page = $request->has('page') ? $request->page : 1;
+        }else{
+            $page = $request->old('page');
+        }
+
+        $gits = $this->gitOptionService->findAll($git->id, $page);
+
+        //gitページのページネーション値の取得
+        if(empty($request->old('current_page'))){
+            $currentPage = $request->has('current_page') ? $request->current_page : 1;
+        }else{
+            $currentPage = $request->old('current_page');
+        }
+
+
+        if(empty($request->old('git_type'))){
+            $gitType = $request->has('git_type') ? $request->git_type : 0;
+        }else{
+            $gitType = $request->old('git_type');
+        }
 
         return Inertia::render('GitOptionList',[
             'git' => $git,
             'gits' => $gits,
-            'general' => false
+            'general' => false,
+            'current_page' => $currentPage,
+            'git_type' => $gitType
         ]);
     }
 
@@ -42,12 +65,35 @@ class GitOptionController extends Controller
     {
         $git = $this->gitService->findOne($request);
 
-        $gits = $this->gitOptionService->findAll($git->id);
+        //リダイレクト時、ページ数の保持のために使用
+        if(empty($request->old('page'))){
+            $page = $request->has('page') ? $request->page : 1;
+        }else{
+            $page = $request->old('page');
+        }
+
+        $gits = $this->gitOptionService->findAll($git->id, $page);
+
+        //gitページのページネーション値の取得
+        if(empty($request->old('current_page'))){
+            $currentPage = $request->has('current_page') ? $request->current_page : 1;
+        }else{
+            $currentPage = $request->old('current_page');
+        }
+
+
+        if(empty($request->old('git_type'))){
+            $gitType = $request->has('git_type') ? $request->git_type : 0;
+        }else{
+            $gitType = $request->old('git_type');
+        }
 
         return Inertia::render('GitOptionList',[
             'git' => $git,
             'gits' => $gits,
-            'general' => true
+            'general' => true,
+            'current_page' => $currentPage,
+            'git_type' => $gitType
         ]);
     }
 

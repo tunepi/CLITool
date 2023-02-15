@@ -13,6 +13,8 @@ export type Gits = {
     links: Links[];
     data: Git[];
     current_page: number;
+    next_page_url?: string;
+    prev_page_url?: string;
 };
 
 //ユーザ関係
@@ -35,6 +37,8 @@ export type Users = {
     links: Links[];
     data: User[];
     current_page: number;
+    next_page_url?: string;
+    prev_page_url?: string;
 };
 
 //GitOption関係
@@ -54,6 +58,8 @@ export type GitOptions = {
     links: Links[];
     data: GitOption[];
     current_page: number;
+    next_page_url?: string;
+    prev_page_url?: string;
 };
 
 export type Links = {
@@ -66,7 +72,7 @@ export type TableGitArray = {
     コマンド名: string;
     説明: JSX.Element;
     モーダル: JSX.Element;
-    オプションリンク: JSX.Element;
+    リンク: JSX.Element;
     種別: JSX.Element;
     登録日: string;
 };

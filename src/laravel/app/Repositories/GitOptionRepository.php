@@ -6,13 +6,14 @@ use App\Interfaces\GitOptionInterface;
 use App\Models\GitOption;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Pagination\Paginator;
 
 /**
  * Gitリポジトリ
  */
 class GitOptionRepository implements GitOptionInterface
 {
-    /** @var GitOption */
+    /** @var GitOption $gitOption */
     private GitOption $gitOption;
 
     /**
@@ -29,12 +30,12 @@ class GitOptionRepository implements GitOptionInterface
      * 一覧取得
      *
      * 
-     * @return LengthAwarePaginator
+     * @return Paginator
      */
-    public function findAll(int $gitId): LengthAwarePaginator
+    public function findAll(int $gitId, int $page): Paginator
     {
         //第２引数は取得するカラム名、第３引数は表示ページのクエリ文字列、第4引数は該当ページ数
-        return $this->gitOptionRepository->with('userFavorite', 'git')->where('git_id', '=', $gitId)->paginate(5);
+        return $this->gitOptionRepository->with('userFavorite', 'git')->where('git_id', '=', $gitId)->simplePaginate(5, ['*'], 'page', $page);
 
     }
 

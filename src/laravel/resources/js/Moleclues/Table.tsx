@@ -38,18 +38,20 @@ interface TableRow {
 
 const TableRow = ({ tds, className, target, children }: TableRow) => {
     const bodyItems = tds.map((td: any, index) => (
-        <tr key={index}>
-            {target.map(
-                (row, index) => (
-                    <td className={`px-4 py-2 border ` + className} key={index}>
-                        {td[row]}
-                    </td>
-                ),
-                td,
-            )}
-            {td['モーダル']}
-            {children}
-        </tr>
+        <>
+            <tr key={index}>
+                {target.map(
+                    (row, index) => (
+                        <td className={`px-4 py-2 border ` + className} key={index}>
+                            {td[row]}
+                        </td>
+                    ),
+                    td,
+                )}
+                {td['モーダル']}
+                {children}
+            </tr>
+        </>
     ));
 
     return <tbody>{bodyItems}</tbody>;

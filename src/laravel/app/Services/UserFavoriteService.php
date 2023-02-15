@@ -16,10 +16,10 @@ class UserFavoriteService
         $this->userFavoriteInterface = $userFavoriteInterface;
     }
 
-    public function findAll(int $userId, int $type, string $route)
+    public function findAll(int $userId, int $type, string $route, int $page)
     {
         //複数になった場合foreachで回して取得
-        return $this->userFavoriteInterface->findAll($userId, $type, $route);
+        return $this->userFavoriteInterface->findAll($userId, $type, $route, $page);
     }
 
     public function findOne(Request $request, string $route)

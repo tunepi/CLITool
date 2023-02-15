@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Pagination\Paginator;
 
 /**
  * Gitリポジトリ
@@ -32,12 +33,12 @@ class UserRepository implements UserInterface
      *
      * @param int $id
      * @param int $page
-     * @return LengthAwarePaginator
+     * @return Paginator
      */
-    public function findAllOtherOwn(int $id, int $page): LengthAwarePaginator
+    public function findAllOtherOwn(int $id, int $page): Paginator
     {
         //第２引数は取得するカラム名、第３引数は表示ページのクエリ文字列、第4引数は該当ページ数
-        return $this->userRepository->where('id','!=',$id)->paginate(10, ['*'], 'page', $page);
+        return $this->userRepository->where('id','!=',$id)->simplePaginate(5, ['*'], 'page', $page);
     }
 
     /**
