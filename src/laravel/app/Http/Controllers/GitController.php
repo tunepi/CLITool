@@ -49,12 +49,19 @@ class GitController extends Controller
             $gitType = null;
         }
 
-        $gitLists = $this->gitService->findAll($page, $gitType);
+        if(empty($request->old('searchWord'))){
+            $searchWord = $request->searchWord;
+        }else{
+            $searchWord = null;
+        }
+
+        $gitLists = $this->gitService->findAll($page, $gitType, $searchWord);
 
         return Inertia::render('GitList',[
             'gits' => $gitLists,
             'general' => false,
             'searchGitType' => $gitType,
+            'searchWord' => $searchWord
         ]);
     }
 
@@ -85,11 +92,19 @@ class GitController extends Controller
             $gitType = null;
         }
 
-        $gitLists = $this->gitService->findAll($page, $gitType);
+        if(empty($request->old('searchWord'))){
+            $searchWord = $request->searchWord;
+        }else{
+            $searchWord = null;
+        }
+
+        $gitLists = $this->gitService->findAll($page, $gitType, $searchWord);
 
         return Inertia::render('GitList',[
             'gits' => $gitLists,
-            'general' => true
+            'general' => true,
+            'searchGitType' => $gitType,
+            'searchWord' => $searchWord
         ]);
     }
 
@@ -134,10 +149,10 @@ class GitController extends Controller
 
     public function search(Request $request) 
     {
-        Log::debug($request);
-        return Inertia::render('GitList',[
-            'gits' => $request
-        ]);
+        // return redirect()->route('git');
+        // return Inertia::render('GitList',[
+        //     'gits' => $request
+        // ]);
     }
 
 }

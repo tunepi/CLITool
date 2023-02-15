@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '@inertiajs/inertia-react';
 
 interface Props {
-    href: string;
+    href?: string;
     active: boolean;
     children: React.ReactNode;
 }

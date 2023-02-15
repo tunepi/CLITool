@@ -5,9 +5,10 @@ import { TableGitArray, TableUserArray, TableGitOptionArray } from '../type';
 interface Props {
     th: Array<string>;
     tds: TableGitArray[] | TableUserArray[] | TableGitOptionArray[];
+    children?: JSX.Element;
 }
 
-const MainTableLayout = ({ th, tds }: Props) => {
+const MainTableLayout = ({ th, tds, children }: Props) => {
     return (
         <div className="pt-5">
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -18,6 +19,7 @@ const MainTableLayout = ({ th, tds }: Props) => {
                             <Table.TableRow tds={tds} target={th} />
                         </Table>
                     </div>
+                    {children}
                 </div>
             </div>
         </div>

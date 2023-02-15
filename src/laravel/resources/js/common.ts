@@ -1,4 +1,5 @@
 export const gitType: string[] = [
+    '全て',
     'Setup and Config',
     'Getting and Creating Projects',
     'Basic Snapshotting',
@@ -7,7 +8,6 @@ export const gitType: string[] = [
     'Inspection and Comparison',
     'Patching',
     'Debugging',
-    'Guides',
     'Email',
     'External Systems',
     'Administration',

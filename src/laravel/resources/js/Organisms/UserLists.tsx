@@ -7,68 +7,16 @@ import PaginationList from './PaginationList';
 import { User, Links } from '@/type';
 import MainTableLayout from '@/Moleclues/MainTableLayout';
 import CheckRoll from '@/Atoms/CheckRoll';
+import Pagenate from '@/Moleclues/Pagenate';
 
 interface Props {
     users: User[];
-    links: Links[];
     current_page: number;
+    next_url?: string;
+    prev_url?: string;
 }
 
-//ユーザ一覧JSXの作成
-// const UserListData = ({ users, current_page }: Props): JSX.Element[] => {
-//     //渡ってきた値を変数に格納
-//     const userData = users;
-//     //詳細モーダル表示非表示用
-//     const [modalIsOpen, setModalIsOpen] = useState<number>();
-//     //useEffectフラグ用
-//     const [flg, setFlg] = useState<number>(0);
-//     //詳細モーダル表示用
-//     const setModalOpenById = (id: number, setModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>) => {
-//         if (setModalIsOpen == undefined) {
-//             return;
-//         }
-//         setModalIsOpen(id);
-//     };
-
-//     //useEffect起動用フラグ
-//     const setOpenFlg = (flg: number, setFlg: React.Dispatch<React.SetStateAction<number>>) => {
-//         flg === 0 ? setFlg(1) : setFlg(0);
-//     };
-
-//     return userData.map((user: User) => {
-//         return (
-//             <div className="pt-5" key={user.id.toString()}>
-//                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-//                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-//                         <div className="p-6 bg-white border-b border-gray-200 sm:flex space-x-8">
-//                             <div>{user.name}</div>
-//                             <Button
-//                                 variant="contained"
-//                                 color="primary"
-//                                 onClick={() => {
-//                                     setModalOpenById(user.id, setModalIsOpen);
-//                                     setOpenFlg(flg, setFlg);
-//                                 }}
-//                             >
-//                                 詳細
-//                             </Button>
-//                             <DetailUserModal
-//                                 user={user}
-//                                 detailModalIsOpen={modalIsOpen}
-//                                 flg={flg}
-//                                 setOpenFlg={setOpenFlg}
-//                                 setModalOpenById={setModalOpenById}
-//                                 current_page={current_page}
-//                             />
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         );
-//     });
-// };
-
-const UserLists = ({ users, links, current_page }: Props): JSX.Element => {
+const UserLists = ({ users, current_page, next_url, prev_url }: Props): JSX.Element => {
     //詳細モーダル表示非表示用
     const [modalIsOpen, setModalIsOpen] = useState<number>();
     //useEffectフラグ用
@@ -126,9 +74,11 @@ const UserLists = ({ users, links, current_page }: Props): JSX.Element => {
 
     return (
         <div className="hidden  sm:-my-px sm:ml-10 sm:block">
-            {/* {UserListData(props)} */}
-            <MainTableLayout th={target} tds={userData} />
-            <PaginationList links={links} />
+            <MainTableLayout
+                th={target}
+                tds={userData}
+                children={<Pagenate next_url={next_url} prev_url={prev_url} />}
+            />
         </div>
     );
 };

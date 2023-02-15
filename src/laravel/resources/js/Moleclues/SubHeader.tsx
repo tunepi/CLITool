@@ -14,19 +14,21 @@ const SubHeader = ({ headerName, buttonName, setModalIsOpen, general, children }
     return (
         <div className="flex justify-between">
             <h2 className="font-semibold text-xl text-gray-800 leading-tight flex items-center">{headerName}</h2>
-            {children}
-            {checkRoll == false && (
-                <div>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        children={buttonName}
-                        onClick={() => {
-                            setModalIsOpen(true);
-                        }}
-                    />
-                </div>
-            )}
+            <div className="flex">
+                {children}
+                {checkRoll == false && (
+                    <div className="ml-5">
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            children={buttonName}
+                            onClick={() => {
+                                setModalIsOpen(true);
+                            }}
+                        />
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

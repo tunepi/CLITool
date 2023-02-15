@@ -48,6 +48,8 @@ const Favorite = ({ auth, favorites, searchCommandType }: Props) => {
             general={true}
             auth={auth}
             redirect_url={'favorite'}
+            next_url={favorites.next_page_url}
+            prev_url={favorites.prev_page_url}
         />
     );
     return (

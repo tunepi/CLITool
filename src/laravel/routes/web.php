@@ -30,7 +30,8 @@ Route::get('/', function () {
 Route::group(['prefix' => 'general', 'middleware' => 'auth', 'verified'], function(){
     /** @var GitController */
     $gitController = GitController::class;
-    Route::get('/git/{git_type?}', [$gitController, 'general'])->name('gitList');
+    Route::get('/git', [$gitController, 'general'])->name('gitList');
+    Route::post('/git/search', [$gitController, 'general'])->name('searchGeneral');
 
     /** @var GitOptionController */
     $gitOptionController = GitOptionController::class;
@@ -63,6 +64,7 @@ Route::prefix('management')->group(function(){
     $gitController = GitController::class;
     //Git
     Route::get('/git', [$gitController, 'index'])->name('git');
+    Route::post('/git/search', [$gitController, 'general'])->name('searchManagement');
     Route::post('/git/register', [$gitController, 'create'])->name('gitRegister');
     Route::post('/git/update', [$gitController, 'update'])->name('gitUpdate');
     Route::post('/git/delete', [$gitController, 'delete'])->name('gitDelete');

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 class UserService
 {
@@ -24,9 +25,9 @@ class UserService
      *
      * @param int $id
      * @param int $page
-     * @return Collection
+     * @return Paginator
      */
-    public function findAllOtherOwn(int $id, int $page): LengthAwarePaginator
+    public function findAllOtherOwn(int $id, int $page): Paginator
     {
         return $this->userInterface->findAllOtherOwn($id, $page);
     }

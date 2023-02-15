@@ -1,13 +1,14 @@
 import React from 'react';
 
 interface Props {
-    type?: "submit" | "button" | "reset" | undefined;
+    type?: 'submit' | 'button' | 'reset' | undefined;
     className?: string;
     processing: boolean;
     children: React.ReactNode;
+    click?: any;
 }
 
-export default function Button({ type = 'submit', className = '', processing, children }: Props) {
+export default function Button({ type = 'submit', className = '', processing, children, click }: Props) {
     return (
         <button
             type={type}
@@ -17,6 +18,7 @@ export default function Button({ type = 'submit', className = '', processing, ch
                 } ` + className
             }
             disabled={processing}
+            onClick={click}
         >
             {children}
         </button>

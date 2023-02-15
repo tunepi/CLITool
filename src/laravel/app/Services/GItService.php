@@ -7,6 +7,7 @@ use App\Interfaces\GitInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Requests\Git\CreateRequest;
 use App\Models\Git;
+use Illuminate\Pagination\Paginator;
 
 class GitService
 {
@@ -23,11 +24,11 @@ class GitService
      *
      * @param integer $page
      * @param int | null $gitType
-     * @return LengthAwarePaginator
+     * @return Paginator
      */
-    public function findAll(int $page, ?int $gitType):LengthAwarePaginator
+    public function findAll(int $page, ?int $gitType, ?string $searchWord):Paginator
     {
-        return $this->gitInterface->findAll($page, $gitType);
+        return $this->gitInterface->findAll($page, $gitType, $searchWord);
     }
 
     /**

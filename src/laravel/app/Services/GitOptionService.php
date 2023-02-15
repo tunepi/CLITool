@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Interfaces\GitOptionInterface;
 use App\Models\GitOption;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class GitOptionService {
     /** @var GitOptionInterface $gitOptionInterface */
@@ -20,9 +21,9 @@ class GitOptionService {
      *
      * @return void
      */
-    public function findAll(int $gitId)
+    public function findAll(int $gitId, int $page):Paginator
     {
-        return $this->gitOptionInterface->findAll($gitId);
+        return $this->gitOptionInterface->findAll($gitId, $page);
     }
 
     /**

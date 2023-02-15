@@ -43,6 +43,13 @@ class UserFavoriteController extends Controller
     {
         $user = Auth::user();
 
+        //リダイレクト時、ページ数の保持のために使用
+        if(empty($request->old('page'))){
+            $page = $request->has('page') ? $request->page : 1;
+        }else{
+            $page = $request->old('page');
+        }
+
         if(empty($request->old('command_type'))){
             $type = $request->has('command_type') ? $request->command_type : 1;
         }else{
@@ -51,11 +58,11 @@ class UserFavoriteController extends Controller
 
         $routeArray = UserFavorite::TYPE_AND_ROUTE;
 
-        $favoriteInfo = $this->userFavoriteService->findAll($user->id, $type, $routeArray[strval($type)]);
+        $favoriteInfo = $this->userFavoriteService->findAll($user->id, $type, $routeArray[strval($type)], $page);
 
-        if(!empty($request->old('changeFavorite')) && $request->old('registerOrCancel') == 0){
-            $favoriteInfo->getCollection()->push($request->old('changeFavorite'));
-        }
+        // if(!empty($request->old('changeFavorite')) && $request->old('registerOrCancel') == 0){
+        //     $favoriteInfo->getCollection()->push($request->old('changeFavorite'));
+        // }
 
         return Inertia::render('Favorite',[
             'favorites' => $favoriteInfo,
@@ -67,22 +74,16 @@ class UserFavoriteController extends Controller
      * 新規登録
      *
      * @param Request $request
-     * @return RedirectResponse
      */
-    public function create(Request $request): RedirectResponse
+    public function create(Request $request)
     {
         $this->userFavoriteService->create($request);
-
-        return redirect()->route($request->redirect_url,[
-            'id' => $request->parent_command_id
-        ]);
     }
     
     /**
      * ブックマーク登録
      *
      * @param Request $request
-     * @return RedirectResponse
      */
     public function register(Request $request)
     {
@@ -96,14 +97,12 @@ class UserFavoriteController extends Controller
      * ブックマーク解除
      *
      * @param Request $request
-     * @return RedirectResponse
      */
-    public function cancel(Request $request): RedirectResponse
+    public function cancel(Request $request)
     {
         $isFavorite = 0;
 
         return $this->registerOrCancel($request, $isFavorite);
-
     }
 
     /**
@@ -111,29 +110,13 @@ class UserFavoriteController extends Controller
      *
      * @param Request $request
      * @param integer $isFavorite
-     * @return RedirectResponse
      */
-    private function registerOrCancel(Request $request, int $isFavorite): RedirectResponse
+    private function registerOrCancel(Request $request, int $isFavorite)
     {
         $routeArray = UserFavorite::TYPE_AND_ROUTE;
 
         $type = !empty($request->type) ? $request->type : 1 ;
 
         $this->userFavoriteService->registerOrCancel($request, $isFavorite, $routeArray[strval($type)]);
-
-        $changeFavorite = $this->userFavoriteService->findOne($request, $routeArray[strval($type)]);
-
-        //&request->old();で値を引き継げるようにする
-        $array = ['changeFavorite' => $changeFavorite, 'registerOrCancel' => $isFavorite];
-
-        //ブックマーク画面のリダイレクト
-        if($request->redirect_url === 'favorite'){
-            return redirect()->route($request->redirect_url)->withInput($array);
-        }
-
-        //コマンド画面のリダイレクト
-        return redirect()->route($request->redirect_url,[
-            'id' => $request->parent_command_id,
-        ]);
     }
 }

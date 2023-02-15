@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Interfaces\UserFavoriteInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Pagination\Paginator;
 
 class UserFavoriteRepository implements UserFavoriteInterface
 {
@@ -31,16 +32,18 @@ class UserFavoriteRepository implements UserFavoriteInterface
      *
      * @param integer $userId
      * @param integer $type
-     * @return LengthAwarePaginator
+     * @param string $withName
+     * @param integer $page
+     * @return Paginator
      */
-    public function findAll(int $userId, int $type, string $withName): LengthAwarePaginator
+    public function findAll(int $userId, int $type, string $withName, int $page): Paginator
     {
         // return $this->userFavoriteRepository->where('user_id','!=',$userId)->paginate(10, ['*'], 'page', $page);
         return $this->userFavoriteRepository->with($withName)
                                             ->where('user_id','=',$userId)
                                             ->where('type', $type)
                                             ->where('is_favorite', 1)
-                                            ->paginate(10);
+                                            ->simplePaginate(5, ['*'], 'page', $page);
     }
 
     /**

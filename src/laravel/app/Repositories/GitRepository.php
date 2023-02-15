@@ -6,6 +6,7 @@ use App\Interfaces\GitInterface;
 use App\Models\Git;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Pagination\Paginator;
 
 /**
  * Gitリポジトリ
@@ -20,7 +21,7 @@ class GitRepository implements GitInterface
      *
      * @param Git $git
      */
-    public function __construct(Git $git) 
+    public function __construct(Git $git)
     {
         $this->gitRepository = $git;
     }
@@ -30,17 +31,22 @@ class GitRepository implements GitInterface
      *
      * @param int $page
      * @param int | null $gitType
-     * @return LengthAwarePaginator
+     * @return Paginator
      */
-    public function findAll(int $page, ?int $gitType): LengthAwarePaginator
+    public function findAll(int $page, ?int $gitType, ?string $searchWord): Paginator
     {
         $query = Git::query();
 
         if($gitType ==! null){
             $query->where('git_type', '=', $gitType);
         }
+
+        if($searchWord ==! null){
+            $query->where('git_name', 'LIKE', "%{$searchWord}%");
+        }
+
         //第２引数は取得するカラム名、第３引数は表示ページのクエリ文字列、第4引数は該当ページ数
-        return $query->paginate(5, ['*'], 'page', $page);
+        return $query->simplePaginate(5, ['*'], 'page', $page);
     }
 
     /**
