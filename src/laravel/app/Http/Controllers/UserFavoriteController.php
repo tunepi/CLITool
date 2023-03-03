@@ -4,42 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Services\GitService;
-use App\Services\GitOptionService;
 use App\Services\UserFavoriteService;
-use App\Http\Controllers\GitOptionController;
 use App\Models\UserFavorite;
-use Illuminate\Support\Facades\Log;
-use \Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 class UserFavoriteController extends Controller
 {
-    /** @var GitService $gitService */
-    private GitService $gitService;
-
-    /** @var GitOptionService $gitOptionService */
-    private GitOptionService $gitOptionService;
-
     /** @var UserFavoriteService $userFavoriteService */
     private UserFavoriteService $userFavoriteService;
 
-    private GitOptionController $gitOptionController;
-
-    public function __construct(
-        GitService $gitService, 
-        GitOptionService $gitOptionService, 
-        UserFavoriteService $userFavoriteService,
-        GitOptionController $gitOptionController
-        )
+    public function __construct(UserFavoriteService $userFavoriteService)
     {
-        $this->gitService = $gitService;
-        $this->gitOptionService = $gitOptionService;
         $this->userFavoriteService = $userFavoriteService;
-        $this->gitOptionController = $gitOptionController;
     }
 
-    public function index(Request $request)
+    /**
+     * Undocumented function
+     *
+     * @param Request $request
+     * @return \Inertia\Response
+     */
+    public function index(Request $request): \Inertia\Response
     {
         $user = Auth::user();
 
@@ -59,10 +44,6 @@ class UserFavoriteController extends Controller
         $routeArray = UserFavorite::TYPE_AND_ROUTE;
 
         $favoriteInfo = $this->userFavoriteService->findAll($user->id, $type, $routeArray[strval($type)], $page);
-
-        // if(!empty($request->old('changeFavorite')) && $request->old('registerOrCancel') == 0){
-        //     $favoriteInfo->getCollection()->push($request->old('changeFavorite'));
-        // }
 
         return Inertia::render('Favorite',[
             'favorites' => $favoriteInfo,

@@ -60,7 +60,7 @@ const Trigger = ({ children }: Children) => {
     );
 };
 
-const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-white', children }: ContentProps) => {
+const Content = ({ align = 'right', width = '40', contentClasses = 'py-1 bg-white', children }: ContentProps) => {
     const { open, setOpen } = useContext(DropDownContext);
 
     let alignmentClasses = 'origin-top';
@@ -73,8 +73,8 @@ const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-whit
 
     let widthClasses = '';
 
-    if (width === '48') {
-        widthClasses = 'w-48';
+    if (width === '40') {
+        widthClasses = 'w-40';
     }
 
     return (
@@ -109,7 +109,7 @@ const DropdownLink = ({ href, method = 'post', as = 'a', children }: DropdownLin
             href={href}
             method={method}
             as={as}
-            className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+            className="block w-full px-4 py-2 text-center text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
         >
             {children}
         </Link>
@@ -119,10 +119,11 @@ const DropdownLink = ({ href, method = 'post', as = 'a', children }: DropdownLin
 const DropdownModalButton = ({ children, handleClick }: DropdownModalButtonProps) => {
     return (
         <Button
-            className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+            className="block w-full text-left text-sm leading-5 text-gray-900 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
             onClick={() => {
                 handleClick();
             }}
+            color={'inherit'}
         >
             {children}
         </Button>

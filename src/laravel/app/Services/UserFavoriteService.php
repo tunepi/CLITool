@@ -5,24 +5,47 @@ use App\Interfaces\UserFavoriteInterface;
 use Illuminate\Http\Request;
 use App\Models\UserFavorite;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Pagination\Paginator;
 
+/** ユーザお気に入りサービス */
 class UserFavoriteService
 {
-    /** @var UserInterface ユーザインターファイス */
-    private UserFavoriteInterface $userFavoriteInterface;
+    /** @var UserFavoriteInterface $userFavoriteInterface */
+    private $userFavoriteInterface;
 
+    /**
+     * コンストラクタ
+     *
+     * @param UserFavoriteInterface $userFavoriteInterface
+     */
     public function __construct(UserFavoriteInterface $userFavoriteInterface)
     {
         $this->userFavoriteInterface = $userFavoriteInterface;
     }
 
-    public function findAll(int $userId, int $type, string $route, int $page)
+    /**
+     * 一覧取得
+     *
+     * @param int $userId
+     * @param int $type
+     * @param string $route
+     * @param int $page
+     * @return Paginator
+     */
+    public function findAll(int $userId, int $type, string $route, int $page): Paginator
     {
         //複数になった場合foreachで回して取得
         return $this->userFavoriteInterface->findAll($userId, $type, $route, $page);
     }
 
-    public function findOne(Request $request, string $route)
+    /**
+     * 一件の取得
+     *
+     * @param Request $request
+     * @param string $route
+     * @return null|UserFavorite
+     */
+    public function findOne(Request $request, string $route): ?UserFavorite
     {
         return $this->userFavoriteInterface->findOne($request->user_id, $request->command_id, $request->type, $route);
     }
@@ -44,14 +67,15 @@ class UserFavoriteService
 
         $userFavoriteInstance = new UserFavorite();
 
-        return $this->userFavoriteInterface->save($userFavoriteInstance, $userFavoriteInfo);
+        $this->userFavoriteInterface->save($userFavoriteInstance, $userFavoriteInfo);
     }
     
     /**
      * 登録か解除か
      *
      * @param Request $request
-     * @param integer $isFavorite
+     * @param int $isFavorite
+     * @param string $route
      * @return void
      */
     public function registerOrCancel(Request $request, int $isFavorite, string $route)
@@ -62,8 +86,7 @@ class UserFavoriteService
 
         $userFavoriteInstance = $this->userFavoriteInterface->findOne($request->user_id, $request->command_id, $request->type, $route);
 
-        return $this->userFavoriteInterface->save($userFavoriteInstance, $userFavoriteInfo);
-
+        $this->userFavoriteInterface->save($userFavoriteInstance, $userFavoriteInfo);
     }
 }
 

@@ -4,16 +4,15 @@ namespace App\Services;
 
 use App\Interfaces\UserInterface;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 
+/** ユーザサービス */
 class UserService
 {
-    /** @var UserInterface ユーザインターファイス */
-    private UserInterface $userInterface;
+    /** @var UserInterface $userInterface ユーザインターファイス */
+    private $userInterface;
 
     public function __construct(UserInterface $userInterface)
     {
@@ -35,7 +34,7 @@ class UserService
     /**
      * ユーザの一件取得
      *
-     * @param integer $id
+     * @param int $id
      * @return User|null
      */
     public function findOne(int $id): ?User
@@ -51,9 +50,6 @@ class UserService
      */
     public function create(Request $request)
     {
-        if($request === null){
-            return;
-        }
 
         /** @var array $userInfo ユーザ登録情報 */
         $userInfo = [
@@ -76,10 +72,6 @@ class UserService
      */
     public function update(Request $request)
     {
-        if($request === null){
-            return;
-        }
-
         $id = $request->id;
 
         $user = $this->userInterface->findOne($id);
@@ -91,19 +83,22 @@ class UserService
             'roll' => $request->roll,
         ];
 
-        return $this->userInterface->save($user, $userInfo);
+        $this->userInterface->save($user, $userInfo);
     }
 
+    /**
+     * ユーザの削除
+     *
+     * @param Request $request
+     * @return void
+     */
     public function delete(Request $request)
     {
-        if($request === null){
-            return;
-        }
 
         $id = $request->id;
 
         $user = $this->userInterface->findOne($id);
 
-        return $this->userInterface->delete($user);
+        $this->userInterface->delete($user);
     }
 }

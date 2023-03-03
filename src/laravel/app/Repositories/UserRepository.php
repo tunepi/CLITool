@@ -4,10 +4,6 @@ namespace App\Repositories;
 
 use App\Interfaces\UserInterface;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Pagination\Paginator;
 
 /**
@@ -15,17 +11,18 @@ use Illuminate\Pagination\Paginator;
  */
 class UserRepository implements UserInterface
 {
-    /** @var User */
-    private User $user;
+
+    /** @var User $userRepository */
+    private $userRepository;
 
     /**
      * construct
      *
      * @param User $user
      */
-    public function __construct(User $user) 
+    public function __construct(User $userRepository) 
     {
-        $this->userRepository = $user;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -44,7 +41,7 @@ class UserRepository implements UserInterface
     /**
      * ユーザ一件の取得
      *
-     * @param integer $id
+     * @param int $id
      * @return User|null
      */
     public function findOne(int $id): ?User
@@ -61,7 +58,7 @@ class UserRepository implements UserInterface
      */
     public function save(User $userInstance, Array $userInfo)
     {
-        if($userInstance === null || empty($userInfo)){
+        if(empty($userInstance->first()) || empty($userInfo)){
             return;
         }
 
@@ -78,7 +75,7 @@ class UserRepository implements UserInterface
      */
     public function delete(User $user)
     {
-        if($user === null){
+        if(empty($user->first())){
             return;
         }
 

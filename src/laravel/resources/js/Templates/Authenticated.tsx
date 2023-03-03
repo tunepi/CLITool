@@ -14,8 +14,8 @@ interface Props {
 
 export default function Authenticated({ auth, header, children }: Props) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-    const [IsOpenModal, setIsModalOpen] = useState('');
-
+    //プロフィール用変数と関数
+    const [IsOpenModal, setIsModalOpen] = useState<number>();
     const handleClick = () => {
         setIsModalOpen(auth.user.id);
     };
@@ -27,7 +27,7 @@ export default function Authenticated({ auth, header, children }: Props) {
                     <div className="flex justify-between h-16">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
-                                <Link href="/">
+                                <Link href={route('gitList')}>
                                     <ApplicationLogo className="block h-9 w-auto text-gray-500" />
                                 </Link>
                             </div>
@@ -104,11 +104,7 @@ export default function Authenticated({ auth, header, children }: Props) {
                 </div>
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
-                    <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
-                        </ResponsiveNavLink>
-                    </div>
+                    <div className="pt-2 pb-3 space-y-1"></div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
                         <div className="px-4">

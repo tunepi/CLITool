@@ -91,13 +91,4 @@ class User extends Authenticatable
         return $date->format('Y年m月d日');
     }
 
-    /**
-     * ロールの名称設定
-     *
-     * @return string
-     */
-    // protected function getRollAttribute()
-    // {
-    //     return $this->attributes['roll'] === 1 ? '管理者' : '一般';
-    // }
 }

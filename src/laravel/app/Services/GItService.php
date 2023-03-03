@@ -4,11 +4,11 @@ namespace App\Services;
 
 use Illuminate\Http\Request;
 use App\Interfaces\GitInterface;
-use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Requests\Git\CreateRequest;
 use App\Models\Git;
 use Illuminate\Pagination\Paginator;
 
+/** Gitサービス */
 class GitService
 {
     /** @var GitInterface $gitInterface */
@@ -22,7 +22,7 @@ class GitService
     /**
      * 一覧取得
      *
-     * @param integer $page
+     * @param int $page
      * @param int | null $gitType
      * @return Paginator
      */

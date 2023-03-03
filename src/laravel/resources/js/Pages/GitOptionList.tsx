@@ -13,12 +13,12 @@ interface Props {
     general: boolean;
     current_page?: number;
     git_type?: number;
+    searchWord?: string;
 }
 
-const GitOptionList = ({ auth, git, gits, general, current_page, git_type }: Props) => {
-    console.log(git_type);
+const GitOptionList = ({ auth, git, gits, general, current_page, git_type, searchWord }: Props) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-
+    console.log(searchWord);
     const gitUrl = general == true ? 'gitList' : 'git';
     return (
         <MainLayout
@@ -32,7 +32,7 @@ const GitOptionList = ({ auth, git, gits, general, current_page, git_type }: Pro
                     general={general}
                     children={
                         <NavLink
-                            href={route(gitUrl, { page: current_page, git_type: git_type })}
+                            href={route(gitUrl, { page: current_page, git_type: git_type, searchWord: searchWord })}
                             active={false}
                             children={'戻る'}
                         />

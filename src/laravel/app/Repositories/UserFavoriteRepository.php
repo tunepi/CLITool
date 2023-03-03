@@ -10,30 +10,26 @@ use Illuminate\Pagination\Paginator;
 
 class UserFavoriteRepository implements UserFavoriteInterface
 {
-    /** @var User */
-    private User $user;
-
-    /** @var UserFavorite */
-    private UserFavorite $userFavorite;
+    /** @var UserFavorite $userFavoriteRepository */
+    private $userFavoriteRepository;
 
     /**
      * construct
      *
-     * @param User $user
+     * @param UserFavorite $userFavorite
      */
-    public function __construct(User $user, UserFavorite $userFavorite) 
+    public function __construct(UserFavorite $userFavoriteRepository) 
     {
-        $this->userRepository = $user;
-        $this->userFavoriteRepository = $userFavorite;
+        $this->userFavoriteRepository = $userFavoriteRepository;
     }
 
     /**
      * 全取得
      *
-     * @param integer $userId
-     * @param integer $type
+     * @param int $userId
+     * @param int $type
      * @param string $withName
-     * @param integer $page
+     * @param int $page
      * @return Paginator
      */
     public function findAll(int $userId, int $type, string $withName, int $page): Paginator
@@ -49,9 +45,10 @@ class UserFavoriteRepository implements UserFavoriteInterface
     /**
      * 1件の取得
      *
-     * @param integer $userId
-     * @param integer $commandId
-     * @param integer $type
+     * @param int $userId
+     * @param int $commandId
+     * @param int $type
+     * @param string $withName
      * @return UserFavorite|null
      */
     public function findOne(int $userId, int $commandId, int $type, string $withName): ?UserFavorite
@@ -68,7 +65,7 @@ class UserFavoriteRepository implements UserFavoriteInterface
      */
     public function save(UserFavorite $userFavoriteInstance, Array $favoriteInfo)
     {
-        if($userFavoriteInstance === null || empty($favoriteInfo)){
+        if(empty($userFavoriteInstance->first()) || empty($favoriteInfo)){
             return;
         }
 

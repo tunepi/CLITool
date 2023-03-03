@@ -7,16 +7,14 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Services\GitService;
 use App\Http\Requests\Git\CreateRequest;
-use GuzzleHttp\Promise\Create;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\Rules;
 use \Illuminate\Http\RedirectResponse;
 
+/** Gitコントローラ */
 class GitController extends Controller
 {
 
-    /** @var GitServices $gitService */
-    private GitService $gitService;
+    /** @var GitService $gitService */
+    private $gitService;
 
     public function __construct(GitService $gitService)
     {
@@ -26,9 +24,9 @@ class GitController extends Controller
      * メイン画面の表示
      *
      * @param Request $request
-     * @return void
+     * @return \Inertia\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): \Inertia\Response
     {
         $user = Auth::user();
 
@@ -69,9 +67,9 @@ class GitController extends Controller
      * 一般権限の一覧画面
      *
      * @param Request $request
-     * @return void
+     * @return \Inertia\Response
      */
-    public function general(Request $request)
+    public function general(Request $request): \Inertia\Response
     {
         $user = Auth::user();
 
@@ -112,9 +110,9 @@ class GitController extends Controller
      * 新規登録
      *
      * @param CreateRequest $request
-     * @return void
+     * @return RedirectResponse
      */
-    public function create(CreateRequest $request)
+    public function create(CreateRequest $request): RedirectResponse
     {
         $this->gitService->create($request);
 
@@ -125,9 +123,9 @@ class GitController extends Controller
      * 更新
      *
      * @param CreateRequest $request
-     * @return void
+     * @return RedirectResponse
      */
-    public function update(CreateRequest $request)
+    public function update(CreateRequest $request): RedirectResponse
     {
         $this->gitService->update($request);
 
@@ -138,21 +136,13 @@ class GitController extends Controller
      * 削除
      *
      * @param Request $request
-     * @return void
+     * @return RedirectResponse
      */
-    public function delete(Request $request)
+    public function delete(Request $request): RedirectResponse
     {
         $this->gitService->delete($request);
 
         return redirect()->route('git');
-    }
-
-    public function search(Request $request) 
-    {
-        // return redirect()->route('git');
-        // return Inertia::render('GitList',[
-        //     'gits' => $request
-        // ]);
     }
 
 }

@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Models\User;
 use App\Services\UserService;
 use App\Http\Requests\User\EditRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules;
 use \Illuminate\Http\RedirectResponse;
 
@@ -30,11 +28,9 @@ class UserController extends Controller
      * ユーザ一覧の表示
      *
      * @param Request $request
-     * @param int|null $page
-     * @return void
      * @return \Inertia\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): \Inertia\Response
     {
         $user = Auth::user();
 
@@ -61,7 +57,6 @@ class UserController extends Controller
      * ユーザの新規登録
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Illuminate\Validation\ValidationException
      */

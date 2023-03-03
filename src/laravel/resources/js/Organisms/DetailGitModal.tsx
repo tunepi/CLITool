@@ -47,7 +47,7 @@ const DetailGitModal = ({
     }, [flg]);
 
     return (
-        <div>
+        <>
             <CommonModal isOpen={git.id === modalIsOpen} onRequestClose={onCloseModal} id={git.id}>
                 <div>
                     <label className={`block font-medium text-sm text-gray-700 mr-10 w-13`}>説明</label>
@@ -111,7 +111,7 @@ const DetailGitModal = ({
                     current_page={current_page}
                 />
             )}
-        </div>
+        </>
     );
 };
 

@@ -49,12 +49,12 @@ const DetailGitOptionModal = ({
     }, [flg]);
 
     return (
-        <div>
+        <>
             <CommonModal isOpen={gitOption.id === modalIsOpen} onRequestClose={onCloseModal} id={gitOption.id}>
                 <div>
                     <label className={`block font-medium text-sm text-gray-700 mr-10 w-13`}>説明</label>
                     <div className="border-2 border-block-500">
-                        <div className="flex ml-10 mt-2">{gitOption.description}</div>
+                        <div className="flex ml-1 break-words whitespace-pre-wrap">{gitOption.description}</div>
                     </div>
                     <div className="flex items-center justify-around mt-4 space-x-14">
                         {general == false && (
@@ -113,7 +113,7 @@ const DetailGitOptionModal = ({
                     current_page={current_page}
                 />
             )}
-        </div>
+        </>
     );
 };
 

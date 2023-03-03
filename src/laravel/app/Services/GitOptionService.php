@@ -7,6 +7,7 @@ use App\Models\GitOption;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 
+/** GitOptionサービス */
 class GitOptionService {
     /** @var GitOptionInterface $gitOptionInterface */
     private GitOptionInterface $gitOptionInterface;
@@ -17,11 +18,13 @@ class GitOptionService {
     }
 
     /**
-     * 5件ずつ取得
+     * 全件取得
      *
-     * @return void
+     * @param int $gitId
+     * @param int $page
+     * @return Paginator
      */
-    public function findAll(int $gitId, int $page):Paginator
+    public function findAll(int $gitId, int $page): Paginator
     {
         return $this->gitOptionInterface->findAll($gitId, $page);
     }
@@ -42,7 +45,7 @@ class GitOptionService {
 
         $gitOptionInstance = new GitOption;
 
-        return $this->gitOptionInterface->save($gitOptionInstance, $gitOptionInfo);
+        $this->gitOptionInterface->save($gitOptionInstance, $gitOptionInfo);
     }
 
     /**
@@ -60,7 +63,7 @@ class GitOptionService {
 
         $gitOptionInstance = $this->gitOptionInterface->findOne($request->id);
 
-        return $this->gitOptionInterface->save($gitOptionInstance, $gitOptionInfo);
+        $this->gitOptionInterface->save($gitOptionInstance, $gitOptionInfo);
     }
 
     /**
@@ -73,6 +76,6 @@ class GitOptionService {
     {
         $gitOptionInstance = $this->gitOptionInterface->findOne($request->id);
 
-        return $this->gitOptionInterface->delete($gitOptionInstance);
+        $this->gitOptionInterface->delete($gitOptionInstance);
     }
 }

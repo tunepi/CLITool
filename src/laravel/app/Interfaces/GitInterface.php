@@ -2,9 +2,7 @@
 
 namespace App\Interfaces;
 
-use App\Repositories\GitRepository;
 use App\Models\Git;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 
 interface GitInterface 
@@ -13,8 +11,9 @@ interface GitInterface
     /**
      * 一覧取得
      *
-     * @param integer $page
-     * @param int | null $gitType
+     * @param int $page
+     * @param int|null $gitType
+     * @param string|null $searchWord
      * @return Paginator
      */
     public function findAll(int $page, ?int $gitType, ?string $searchWord): Paginator;

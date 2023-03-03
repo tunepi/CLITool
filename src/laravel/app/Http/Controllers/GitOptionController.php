@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\GitOption;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Services\GitService;
 use App\Services\GitOptionService;
 use App\Http\Requests\GitOption\CreateRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Log;
 
+/** GitOptionコントローラ */
 class GitOptionController extends Controller
 {
     /** @var GitService $gitService */
@@ -25,7 +24,13 @@ class GitOptionController extends Controller
         $this->gitOptionService = $gitOptionService;
     }
 
-    public function index(Request $request)
+    /**
+     * 管理用GitページURL
+     *
+     * @param Request $request
+     * @return \Inertia\Response
+     */
+    public function index(Request $request): \Inertia\Response
     {
         $git = $this->gitService->findOne($request);
 
@@ -61,7 +66,13 @@ class GitOptionController extends Controller
         ]);
     }
 
-    public function general(Request $request)
+    /**
+     * 一般用GitOptionページ
+     *
+     * @param Request $request
+     * @return \Inertia\Response
+     */
+    public function general(Request $request): \Inertia\Response
     {
         $git = $this->gitService->findOne($request);
 
@@ -88,19 +99,26 @@ class GitOptionController extends Controller
             $gitType = $request->old('git_type');
         }
 
+        if(empty($request->old('searchWord'))){
+            $searchWord = $request->has('searchWord') ? $request->searchWord : '';
+        }else{
+            $searchWord = $request->old('searchWord');
+        }
+
         return Inertia::render('GitOptionList',[
             'git' => $git,
             'gits' => $gits,
             'general' => true,
             'current_page' => $currentPage,
-            'git_type' => $gitType
+            'git_type' => $gitType,
+            'searchWord' => $searchWord
         ]);
     }
 
     /**
      * 新規登録
      *
-     * @param Request $request
+     * @param CreateRequest $request
      * @return RedirectResponse
      */
     public function create(CreateRequest $request): RedirectResponse
