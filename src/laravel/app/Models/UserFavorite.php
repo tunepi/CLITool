@@ -35,7 +35,7 @@ class UserFavorite extends Model
 {
     use HasFactory, Notifiable, SoftDeletes;
 
-    /** @var Git */
+    /** @var number Git */
     const GIT = 1;
 
     const TYPE_AND_ROUTE = [

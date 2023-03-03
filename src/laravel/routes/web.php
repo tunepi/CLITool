@@ -20,11 +20,11 @@ use App\Http\Controllers\GitOptionController;
 */
 
 //ログイン画面 or dashboard画面
-Route::get('/', function () {
-    return Inertia::render('Dashboard',[
-        'user' => 'user'
-    ]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/', function () {
+//     return Inertia::render('Dashboard',[
+//         'user' => 'user'
+//     ]);
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::group(['prefix' => 'general', 'middleware' => 'auth', 'verified'], function(){

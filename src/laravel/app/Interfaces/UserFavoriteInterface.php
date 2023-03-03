@@ -2,8 +2,6 @@
 namespace App\Interfaces;
 
 use App\Models\UserFavorite;
-use App\Models\User;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 
 /** ユーザお気に入りインターフェイス */
@@ -12,8 +10,10 @@ interface UserFavoriteInterface
     /**
      * 全取得
      *
-     * @param integer $userId
-     * @param integer $type
+     * @param int $userId
+     * @param int $type
+     * @param string $withName
+     * @param int $page
      * @return Paginator
      */
     public function findAll(int $userId, int $type, string $withName, int $page): Paginator;
@@ -21,9 +21,9 @@ interface UserFavoriteInterface
     /**
      * 1件の取得
      *
-     * @param integer $userId
-     * @param integer $commandId
-     * @param integer $type
+     * @param int $userId
+     * @param int $commandId
+     * @param int $type
      * @param string $withName
      * @return UserFavorite|null
      */

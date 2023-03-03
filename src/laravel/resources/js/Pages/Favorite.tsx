@@ -16,8 +16,6 @@ interface Props {
 }
 
 const Favorite = ({ auth, favorites, searchCommandType }: Props) => {
-    console.log(favorites);
-
     const { data, setData, processing, errors, reset } = useForm({
         command_type: '',
     });
@@ -61,17 +59,17 @@ const Favorite = ({ auth, favorites, searchCommandType }: Props) => {
                     headerName="ブックマーク"
                     setModalIsOpen={setModalIsOpen}
                     general={true}
-                    children={
-                        <SelectBox
-                            options={COMMAND}
-                            name={'git_type'}
-                            defaultValue={searchCommandType}
-                            handleChange={onHandleChangeBySelected}
-                            className={
-                                'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm'
-                            }
-                        />
-                    }
+                    // children={
+                    //     <SelectBox
+                    //         options={COMMAND}
+                    //         name={'git_type'}
+                    //         defaultValue={searchCommandType}
+                    //         handleChange={onHandleChangeBySelected}
+                    //         className={
+                    //             'border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm'
+                    //         }
+                    //     />
+                    // }
                 />
             }
             children={<div className="w-full">{childrenElement}</div>}

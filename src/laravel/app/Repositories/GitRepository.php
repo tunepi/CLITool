@@ -4,8 +4,6 @@ namespace App\Repositories;
 
 use App\Interfaces\GitInterface;
 use App\Models\Git;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Pagination\Paginator;
 
 /**
@@ -13,35 +11,37 @@ use Illuminate\Pagination\Paginator;
  */
 class GitRepository implements GitInterface
 {
-    /** @var Git */
-    private Git $git;
+    //(一度も呼ばれていないためコメントアウト)
+    // /** @var Git $gitRepository */
+    // // private $gitRepository;
 
-    /**
-     * construct
-     *
-     * @param Git $git
-     */
-    public function __construct(Git $git)
-    {
-        $this->gitRepository = $git;
-    }
+    // /**
+    //  * construct
+    //  *
+    //  * @param Git $gitRepository
+    //  */
+    // public function __construct(Git $gitRepository)
+    // {
+    //     $this->gitRepository = $gitRepository;
+    // }
 
     /**
      * 一覧取得
      *
      * @param int $page
      * @param int | null $gitType
+     * @param string | null $searchWord
      * @return Paginator
      */
     public function findAll(int $page, ?int $gitType, ?string $searchWord): Paginator
     {
         $query = Git::query();
 
-        if($gitType ==! null){
+        if(!empty($gitType)){
             $query->where('git_type', '=', $gitType);
         }
 
-        if($searchWord ==! null){
+        if(!empty($searchWord)){
             $query->where('git_name', 'LIKE', "%{$searchWord}%");
         }
 
@@ -75,7 +75,7 @@ class GitRepository implements GitInterface
      */
     public function save(Git $gitInstance, array $gitInfo)
     {
-        if($gitInstance === null || empty($gitInfo)){
+        if(empty($gitInstance->first()) || empty($gitInfo)){
             return;
         }
 
@@ -92,7 +92,7 @@ class GitRepository implements GitInterface
      */
     public function delete(Git $git)
     {
-        if($git === null){
+        if(empty($git->first())){
             return;
         }
 

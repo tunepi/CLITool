@@ -4,8 +4,6 @@ namespace App\Repositories;
 
 use App\Interfaces\GitOptionInterface;
 use App\Models\GitOption;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Pagination\Paginator;
 
 /**
@@ -13,23 +11,24 @@ use Illuminate\Pagination\Paginator;
  */
 class GitOptionRepository implements GitOptionInterface
 {
-    /** @var GitOption $gitOption */
-    private GitOption $gitOption;
+
+    /** @var GitOption $gitOptionRepository */
+    private $gitOptionRepository;
 
     /**
      * construct
      *
-     * @param GitOption $gitOption
+     * @param GitOption $gitOptionRepository
      */
-    public function __construct(GitOption $gitOption) 
+    public function __construct(GitOption $gitOptionRepository) 
     {
-        $this->gitOptionRepository = $gitOption;
+        $this->gitOptionRepository = $gitOptionRepository;
     }
 
     /**
      * 一覧取得
-     *
-     * 
+     * @param int $gitId
+     * @param int $page
      * @return Paginator
      */
     public function findAll(int $gitId, int $page): Paginator
@@ -42,11 +41,13 @@ class GitOptionRepository implements GitOptionInterface
     /**
      * 1件取得
      *
-     * @param integer|null $id
+     * @param int|null $id
      * @return null|GitOption
      */
     public function findOne(?int $id): ?GitOption
     {
+        $query = GitOption::query();
+
         if(!empty($id)){
             $query = $this->gitOptionRepository->where('id', '=', $id);
         }
@@ -63,7 +64,7 @@ class GitOptionRepository implements GitOptionInterface
      */
     public function save(GitOption $gitOptionInstance, Array $gitOptionInfo)
     {
-        if($gitOptionInstance === null || empty($gitOptionInfo)){
+        if(empty($gitOptionInstance->first()) || empty($gitOptionInfo)){
             return;
         }
 
@@ -80,7 +81,7 @@ class GitOptionRepository implements GitOptionInterface
      */
     public function delete(GitOption $gitOption)
     {
-        if($gitOption === null){
+        if(empty($gitOption->first())){
             return;
         }
 

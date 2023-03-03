@@ -3,9 +3,6 @@
 namespace App\Interfaces;
 
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 
 /**

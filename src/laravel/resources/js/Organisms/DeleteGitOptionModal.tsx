@@ -46,9 +46,6 @@ const DeleteGitOptionModal = ({ gitOption, IsOpen, flg, detailModalIsOpen, curre
         e.preventDefault();
 
         post(route('gitOptionDelete'), {
-            onStart: (visit) => {
-                console.log(visit);
-            },
             onSuccess: () => {
                 setModalIsOpen(undefined);
             },

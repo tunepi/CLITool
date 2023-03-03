@@ -16,19 +16,23 @@ use App\Interfaces\GitOptionInterface;
 use App\Interfaces\UserInterface;
 use App\Interfaces\UserFavoriteInterface;
 
-class AppServiceProvider extends ServiceProvider
+class RepositoryServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * Register services.
      *
      * @return void
      */
     public function register()
     {
+        $this->app->bind(GitInterface::class, GitRepository::class);
+        $this->app->bind(GitOptionInterface::class, GitOptionRepository::class);
+        $this->app->bind(UserInterface::class, UserRepository::class);
+        $this->app->bind(UserFavoriteInterface::class, UserFavoriteRepository::class);
     }
 
     /**
-     * Bootstrap any application services.
+     * Bootstrap services.
      *
      * @return void
      */

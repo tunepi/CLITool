@@ -8,7 +8,7 @@ import { User } from '../type';
 
 interface Props {
     user: User;
-    accountModalIsOpen: number;
+    accountModalIsOpen?: number;
     setModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
 
@@ -36,7 +36,7 @@ const AccountDetailModal = ({ user, accountModalIsOpen, setModalIsOpen }: Props)
     };
 
     return (
-        <div>
+        <>
             <CommonModal isOpen={accountModalIsOpen == user.id} onRequestClose={onCloseModal} id={user.id}>
                 <div>
                     <div className="border-2 border-block-500">
@@ -86,7 +86,7 @@ const AccountDetailModal = ({ user, accountModalIsOpen, setModalIsOpen }: Props)
                 current_page={1}
                 isProfile={isProfile}
             />
-        </div>
+        </>
     );
 };
 

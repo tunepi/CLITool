@@ -33,19 +33,17 @@ const CommonModal = ({ isOpen, onRequestClose, children, id }: Props) => {
     };
 
     return (
-        <div>
-            <Modal
-                isOpen={isOpen}
-                style={customStyles}
-                appElement={document.getElementById('app')}
-                onRequestClose={() => {
-                    onCloseModal(id);
-                }}
-                closeTimeoutMS={200}
-            >
-                {children}
-            </Modal>
-        </div>
+        <Modal
+            isOpen={isOpen}
+            style={customStyles}
+            appElement={document.getElementById('app')}
+            onRequestClose={() => {
+                onCloseModal(id);
+            }}
+            closeTimeoutMS={200}
+        >
+            {children}
+        </Modal>
     );
 };
 
