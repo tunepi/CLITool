@@ -13,16 +13,20 @@ interface Props {
     flg: number;
     detailModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>;
     current_page: number;
+    searchGitType?: number;
+    searchWord?: string;
 }
 
 //event.target.nameの値宣言
-type Name = 'id' | 'git_name' | 'page';
+type Name = 'id' | 'git_name' | 'page' | 'searchGitType' | 'searchWord';
 
-const DeleteGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page }: Props) => {
+const DeleteGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page, searchGitType, searchWord }: Props) => {
     const { data, setData, post, processing } = useForm({
         id: git.id,
         git_name: git.git_name,
         page: current_page,
+        searchGitType: searchGitType,
+        searchWord: searchWord,
     });
 
     //modal表示非表示用
@@ -62,10 +66,19 @@ const DeleteGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page }: P
                 <form onSubmit={deleteGit}>
                     <Input type="hidden" name="id" value={data.id} handleChange={onHandleChange} />
                     <Input type="hidden" name="page" value={data.page} handleChange={onHandleChange} />
+                    <Input
+                        type="hidden"
+                        name="searchGitType"
+                        value={data.searchGitType}
+                        handleChange={onHandleChange}
+                    />
+                    <Input type="hidden" name="searchWord" value={data.searchWord} handleChange={onHandleChange} />
                     <div className="border-2 border-block-500">
                         <div className="flex pl-10">
-                            <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>ユーザ</label>
-                            <div className="ml-1">{data.git_name}</div>
+                            <label className={`block font-medium text-sm text-gray-700 mr-10 w-15 pt-2`}>
+                                コマンド名
+                            </label>
+                            <div className="ml-1 pt-1">{data.git_name}</div>
                         </div>
                         <div className="pl-10 mt-2">
                             <p>上記コマンドを削除します。</p>

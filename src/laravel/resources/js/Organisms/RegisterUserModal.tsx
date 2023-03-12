@@ -65,7 +65,7 @@ const RegisterUserModal = ({ setModalIsOpen, modalIsOpen, current_page }: Props)
                 <ValidationErrors errors={errors} />
                 <Input type="hidden" name="page" value={data.page} handleChange={onHandleChange} />
                 <div>
-                    <Label forInput="name" value="Name" />
+                    <Label forInput="name" value="ユーザ名" />
 
                     <Input
                         type="text"

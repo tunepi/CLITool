@@ -64,7 +64,7 @@ class GitOptionRepository implements GitOptionInterface
      */
     public function save(GitOption $gitOptionInstance, Array $gitOptionInfo)
     {
-        if(empty($gitOptionInstance->first()) || empty($gitOptionInfo)){
+        if(empty($gitOptionInfo)){
             return;
         }
 

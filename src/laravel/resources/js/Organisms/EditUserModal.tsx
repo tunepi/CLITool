@@ -79,7 +79,7 @@ const EditUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page, isP
                 <Input type="hidden" name="id" value={data.id} handleChange={onHandleChange} />
                 <Input type="hidden" name="page" value={data.page} handleChange={onHandleChange} />
                 <div>
-                    <Label forInput="name" value="氏名" />
+                    <Label forInput="name" value="ユーザ名" />
                     <Input
                         type="text"
                         name="name"

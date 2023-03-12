@@ -65,7 +65,9 @@ class UserFavoriteService
             'is_favorite' => 1
         ];
 
-        $userFavoriteInstance = new UserFavorite();
+        $userFavoriteInstance = new UserFavorite;
+
+        Log::debug($userFavoriteInstance);
 
         $this->userFavoriteInterface->save($userFavoriteInstance, $userFavoriteInfo);
     }

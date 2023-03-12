@@ -33,9 +33,10 @@ const EditGitOptionModal = ({ gitOption, IsOpen, flg, detailModalIsOpen, current
     const [modalIsOpen, setModalIsOpen] = useState<number | undefined>();
 
     //modal非表示用
-    const onCloseModal = () => {
+    const onCloseModal = (id?: string) => {
         setModalIsOpen(undefined);
         reset('git_option');
+        id == undefined ? alert('idが存在しません') : detailModalIsOpen(Number(id));
     };
 
     useEffect(() => {
@@ -103,7 +104,14 @@ const EditGitOptionModal = ({ gitOption, IsOpen, flg, detailModalIsOpen, current
                     <Button className="ml-4 bg-gray-900" processing={processing}>
                         更新
                     </Button>
-                    <ModalButton variant="contained" color="primary" onClick={onCloseModal} children="戻る" />
+                    <ModalButton
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                            onCloseModal(gitOption.id.toString());
+                        }}
+                        children="戻る"
+                    />
                 </div>
             </form>
         </CommonModal>

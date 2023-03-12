@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\GitService;
 use App\Http\Requests\Git\CreateRequest;
 use \Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 
 /** Gitコントローラ */
 class GitController extends Controller
@@ -116,7 +117,7 @@ class GitController extends Controller
     {
         $this->gitService->create($request);
 
-        return redirect()->route('git');
+        return $this->commonRedirectGitList($request);
     }
 
     /**
@@ -129,7 +130,7 @@ class GitController extends Controller
     {
         $this->gitService->update($request);
 
-        return redirect()->route('git');
+        return $this->commonRedirectGitList($request);
     }
 
     /**
@@ -142,7 +143,28 @@ class GitController extends Controller
     {
         $this->gitService->delete($request);
 
-        return redirect()->route('git');
+        return $this->commonRedirectGitList($request);
     }
 
+    /**
+     * Git一覧：共通リダイレクト
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    private function commonRedirectGitList(Request $request): RedirectResponse
+    {
+        $page = $request->has('page') ? $request->page : 1;
+
+        $gitType = $request->has('searchGitType') ? $request->searchGitType : null;
+ 
+        $searchWord = $request->has('searchWord') ? $request->searchWord : null;
+
+        //必ずリダイレクトすること
+        return redirect()->route('git',[
+            'page' => $page,
+            'git_type' => $gitType,
+            'searchWord' => $searchWord,
+        ]);
+    }
 }

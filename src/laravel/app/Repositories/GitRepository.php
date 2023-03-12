@@ -75,7 +75,7 @@ class GitRepository implements GitInterface
      */
     public function save(Git $gitInstance, array $gitInfo)
     {
-        if(empty($gitInstance->first()) || empty($gitInfo)){
+        if(empty($gitInfo)){
             return;
         }
 
