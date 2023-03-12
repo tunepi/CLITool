@@ -25,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind('GitService', GitService::class);
+        $this->app->bind('GitOptionService', GitOptionService::class);
+        $this->app->bind('UserService', UserService::class);
+        $this->app->bind('UserFavoriteService', UserFavoriteService::class);
     }
 
     /**
