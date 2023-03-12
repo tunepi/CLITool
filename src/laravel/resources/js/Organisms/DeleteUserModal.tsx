@@ -59,8 +59,10 @@ const DeleteUserModal = ({ user, IsOpen, flg, detailModalIsOpen, current_page }:
                     <Input type="hidden" name="page" value={data.page} handleChange={onHandleChange} />
                     <div className="border-2 border-block-500">
                         <div className="flex pl-10">
-                            <label className={`block font-medium text-sm text-gray-700 mr-10 w-11`}>ユーザ</label>
-                            <div className="ml-1">{data.name}</div>
+                            <label className={`block font-medium text-sm text-gray-700 mr-10 w-15 pt-2`}>
+                                ユーザ名
+                            </label>
+                            <div className="ml-1 pt-1">{data.name}</div>
                         </div>
                         <div className="pl-10 mt-2">
                             <p>上記ユーザを削除します。</p>

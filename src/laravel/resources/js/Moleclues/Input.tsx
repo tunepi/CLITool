@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 interface InputProps {
     type: string;
     name: string;
-    value: string | number;
+    value: string | number | undefined;
     max?: number;
     className?: string;
     autoComplete?: string;

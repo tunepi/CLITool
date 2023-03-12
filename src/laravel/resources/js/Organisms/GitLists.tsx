@@ -79,6 +79,8 @@ const GitLists = ({ gits, current_page, general, next_url, prev_url, searchGitTy
                     setModalOpenById={setModalOpenById}
                     current_page={current_page}
                     general={general}
+                    searchGitType={searchGitType}
+                    searchWord={searchWord}
                 />
             ),
             リンク: (
@@ -94,6 +96,7 @@ const GitLists = ({ gits, current_page, general, next_url, prev_url, searchGitTy
                 />
             ),
             種別: GitTypeName(git.git_type),
+            更新日: git.updated_at,
             登録日: git.created_at,
         };
         return data;
@@ -103,7 +106,7 @@ const GitLists = ({ gits, current_page, general, next_url, prev_url, searchGitTy
     const target =
         general == true
             ? ['コマンド名', '種別', '説明', 'リンク']
-            : ['ID', 'コマンド名', '種別', '登録日', '説明', 'リンク'];
+            : ['ID', 'コマンド名', '種別', '更新日', '登録日', '説明', 'リンク'];
     return (
         <div className="hidden  sm:-my-px sm:ml-10 sm:block">
             <MainTableLayout th={target} tds={gitData} children={<Pagenate next_url={nextUrl} prev_url={prevUrl} />} />

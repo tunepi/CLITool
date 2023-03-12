@@ -46,7 +46,7 @@ const DetailUserModal = ({ user, detailModalIsOpen, flg, setOpenFlg, setModalOpe
                 <div>
                     <div className="border-2 border-block-500">
                         <div className="flex ml-10">
-                            <label className={`block font-medium text-sm text-gray-700 mr-10 w-11 `}>氏名</label>
+                            <label className={`block font-medium text-sm text-gray-700 mr-10 w-15 `}>ユーザ名</label>
                             {user.name}
                         </div>
                         <div className="flex ml-10 mt-2">

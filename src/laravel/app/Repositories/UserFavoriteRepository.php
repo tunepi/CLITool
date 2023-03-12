@@ -65,7 +65,7 @@ class UserFavoriteRepository implements UserFavoriteInterface
      */
     public function save(UserFavorite $userFavoriteInstance, Array $favoriteInfo)
     {
-        if(empty($userFavoriteInstance->first()) || empty($favoriteInfo)){
+        if(empty($favoriteInfo)){
             return;
         }
 

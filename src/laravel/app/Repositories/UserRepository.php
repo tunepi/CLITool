@@ -58,7 +58,7 @@ class UserRepository implements UserInterface
      */
     public function save(User $userInstance, Array $userInfo)
     {
-        if(empty($userInstance->first()) || empty($userInfo)){
+        if(empty($userInfo)){
             return;
         }
 

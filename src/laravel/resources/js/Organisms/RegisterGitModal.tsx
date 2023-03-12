@@ -4,7 +4,6 @@ import Input from '@/Moleclues/Input';
 import Label from '@/Atoms/Label';
 import ValidationErrors from '@/Organisms/ValidationErrors';
 import { useForm } from '@inertiajs/inertia-react';
-import { useEffect } from 'react';
 import { Button as ModalButton } from '@mui/material';
 import SelectBox from '../Moleclues/SelectBox';
 import CommonModal from '../Moleclues/CommonModal';
@@ -14,14 +13,18 @@ interface Props {
     setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     modalIsOpen: boolean;
     current_page: number;
+    searchGitType?: number;
+    searchWord?: string;
 }
 
-const RegisterGitModal = ({ setModalIsOpen, modalIsOpen, current_page }: Props) => {
+const RegisterGitModal = ({ setModalIsOpen, modalIsOpen, current_page, searchGitType, searchWord }: Props) => {
     const { data, setData, post, processing, errors, reset } = useForm({
         git_name: '',
         git_type: '',
         description: '',
         page: current_page,
+        searchGitType: searchGitType,
+        searchWord: searchWord,
     });
 
     //modal非表示用
@@ -30,13 +33,9 @@ const RegisterGitModal = ({ setModalIsOpen, modalIsOpen, current_page }: Props) 
         reset('git_name');
     };
 
-    useEffect(() => {
-        return () => {};
-    }, []);
-
     const onHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setData(
-            event.target.name as 'git_name',
+            event.target.name as 'git_name' | 'page' | 'searchGitType' | 'searchWord',
             event.target.type === 'checkbox' ? event.target.checked + '' : event.target.value,
         );
     };
@@ -64,6 +63,8 @@ const RegisterGitModal = ({ setModalIsOpen, modalIsOpen, current_page }: Props) 
             <form onSubmit={submit}>
                 <ValidationErrors errors={errors} />
                 <Input type="hidden" name="page" value={data.page} handleChange={onHandleChange} />
+                <Input type="hidden" name="searchGitType" value={data.searchGitType} handleChange={onHandleChange} />
+                <Input type="hidden" name="searchWord" value={data.searchWord} handleChange={onHandleChange} />
                 <div>
                     <Label forInput="name" value="gitコマンド名" />
 

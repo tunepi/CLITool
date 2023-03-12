@@ -125,9 +125,7 @@ class GitOptionController extends Controller
     {
         $this->gitOptionService->create($request);
 
-        return redirect()->route('gitOption',[
-            'id' => $request->git_id
-        ]);
+        return $this->commonRedirectGitOptionList($request);
     }
 
     /**
@@ -140,9 +138,7 @@ class GitOptionController extends Controller
     {
         $this->gitOptionService->update($request);
 
-        return redirect()->route('gitOption',[
-            'id' => $request->git_id
-        ]);
+        return $this->commonRedirectGitOptionList($request);
     }
 
     /**
@@ -155,8 +151,23 @@ class GitOptionController extends Controller
     {
         $this->gitOptionService->delete($request);
 
+        return $this->commonRedirectGitOptionList($request);
+    }
+
+    /**
+     * GitOption一覧：共通リダイレクト
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    private function commonRedirectGitOptionList(Request $request): RedirectResponse
+    {
+        $page = $request->has('page') ? $request->page : 1;
+
+        //必ずリダイレクトすること
         return redirect()->route('gitOption',[
-            'id' => $request->git_id
+            'id' => $request->git_id,
+            'page' => $page
         ]);
     }
 }

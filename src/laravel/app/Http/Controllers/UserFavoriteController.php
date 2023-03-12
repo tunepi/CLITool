@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Services\UserFavoriteService;
 use App\Models\UserFavorite;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class UserFavoriteController extends Controller
 {
@@ -58,6 +59,7 @@ class UserFavoriteController extends Controller
      */
     public function create(Request $request)
     {
+        Log::debug($request);
         $this->userFavoriteService->create($request);
     }
     

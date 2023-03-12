@@ -24,7 +24,6 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required',
             'git_name'   => 'required|string|max:255',
             'git_type' => 'required',
             'description' => 'required',

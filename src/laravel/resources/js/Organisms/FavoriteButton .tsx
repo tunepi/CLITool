@@ -79,6 +79,7 @@ const FavoriteButton = ({ user_id, command_id, type, url, git_id, redirect_url }
     const favorite = (e: React.FormEvent<HTMLFormElement>) => {
         //画面遷移を止める
         e.preventDefault();
+        console.log(urlState);
 
         axios
             .post(route(urlState), data)

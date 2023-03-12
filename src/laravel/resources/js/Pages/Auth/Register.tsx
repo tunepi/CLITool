@@ -41,7 +41,7 @@ export default function Register() {
 
             <form onSubmit={submit}>
                 <div>
-                    <Label forInput="name" value="Name" />
+                    <Label forInput="name" value="ユーザ名" />
 
                     <Input
                         type="text"

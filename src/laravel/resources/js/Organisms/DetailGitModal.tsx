@@ -15,6 +15,8 @@ interface Props {
     setModalOpenById: (id: number, setModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>) => void;
     current_page: number;
     general?: boolean;
+    searchGitType?: number;
+    searchWord?: string;
 }
 const DetailGitModal = ({
     git,
@@ -24,6 +26,8 @@ const DetailGitModal = ({
     setModalOpenById,
     current_page,
     general,
+    searchGitType,
+    searchWord,
 }: Props) => {
     //詳細モーダルの表示非表示用
     const [modalIsOpen, setModalIsOpen] = useState<number | undefined>(detailModalIsOpen);
@@ -99,6 +103,8 @@ const DetailGitModal = ({
                     flg={editModalFlg}
                     detailModalIsOpen={setModalIsOpen}
                     current_page={current_page}
+                    searchGitType={searchGitType}
+                    searchWord={searchWord}
                 />
             )}
             {/* 削除モーダル */}
@@ -109,6 +115,8 @@ const DetailGitModal = ({
                     flg={deleteModalFlg}
                     detailModalIsOpen={setModalIsOpen}
                     current_page={current_page}
+                    searchGitType={searchGitType}
+                    searchWord={searchWord}
                 />
             )}
         </>

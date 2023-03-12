@@ -18,24 +18,38 @@ interface Props {
     detailModalIsOpen: React.Dispatch<React.SetStateAction<number | undefined>>;
     current_page: number;
     isProfile?: number;
+    searchGitType?: number;
+    searchWord?: string;
 }
 
-const EditGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page, isProfile }: Props) => {
+const EditGitModal = ({
+    git,
+    IsOpen,
+    flg,
+    detailModalIsOpen,
+    current_page,
+    isProfile,
+    searchGitType,
+    searchWord,
+}: Props) => {
     const { data, setData, post, processing, errors, reset } = useForm({
         id: git.id,
         git_name: git.git_name,
         git_type: git.git_type.toString(),
         description: git.description,
         page: current_page,
+        searchGitType: searchGitType,
+        searchWord: searchWord,
     });
 
     //modal表示非表示用
     const [modalIsOpen, setModalIsOpen] = useState<number | undefined>();
 
     //modal非表示用
-    const onCloseModal = () => {
+    const onCloseModal = (id?: string) => {
         setModalIsOpen(undefined);
         reset('git_name');
+        id == undefined ? alert('idが存在しません') : detailModalIsOpen(Number(id));
     };
 
     useEffect(() => {
@@ -44,7 +58,7 @@ const EditGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page, isPro
 
     const onHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setData(
-            event.target.name as 'id' | 'git_name',
+            event.target.name as 'id' | 'git_name' | 'searchGitType' | 'searchWord',
             event.target.type === 'checkbox' ? event.target.checked + '' : event.target.value,
         );
     };
@@ -75,6 +89,8 @@ const EditGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page, isPro
                 <ValidationErrors errors={errors} />
                 <Input type="hidden" name="page" value={data.page} handleChange={onHandleChange} />
                 <Input type="hidden" name="id" value={data.id} handleChange={onHandleChange} />
+                <Input type="hidden" name="searchGitType" value={data.searchGitType} handleChange={onHandleChange} />
+                <Input type="hidden" name="searchWord" value={data.searchWord} handleChange={onHandleChange} />
                 <div>
                     <Label forInput="name" value="gitコマンド名" />
 
@@ -119,7 +135,14 @@ const EditGitModal = ({ git, IsOpen, flg, detailModalIsOpen, current_page, isPro
                     <Button className="ml-4 bg-gray-900" processing={processing}>
                         更新
                     </Button>
-                    <ModalButton variant="contained" color="primary" onClick={onCloseModal} children="戻る" />
+                    <ModalButton
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                            onCloseModal(git.id.toString());
+                        }}
+                        children="戻る"
+                    />
                 </div>
             </form>
         </CommonModal>

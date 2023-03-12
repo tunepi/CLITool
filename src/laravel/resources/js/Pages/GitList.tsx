@@ -102,7 +102,13 @@ const GitList = ({ auth, gits, general, searchGitType, searchWord }: Props) => {
                         searchWord={searchWord}
                     />
                     {general == false && (
-                        <RegisterGitModal setModalIsOpen={setModalIsOpen} modalIsOpen={modalIsOpen} current_page={1} />
+                        <RegisterGitModal
+                            setModalIsOpen={setModalIsOpen}
+                            modalIsOpen={modalIsOpen}
+                            current_page={gits.current_page}
+                            searchGitType={searchGitType}
+                            searchWord={searchWord}
+                        />
                     )}
                 </div>
             }
