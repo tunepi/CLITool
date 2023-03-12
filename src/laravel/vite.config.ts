@@ -8,7 +8,7 @@ export default defineConfig({
         manifest: true,
         rollupOptions: {
             // デフォルトの .html エントリを上書き
-            input: 'resources/ts/app.tsx',
+            input: 'resources/js/app.tsx',
         },
     },
     //5173と8000を接続するために明示的にhostを0.0.0.0に設定
