@@ -9,7 +9,7 @@ use App\Models\Git;
 use Illuminate\Pagination\Paginator;
 
 /** Gitサービス */
-class GitService
+class GitService 
 {
     /** @var GitInterface $gitInterface */
     private GitInterface $gitInterface;
