@@ -31,10 +31,6 @@ class GitController extends Controller
     {
         $user = Auth::user();
 
-        if($user === null){
-            return Inertia::render('Management');
-        }
-
         //リダイレクト時、ページ数の保持のために使用
         if(empty($request->old('page'))){
             $page = $request->has('page') ? $request->page : 1;

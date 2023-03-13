@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Log;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -34,8 +35,11 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         $request->authenticate();
+        Log::debug('authenticateまで通っている');
 
         $request->session()->regenerate();
+        Log::debug('regenerateまで通っている');
+        Log::debug(RouteServiceProvider::HOME);
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
@@ -55,5 +59,15 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect(RouteServiceProvider::HOME);
+    }
+
+    /**
+     * ログイン画面リダイレクト
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function redirectLogin()
+    {
+        return redirect()->route('login');
     }
 }
