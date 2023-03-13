@@ -18,12 +18,6 @@ use App\Http\Controllers\GitOptionController;
 |
 */
 
-//ログイン画面
-Route::get('/', function () {
-    return Inertia::render('Auth/Login');
-})->middleware(['auth', 'verified']);
-
-
 Route::group(['prefix' => 'general', 'middleware' => 'auth', 'verified'], function(){
     /** @var GitController */
     $gitController = GitController::class;
