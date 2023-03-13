@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\UserFavoriteController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
@@ -19,12 +18,10 @@ use App\Http\Controllers\GitOptionController;
 |
 */
 
-//ログイン画面 or dashboard画面
-// Route::get('/', function () {
-//     return Inertia::render('Dashboard',[
-//         'user' => 'user'
-//     ]);
-// })->middleware(['auth', 'verified'])->name('dashboard');
+//ログイン画面
+Route::get('/', function () {
+    return Inertia::render('Auth/Login');
+})->middleware(['auth', 'verified']);
 
 
 Route::group(['prefix' => 'general', 'middleware' => 'auth', 'verified'], function(){
