@@ -5,6 +5,7 @@ import NavLink from '@/Atoms/NavLink';
 const ManagementTypes: Array<Array<string>> = [
     ['ユーザ一覧', 'user'],
     ['Git', 'git'],
+    ['Docker', 'git'],
     // ['Docker', 'dashboard'],
     // ['Docker-Compose', 'dashboard'],
     // ['Npm', 'dashboard'],
