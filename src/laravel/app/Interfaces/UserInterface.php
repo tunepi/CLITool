@@ -34,7 +34,7 @@ interface UserInterface
      * @param Array $userInfo
      * @return void
      */
-    public function save(User $userInstance, Array $userInfo);
+    public function save(User $userInstance, array $userInfo);
 
     /**
      * ユーザの削除

@@ -54,5 +54,4 @@ class Git extends Model
     {
         return $date->format('Y年m月d日');
     }
-    
 }

@@ -9,7 +9,7 @@ use App\Models\Git;
 use Illuminate\Pagination\Paginator;
 
 /** Gitサービス */
-class GitService 
+class GitService
 {
     /** @var GitInterface $gitInterface */
     private GitInterface $gitInterface;
@@ -26,7 +26,7 @@ class GitService
      * @param int | null $gitType
      * @return Paginator
      */
-    public function findAll(int $page, ?int $gitType, ?string $searchWord):Paginator
+    public function findAll(int $page, ?int $gitType, ?string $searchWord): Paginator
     {
         return $this->gitInterface->findAll($page, $gitType, $searchWord);
     }
@@ -37,7 +37,7 @@ class GitService
      * @param Request $request
      * @return Git
      */
-    public function findOne(Request $request):Git
+    public function findOne(Request $request): Git
     {
         return $this->gitInterface->findOne($request->id);
     }
@@ -59,7 +59,6 @@ class GitService
         $gitInstance = new Git;
 
         $this->gitInterface->save($gitInstance, $gitInfo);
-
     }
 
     /**

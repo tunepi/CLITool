@@ -20,7 +20,7 @@ class GitOptionRepository implements GitOptionInterface
      *
      * @param GitOption $gitOptionRepository
      */
-    public function __construct(GitOption $gitOptionRepository) 
+    public function __construct(GitOption $gitOptionRepository)
     {
         $this->gitOptionRepository = $gitOptionRepository;
     }
@@ -35,7 +35,6 @@ class GitOptionRepository implements GitOptionInterface
     {
         //第２引数は取得するカラム名、第３引数は表示ページのクエリ文字列、第4引数は該当ページ数
         return $this->gitOptionRepository->with('userFavorite', 'git')->where('git_id', '=', $gitId)->simplePaginate(5, ['*'], 'page', $page);
-
     }
 
     /**
@@ -48,7 +47,7 @@ class GitOptionRepository implements GitOptionInterface
     {
         $query = GitOption::query();
 
-        if(!empty($id)){
+        if (!empty($id)) {
             $query = $this->gitOptionRepository->where('id', '=', $id);
         }
 
@@ -62,9 +61,9 @@ class GitOptionRepository implements GitOptionInterface
      * @param Array $gitOptionInfo
      * @return void
      */
-    public function save(GitOption $gitOptionInstance, Array $gitOptionInfo)
+    public function save(GitOption $gitOptionInstance, array $gitOptionInfo)
     {
-        if(empty($gitOptionInfo)){
+        if (empty($gitOptionInfo)) {
             return;
         }
 
@@ -81,11 +80,10 @@ class GitOptionRepository implements GitOptionInterface
      */
     public function delete(GitOption $gitOption)
     {
-        if(empty($gitOption->first())){
+        if (empty($gitOption->first())) {
             return;
         }
 
         $gitOption->delete();
     }
-
 }

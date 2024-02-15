@@ -5,7 +5,7 @@ namespace App\Interfaces;
 use App\Models\Git;
 use Illuminate\Pagination\Paginator;
 
-interface GitInterface 
+interface GitInterface
 {
 
     /**
@@ -24,7 +24,7 @@ interface GitInterface
      * @param int|null $id
      * @return Git
      */
-    public function findOne(?int $id):Git;
+    public function findOne(?int $id): Git;
 
     /**
      * 登録・更新共通処理

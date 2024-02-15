@@ -5,7 +5,7 @@ namespace App\Interfaces;
 use App\Models\GitOption;
 use Illuminate\Pagination\Paginator;
 
-interface GitOptionInterface 
+interface GitOptionInterface
 {
 
     /**

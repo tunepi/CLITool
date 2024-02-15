@@ -35,29 +35,28 @@ class GitOptionController extends Controller
         $git = $this->gitService->findOne($request);
 
         //リダイレクト時、ページ数の保持のために使用
-        if(empty($request->old('page'))){
+        if (empty($request->old('page'))) {
             $page = $request->has('page') ? $request->page : 1;
-        }else{
+        } else {
             $page = $request->old('page');
         }
 
         $gits = $this->gitOptionService->findAll($git->id, $page);
 
         //gitページのページネーション値の取得
-        if(empty($request->old('current_page'))){
+        if (empty($request->old('current_page'))) {
             $currentPage = $request->has('current_page') ? $request->current_page : 1;
-        }else{
+        } else {
             $currentPage = $request->old('current_page');
         }
 
-
-        if(empty($request->old('git_type'))){
+        if (empty($request->old('git_type'))) {
             $gitType = $request->has('git_type') ? $request->git_type : 0;
-        }else{
+        } else {
             $gitType = $request->old('git_type');
         }
 
-        return Inertia::render('GitOptionList',[
+        return Inertia::render('GitOptionList', [
             'git' => $git,
             'gits' => $gits,
             'general' => false,
@@ -77,35 +76,35 @@ class GitOptionController extends Controller
         $git = $this->gitService->findOne($request);
 
         //リダイレクト時、ページ数の保持のために使用
-        if(empty($request->old('page'))){
+        if (empty($request->old('page'))) {
             $page = $request->has('page') ? $request->page : 1;
-        }else{
+        } else {
             $page = $request->old('page');
         }
 
         $gits = $this->gitOptionService->findAll($git->id, $page);
 
         //gitページのページネーション値の取得
-        if(empty($request->old('current_page'))){
+        if (empty($request->old('current_page'))) {
             $currentPage = $request->has('current_page') ? $request->current_page : 1;
-        }else{
+        } else {
             $currentPage = $request->old('current_page');
         }
 
 
-        if(empty($request->old('git_type'))){
+        if (empty($request->old('git_type'))) {
             $gitType = $request->has('git_type') ? $request->git_type : 0;
-        }else{
+        } else {
             $gitType = $request->old('git_type');
         }
 
-        if(empty($request->old('searchWord'))){
+        if (empty($request->old('searchWord'))) {
             $searchWord = $request->has('searchWord') ? $request->searchWord : '';
-        }else{
+        } else {
             $searchWord = $request->old('searchWord');
         }
 
-        return Inertia::render('GitOptionList',[
+        return Inertia::render('GitOptionList', [
             'git' => $git,
             'gits' => $gits,
             'general' => true,
@@ -165,7 +164,7 @@ class GitOptionController extends Controller
         $page = $request->has('page') ? $request->page : 1;
 
         //必ずリダイレクトすること
-        return redirect()->route('gitOption',[
+        return redirect()->route('gitOption', [
             'id' => $request->git_id,
             'page' => $page
         ]);
