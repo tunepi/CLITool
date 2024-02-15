@@ -90,5 +90,4 @@ class User extends Authenticatable
     {
         return $date->format('Y年m月d日');
     }
-
 }

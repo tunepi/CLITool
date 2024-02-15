@@ -20,7 +20,7 @@ class UserRepository implements UserInterface
      *
      * @param User $user
      */
-    public function __construct(User $userRepository) 
+    public function __construct(User $userRepository)
     {
         $this->userRepository = $userRepository;
     }
@@ -35,7 +35,7 @@ class UserRepository implements UserInterface
     public function findAllOtherOwn(int $id, int $page): Paginator
     {
         //第２引数は取得するカラム名、第３引数は表示ページのクエリ文字列、第4引数は該当ページ数
-        return $this->userRepository->where('id','!=',$id)->simplePaginate(5, ['*'], 'page', $page);
+        return $this->userRepository->where('id', '!=', $id)->simplePaginate(5, ['*'], 'page', $page);
     }
 
     /**
@@ -46,7 +46,7 @@ class UserRepository implements UserInterface
      */
     public function findOne(int $id): ?User
     {
-        return $this->userRepository->where('id','=',$id)->first();
+        return $this->userRepository->where('id', '=', $id)->first();
     }
 
     /**
@@ -56,9 +56,9 @@ class UserRepository implements UserInterface
      * @param Array $userInfo
      * @return void
      */
-    public function save(User $userInstance, Array $userInfo)
+    public function save(User $userInstance, array $userInfo)
     {
-        if(empty($userInfo)){
+        if (empty($userInfo)) {
             return;
         }
 
@@ -75,11 +75,10 @@ class UserRepository implements UserInterface
      */
     public function delete(User $user)
     {
-        if(empty($user->first())){
+        if (empty($user->first())) {
             return;
         }
 
         $user->delete();
     }
-
 }

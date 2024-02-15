@@ -38,6 +38,7 @@ class UserFavorite extends Model
     /** @var number Git */
     const GIT = 1;
 
+    /** @var array */
     const TYPE_AND_ROUTE = [
         '1' => 'git.git'
     ];
@@ -70,8 +71,8 @@ class UserFavorite extends Model
      *
      * @return BelongsTo
      */
-    public function git():BelongsTo
+    public function git(): BelongsTo
     {
-        return $this->belongsTo(GitOption::class, 'command_id','id');
+        return $this->belongsTo(GitOption::class, 'command_id', 'id');
     }
 }

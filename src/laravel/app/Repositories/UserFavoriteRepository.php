@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\UserFavorite;
@@ -18,7 +19,7 @@ class UserFavoriteRepository implements UserFavoriteInterface
      *
      * @param UserFavorite $userFavorite
      */
-    public function __construct(UserFavorite $userFavoriteRepository) 
+    public function __construct(UserFavorite $userFavoriteRepository)
     {
         $this->userFavoriteRepository = $userFavoriteRepository;
     }
@@ -34,12 +35,11 @@ class UserFavoriteRepository implements UserFavoriteInterface
      */
     public function findAll(int $userId, int $type, string $withName, int $page): Paginator
     {
-        // return $this->userFavoriteRepository->where('user_id','!=',$userId)->paginate(10, ['*'], 'page', $page);
         return $this->userFavoriteRepository->with($withName)
-                                            ->where('user_id','=',$userId)
-                                            ->where('type', $type)
-                                            ->where('is_favorite', 1)
-                                            ->simplePaginate(5, ['*'], 'page', $page);
+            ->where('user_id', '=', $userId)
+            ->where('type', $type)
+            ->where('is_favorite', 1)
+            ->simplePaginate(5, ['*'], 'page', $page);
     }
 
     /**
@@ -63,9 +63,9 @@ class UserFavoriteRepository implements UserFavoriteInterface
      * @param Array $favoriteInfo
      * @return void
      */
-    public function save(UserFavorite $userFavoriteInstance, Array $favoriteInfo)
+    public function save(UserFavorite $userFavoriteInstance, array $favoriteInfo)
     {
-        if(empty($favoriteInfo)){
+        if (empty($favoriteInfo)) {
             return;
         }
 
@@ -73,13 +73,4 @@ class UserFavoriteRepository implements UserFavoriteInterface
 
         $userFavoriteInstance->save();
     }
-
-
 }
-
-
-
-
-
-
-?>
