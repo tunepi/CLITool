@@ -38,5 +38,4 @@ interface UserFavoriteInterface
      */
     public function save(UserFavorite $userFavoriteInstance, Array $favoriteInfo);
 }
-
 ?>

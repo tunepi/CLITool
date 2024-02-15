@@ -29,30 +29,28 @@ class GitController extends Controller
      */
     public function index(Request $request): \Inertia\Response
     {
-        $user = Auth::user();
-
         //リダイレクト時、ページ数の保持のために使用
-        if(empty($request->old('page'))){
+        if (empty($request->old('page'))) {
             $page = $request->has('page') ? $request->page : 1;
-        }else{
+        } else {
             $page = $request->old('page');
         }
 
-        if(empty($request->old('git_type'))){
+        if (empty($request->old('git_type'))) {
             $gitType = $request->git_type;
-        }else{
+        } else {
             $gitType = null;
         }
 
-        if(empty($request->old('searchWord'))){
+        if (empty($request->old('searchWord'))) {
             $searchWord = $request->searchWord;
-        }else{
+        } else {
             $searchWord = null;
         }
 
         $gitLists = $this->gitService->findAll($page, $gitType, $searchWord);
 
-        return Inertia::render('GitList',[
+        return Inertia::render('GitList', [
             'gits' => $gitLists,
             'general' => false,
             'searchGitType' => $gitType,
@@ -70,32 +68,32 @@ class GitController extends Controller
     {
         $user = Auth::user();
 
-        if($user === null){
+        if ($user === null) {
             return Inertia::render('Management');
         }
 
         //リダイレクト時、ページ数の保持のために使用
-        if(empty($request->old('page'))){
+        if (empty($request->old('page'))) {
             $page = $request->has('page') ? $request->page : 1;
-        }else{
+        } else {
             $page = $request->old('page');
         }
 
-        if(empty($request->old('git_type'))){
+        if (empty($request->old('git_type'))) {
             $gitType = $request->git_type;
-        }else{
+        } else {
             $gitType = null;
         }
 
-        if(empty($request->old('searchWord'))){
+        if (empty($request->old('searchWord'))) {
             $searchWord = $request->searchWord;
-        }else{
+        } else {
             $searchWord = null;
         }
 
         $gitLists = $this->gitService->findAll($page, $gitType, $searchWord);
 
-        return Inertia::render('GitList',[
+        return Inertia::render('GitList', [
             'gits' => $gitLists,
             'general' => true,
             'searchGitType' => $gitType,
@@ -153,11 +151,11 @@ class GitController extends Controller
         $page = $request->has('page') ? $request->page : 1;
 
         $gitType = $request->has('searchGitType') ? $request->searchGitType : null;
- 
+
         $searchWord = $request->has('searchWord') ? $request->searchWord : null;
 
         //必ずリダイレクトすること
-        return redirect()->route('git',[
+        return redirect()->route('git', [
             'page' => $page,
             'git_type' => $gitType,
             'searchWord' => $searchWord,

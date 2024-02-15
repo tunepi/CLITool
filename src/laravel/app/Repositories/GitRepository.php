@@ -11,20 +11,6 @@ use Illuminate\Pagination\Paginator;
  */
 class GitRepository implements GitInterface
 {
-    //(一度も呼ばれていないためコメントアウト)
-    // /** @var Git $gitRepository */
-    // // private $gitRepository;
-
-    // /**
-    //  * construct
-    //  *
-    //  * @param Git $gitRepository
-    //  */
-    // public function __construct(Git $gitRepository)
-    // {
-    //     $this->gitRepository = $gitRepository;
-    // }
-
     /**
      * 一覧取得
      *
@@ -37,11 +23,11 @@ class GitRepository implements GitInterface
     {
         $query = Git::query();
 
-        if(!empty($gitType)){
+        if (!empty($gitType)) {
             $query->where('git_type', '=', $gitType);
         }
 
-        if(!empty($searchWord)){
+        if (!empty($searchWord)) {
             $query->where('git_name', 'LIKE', "%{$searchWord}%");
         }
 
@@ -55,11 +41,11 @@ class GitRepository implements GitInterface
      * @param int|null $id
      * @return Git
      */
-    public function findOne(?int $id):Git
+    public function findOne(?int $id): Git
     {
         $query = Git::query();
 
-        if(!empty($id)){
+        if (!empty($id)) {
             $query->where('id', '=', $id);
         }
 
@@ -75,7 +61,7 @@ class GitRepository implements GitInterface
      */
     public function save(Git $gitInstance, array $gitInfo)
     {
-        if(empty($gitInfo)){
+        if (empty($gitInfo)) {
             return;
         }
 
@@ -92,11 +78,10 @@ class GitRepository implements GitInterface
      */
     public function delete(Git $git)
     {
-        if(empty($git->first())){
+        if (empty($git->first())) {
             return;
         }
 
         $git->delete();
     }
-
 }

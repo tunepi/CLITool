@@ -30,15 +30,15 @@ class UserFavoriteController extends Controller
         $user = Auth::user();
 
         //リダイレクト時、ページ数の保持のために使用
-        if(empty($request->old('page'))){
+        if (empty($request->old('page'))) {
             $page = $request->has('page') ? $request->page : 1;
-        }else{
+        } else {
             $page = $request->old('page');
         }
 
-        if(empty($request->old('command_type'))){
+        if (empty($request->old('command_type'))) {
             $type = $request->has('command_type') ? $request->command_type : 1;
-        }else{
+        } else {
             $type = 1;
         }
 
@@ -46,7 +46,7 @@ class UserFavoriteController extends Controller
 
         $favoriteInfo = $this->userFavoriteService->findAll($user->id, $type, $routeArray[strval($type)], $page);
 
-        return Inertia::render('Favorite',[
+        return Inertia::render('Favorite', [
             'favorites' => $favoriteInfo,
             'searchCommandType' => $type
         ]);
@@ -62,7 +62,7 @@ class UserFavoriteController extends Controller
         Log::debug($request);
         $this->userFavoriteService->create($request);
     }
-    
+
     /**
      * ブックマーク登録
      *
@@ -73,9 +73,8 @@ class UserFavoriteController extends Controller
         $isFavorite = 1;
 
         return $this->registerOrCancel($request, $isFavorite);
-
     }
-    
+
     /**
      * ブックマーク解除
      *
@@ -98,7 +97,7 @@ class UserFavoriteController extends Controller
     {
         $routeArray = UserFavorite::TYPE_AND_ROUTE;
 
-        $type = !empty($request->type) ? $request->type : 1 ;
+        $type = !empty($request->type) ? $request->type : 1;
 
         $this->userFavoriteService->registerOrCancel($request, $isFavorite, $routeArray[strval($type)]);
     }

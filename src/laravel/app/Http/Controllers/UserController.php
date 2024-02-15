@@ -24,6 +24,7 @@ class UserController extends Controller
     {
         $this->userService = $userService;
     }
+
     /**
      * ユーザ一覧の表示
      *
@@ -34,13 +35,13 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        if($user === null){
+        if ($user === null) {
             return Inertia::render('Management');
         }
         //リダイレクト時、ページ数の保持のために使用
-        if(empty($request->old('page'))){
+        if (empty($request->old('page'))) {
             $page = $request->has('page') ? $request->page : 1;
-        }else{
+        } else {
             $page = $request->old('page');
         }
 
@@ -48,7 +49,7 @@ class UserController extends Controller
 
         $userLists = $this->userService->findAllOtherOwn($id, $page);
 
-        return Inertia::render('UserList',[
+        return Inertia::render('UserList', [
             'users' => $userLists,
         ]);
     }

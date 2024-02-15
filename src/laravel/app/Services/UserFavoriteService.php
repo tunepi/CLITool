@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Interfaces\UserFavoriteInterface;
@@ -71,7 +72,7 @@ class UserFavoriteService
 
         $this->userFavoriteInterface->save($userFavoriteInstance, $userFavoriteInfo);
     }
-    
+
     /**
      * 登録か解除か
      *
@@ -91,6 +92,3 @@ class UserFavoriteService
         $this->userFavoriteInterface->save($userFavoriteInstance, $userFavoriteInfo);
     }
 }
-
-
-?>
